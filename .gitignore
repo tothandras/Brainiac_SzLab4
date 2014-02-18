@@ -2,3 +2,10 @@
 .idea/tasks.xml
 target/
 out/
+doc/*.aux
+doc/*.lof
+doc/*.log
+doc/*.out
+doc/*.toc
+doc/*.synctex.gz
+doc/*.synctex.gz(busy)
