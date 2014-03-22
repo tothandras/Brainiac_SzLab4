@@ -1,5 +1,7 @@
 package com.brainiac.model;
 
+import com.brainiac.controller.Skeleton;
+
 /**
  * Project name: Brainiac_SzLab4
  * User: tothandras
@@ -9,6 +11,7 @@ package com.brainiac.model;
 public abstract class Enemy {
     protected int life;
     protected int speed;
+    protected Position position;
 
     public void hurt(Damage damage) {
 
@@ -19,6 +22,8 @@ public abstract class Enemy {
     }
 
     public Position getPosition() {
-        return new Position(0, 0);
+        Skeleton.writeFunctionDetails("Enemy.getPosition()");
+        Skeleton.writeReturnValue("Position.x: " + position.getX() + " Position.y: " + position.getY());
+        return position;
     }
 }

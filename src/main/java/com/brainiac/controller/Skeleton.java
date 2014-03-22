@@ -55,6 +55,24 @@ public class Skeleton {
     }
 
     /**
+     * akkor használjuk, ha a tesztelőtől egy int értéket szeretnénk kérni.
+     * @param s a feltett kérdés
+     * @return az adott válasz
+     */
+    public static int getInt(String s){
+        System.out.println("[?]" + s + "[1..]");
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        try{
+            String value = br.readLine();
+            br.close();
+            return Integer.parseInt(value);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return 1;
+    }
+
+    /**
      * azért csináltam külön egy ilyet, mert itt csökkenteni kell a behúzás mértékét,
      * az előbbinél meg növelni, meg a nyíl is másik irányban van.
      * @param s a visszatérési érték típusa, értéke

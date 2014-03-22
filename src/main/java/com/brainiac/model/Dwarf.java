@@ -10,14 +10,14 @@ import com.brainiac.controller.Skeleton;
  */
 public class Dwarf extends Enemy {
     public Dwarf() {
+        Skeleton.writeFunctionDetails("Dwarf()");
+        Skeleton.writeReturnValue("void");
     }
 
     @Override
     public void hurt(Damage damage) {
         Skeleton.writeFunctionDetails("Dwarf.hurt(Damage damage)");
         damage.getDamage(EnemyType.Dwarf);
-        if (Skeleton.getBoolean("Meghal az ellenség a lövéstől?")){
-
-        }
+        Skeleton.writeReturnValue("void");
     }
 }
