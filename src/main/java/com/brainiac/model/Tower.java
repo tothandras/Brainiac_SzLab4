@@ -1,10 +1,31 @@
 package com.brainiac.model;
 
-/**
- * Project name: Brainiac_SzLab4
- * User: tothandras
- * Date: 2014.03.20.
- * Time: 12:18
- */
+import java.util.List;
+
 public class Tower {
+    private Position position;
+    private List<TowerCrystal> crystals;
+    private Damage damage;
+    private int fireRate;
+    private int range;
+
+    public Tower(Position position) {
+        this.position = position;
+    }
+
+    public void fire(Enemy enemy) {
+
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public int getRange() {
+        return range;
+    }
+
+    public void upgrade(TowerCrystal crystal) {
+
+    }
 }

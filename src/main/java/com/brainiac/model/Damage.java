@@ -7,4 +7,21 @@ package com.brainiac.model;
  * Time: 12:03
  */
 public class Damage {
+    private int toDwarf;
+    private int toElf;
+    private int toHobbit;
+    private int toMan;
+
+    public Damage() {
+
+    }
+
+    public int getDamage(EnemyType enemyType) {
+
+        return 0;
+    }
+
+    void setDamage(int damage, EnemyType enemyType) {
+
+    }
 }

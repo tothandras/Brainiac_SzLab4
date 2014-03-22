@@ -1,10 +1,14 @@
 package com.brainiac.model;
 
-/**
- * Project name: Brainiac_SzLab4
- * User: tothandras
- * Date: 2014.03.20.
- * Time: 12:22
- */
+import java.util.List;
+
 public class GameElements {
+    public List<Enemy> enemies;
+    public List<Tower> towers;
+    public List<Blockage> blockages;
+    public Saruman saruman;
+    public Map map;
+
+    public GameElements() {
+    }
 }

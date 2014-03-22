@@ -6,5 +6,19 @@ package com.brainiac.model;
  * Date: 2014.03.20.
  * Time: 12:02
  */
-public class Enemy {
+public abstract class Enemy {
+    protected int life;
+    protected int speed;
+
+    public void hurt(Damage damage) {
+
+    }
+
+    public void move(Direction direction, Blockage blockage) {
+
+    }
+
+    public Position getPosition() {
+        return new Position(0, 0);
+    }
 }

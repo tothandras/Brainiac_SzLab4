@@ -6,5 +6,7 @@ package com.brainiac.model;
  * Date: 2014.03.20.
  * Time: 12:12
  */
-public class Elf {
+public class Elf extends Enemy {
+    public Elf() {
+    }
 }

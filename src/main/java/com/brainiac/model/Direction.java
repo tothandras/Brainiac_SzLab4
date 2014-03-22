@@ -7,4 +7,5 @@ package com.brainiac.model;
  * Time: 12:01
  */
 public enum Direction {
+    NORTH, EAST, SOUTH, WEST
 }

@@ -1,10 +1,12 @@
 package com.brainiac.model;
 
-/**
- * Project name: Brainiac_SzLab4
- * User: tothandras
- * Date: 2014.03.20.
- * Time: 12:15
- */
+import java.awt.geom.Line2D;
+import java.util.List;
+
 public class Path {
+    // atneveztem a valtozot
+    public List<Line2D> roads;
+
+    public Path() {
+    }
 }
