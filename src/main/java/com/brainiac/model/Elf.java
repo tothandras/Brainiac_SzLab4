@@ -1,5 +1,7 @@
 package com.brainiac.model;
 
+import com.brainiac.controller.Skeleton;
+
 /**
  * Project name: Brainiac_SzLab4
  * User: tothandras
@@ -8,5 +10,11 @@ package com.brainiac.model;
  */
 public class Elf extends Enemy {
     public Elf() {
+    }
+
+    @Override
+    public void hurt(Damage damage) {
+        Skeleton.writeFunctionDetails("Elf.hurt(Damage damage)");
+        damage.getDamage(EnemyType.Elf);
     }
 }

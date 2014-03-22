@@ -1,5 +1,7 @@
 package com.brainiac.model;
 
+import com.brainiac.controller.Skeleton;
+
 /**
  * Project name: Brainiac_SzLab4
  * User: tothandras
@@ -8,5 +10,14 @@ package com.brainiac.model;
  */
 public class Dwarf extends Enemy {
     public Dwarf() {
+    }
+
+    @Override
+    public void hurt(Damage damage) {
+        Skeleton.writeFunctionDetails("Dwarf.hurt(Damage damage)");
+        damage.getDamage(EnemyType.Dwarf);
+        if (Skeleton.getBoolean("Meghal az ellenség a lövéstől?")){
+
+        }
     }
 }

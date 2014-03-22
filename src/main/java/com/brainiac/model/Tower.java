@@ -1,5 +1,7 @@
 package com.brainiac.model;
 
+import com.brainiac.controller.Skeleton;
+
 import java.util.List;
 
 public class Tower {
@@ -14,7 +16,8 @@ public class Tower {
     }
 
     public void fire(Enemy enemy) {
-
+        Skeleton.writeFunctionDetails("Tower.fire(Enemy enemy)");
+        enemy.hurt(damage);
     }
 
     public Position getPosition() {

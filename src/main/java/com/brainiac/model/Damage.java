@@ -1,5 +1,7 @@
 package com.brainiac.model;
 
+import com.brainiac.controller.Skeleton;
+
 /**
  * Project name: Brainiac_SzLab4
  * User: tothandras
@@ -17,7 +19,21 @@ public class Damage {
     }
 
     public int getDamage(EnemyType enemyType) {
-
+        Skeleton.writeFunctionDetails("Damage.getDamage(EnemyType enemyType)");
+        switch (enemyType){
+            case Dwarf:
+                Skeleton.writeReturnValue("int: " + toDwarf);
+                return toDwarf;
+            case Elf:
+                Skeleton.writeReturnValue("int: " + toElf);
+                return toElf;
+            case Hobbit:
+                Skeleton.writeReturnValue("int: " + toHobbit);
+                return toHobbit;
+            case Man:
+                Skeleton.writeReturnValue("int: " + toMan);
+                return toMan;
+        }
         return 0;
     }
 
