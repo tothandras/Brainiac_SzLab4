@@ -21,6 +21,11 @@ public abstract class Enemy {
 
     public void move(Direction direction, Blockage blockage) {
 
+        Skeleton.writeFunctionDetails("Enemy.move(Direction direction, Blockage blockage)");
+        blockage.block();
+
+
+
     }
 
     public Position getPosition() {

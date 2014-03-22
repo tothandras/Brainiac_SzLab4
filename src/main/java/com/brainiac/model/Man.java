@@ -15,4 +15,12 @@ public class Man extends Enemy {
         damage.getDamage(EnemyType.Man);
         Skeleton.writeReturnValue("void");
     }
+
+    @Override
+    public void move(Direction direction, Blockage blockage) {
+
+        Skeleton.writeFunctionDetails("Enemy.move(Direction direction, Blockage blockage)");
+        blockage.block(EnemyType.Man);
+        Skeleton.writeReturnValue("void");
+    }
 }

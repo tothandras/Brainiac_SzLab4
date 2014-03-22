@@ -21,4 +21,12 @@ public class Elf extends Enemy {
         damage.getDamage(EnemyType.Elf);
         Skeleton.writeReturnValue("void");
     }
+
+    @Override
+    public void move(Direction direction, Blockage blockage) {
+
+        Skeleton.writeFunctionDetails("Enemy.move(Direction direction, Blockage blockage)");
+        blockage.block(EnemyType.Elf);
+        Skeleton.writeReturnValue("void");
+    }
 }

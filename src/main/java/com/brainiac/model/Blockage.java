@@ -1,5 +1,7 @@
 package com.brainiac.model;
 
+import com.brainiac.controller.Skeleton;
+
 import java.util.List;
 
 /**
@@ -17,14 +19,20 @@ public class Blockage {
     }
 
     public Position getPosition() {
+
         return position;
     }
+
 
     void upgrade(BlockageCrystal crystal) {
 
     }
 
     int block(EnemyType enemyType) {
+
+        Skeleton.writeFunctionDetails("Blockage.block(EnemyType enemyType)");
+        Skeleton.writeReturnValue("0");
+
         return 0;
     }
 }

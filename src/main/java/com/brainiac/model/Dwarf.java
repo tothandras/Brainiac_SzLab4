@@ -21,4 +21,12 @@ public class Dwarf extends Enemy {
         damage.getDamage(EnemyType.Dwarf);
         Skeleton.writeReturnValue("void");
     }
+
+    @Override
+    public void move(Direction direction, Blockage blockage) {
+
+        Skeleton.writeFunctionDetails("Enemy.move(Direction direction, Blockage blockage)");
+        blockage.block(EnemyType.Dwarf);
+        Skeleton.writeReturnValue("void");
+    }
 }
