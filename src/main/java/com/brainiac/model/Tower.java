@@ -13,6 +13,8 @@ public class Tower {
 
     public Tower(Position position) {
         this.position = position;
+        Skeleton.writeFunctionDetails("Tower(Position: "+position+")");
+        Skeleton.writeReturnValue("void");
     }
 
     public void fire(Enemy enemy) {

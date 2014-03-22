@@ -9,6 +9,8 @@ public class GameEngine {
 
     public GameEngine(GameElements gameElements) {
         this.gameElements = gameElements;
+        Skeleton.writeFunctionDetails("GameEngine(GameElements gameElements)");
+        Skeleton.writeReturnValue("void");
     }
 
     public void startNewGame(){

@@ -13,6 +13,8 @@ public abstract class Enemy {
     protected int speed;
     protected Position position;
 
+
+
     public void hurt(Damage damage) {
 
     }

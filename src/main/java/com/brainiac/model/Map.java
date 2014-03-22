@@ -1,5 +1,7 @@
 package com.brainiac.model;
 
+import com.brainiac.controller.Skeleton;
+
 import java.util.List;
 
 public class Map {
@@ -10,6 +12,8 @@ public class Map {
     public Map(int width, int height) {
         this.width = width;
         this.height = height;
+        Skeleton.writeFunctionDetails("Map(int: "+width+", int: "+height+")");
+        Skeleton.writeReturnValue("void");
     }
 
     public List<Path> getPaths() {
