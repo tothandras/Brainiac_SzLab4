@@ -9,19 +9,19 @@ public class Position {
     public Position(int x, int y) {
         this.x = x;
         this.y = y;
-        Skeleton.writeFunctionDetails("Position(int:"+x+","+"int: "+ y+")");
+        Skeleton.writeFunctionDetails("Position(int:" + x + "," + "int: " + y + ")");
         Skeleton.writeReturnValue("");
     }
 
     public int getX() {
         Skeleton.writeFunctionDetails("Position.getX()");
-        Skeleton.writeReturnValue("int: "+x);
+        Skeleton.writeReturnValue("int: " + x);
         return x;
     }
 
     public int getY() {
         Skeleton.writeFunctionDetails("Position.getY()");
-        Skeleton.writeReturnValue("int: "+y);
+        Skeleton.writeReturnValue("int: " + y);
         return y;
     }
 

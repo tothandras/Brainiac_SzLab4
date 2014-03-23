@@ -27,7 +27,7 @@ public abstract class Enemy {
 
     public Position getPosition() {
         Skeleton.writeFunctionDetails("Enemy.getPosition()");
-        Skeleton.writeReturnValue("Position.x: " + position.getX() + " Position.y: " + position.getY());
+        Skeleton.writeReturnValue("Position: position");
         return position;
     }
 }

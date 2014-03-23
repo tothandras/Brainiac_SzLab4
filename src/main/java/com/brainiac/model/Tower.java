@@ -18,7 +18,6 @@ public class Tower {
         this.fireRate = 1;
         this.range = 10;
         crystals = new ArrayList<TowerCrystal>();
-        Skeleton.writeFunctionDetails("Tower(Range: (" + range + "))");
         Skeleton.writeFunctionDetails("Tower(Position position))");
         Skeleton.writeReturnValue("");
     }
