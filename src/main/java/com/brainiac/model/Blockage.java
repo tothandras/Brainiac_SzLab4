@@ -10,11 +10,13 @@ public class Blockage {
 
     public Blockage(Position position) {
         this.position = position;
-        Skeleton.writeFunctionDetails("Blockage(Position: (" + position.getX() + "," + position.getY() + "))");
-        Skeleton.writeReturnValue("void");
+        Skeleton.writeFunctionDetails("Blockage(Position position)");
+        Skeleton.writeReturnValue("");
     }
 
     public Position getPosition() {
+        Skeleton.writeFunctionDetails("Blockage.getPosition()");
+        Skeleton.writeReturnValue("Position: position");
         return position;
     }
 
@@ -25,6 +27,8 @@ public class Blockage {
     }
 
     int block(EnemyType enemyType) {
+        Skeleton.writeFunctionDetails("Blockage.block(EnemyType enemyType)");
+        Skeleton.writeReturnValue("int: 0");
         return 0;
     }
 }

@@ -1,5 +1,7 @@
 package com.brainiac.model;
 
+import com.brainiac.controller.Skeleton;
+
 /**
  * Project name: Brainiac_SzLab4
  * User: tothandras
@@ -11,11 +13,15 @@ public class BlockageCrystal {
     private int increment;
 
     public BlockageCrystal(EnemyType against, int increment) {
+        Skeleton.writeFunctionDetails("BlockageCrystal(EnemyType against, int increment)");
+        Skeleton.writeReturnValue("");
         this.against = against;
         this.increment = increment;
     }
 
     public int getIncrement() {
+        Skeleton.writeFunctionDetails("BlockageCrystal.getIncrement()");
+        Skeleton.writeReturnValue("int: "+ increment);
         return increment;
     }
 }

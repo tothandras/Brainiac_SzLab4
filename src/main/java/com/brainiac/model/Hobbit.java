@@ -6,7 +6,7 @@ public class Hobbit extends Enemy {
     public Hobbit() {
         this.position = new Position(0,0);
         Skeleton.writeFunctionDetails("Hobbit()");
-        Skeleton.writeReturnValue("void");
+        Skeleton.writeReturnValue("");
     }
 
     @Override

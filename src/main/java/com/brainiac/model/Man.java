@@ -6,7 +6,7 @@ public class Man extends Enemy {
     public Man() {
         this.position = new Position(0,0);
         Skeleton.writeFunctionDetails("Man()");
-        Skeleton.writeReturnValue("void");
+        Skeleton.writeReturnValue("");
     }
 
     @Override

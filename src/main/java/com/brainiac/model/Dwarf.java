@@ -12,7 +12,7 @@ public class Dwarf extends Enemy {
     public Dwarf() {
         this.position = new Position(0,0);
         Skeleton.writeFunctionDetails("Dwarf()");
-        Skeleton.writeReturnValue("void");
+        Skeleton.writeReturnValue("");
     }
 
     @Override

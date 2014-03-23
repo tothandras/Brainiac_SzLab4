@@ -13,10 +13,12 @@ public class Map {
         this.width = width;
         this.height = height;
         Skeleton.writeFunctionDetails("Map(int: "+width+", int: "+height+")");
-        Skeleton.writeReturnValue("void");
+        Skeleton.writeReturnValue("");
     }
 
     public List<Path> getPaths() {
+        Skeleton.writeFunctionDetails("Map.getPaths()");
+        Skeleton.writeReturnValue("paths: List<Path>");
         return paths;
     }
 }

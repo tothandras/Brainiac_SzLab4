@@ -15,7 +15,8 @@ public class Damage {
     private int toMan;
 
     public Damage() {
-
+        Skeleton.writeFunctionDetails("Damage()");
+        Skeleton.writeReturnValue("");
     }
 
     public int getDamage(EnemyType enemyType) {

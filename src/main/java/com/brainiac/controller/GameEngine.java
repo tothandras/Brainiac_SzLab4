@@ -72,13 +72,13 @@ public class GameEngine {
 
     public void checkGameState() {
         Skeleton.writeFunctionDetails("GameEngine.checkGameState()");
+        Skeleton.writeReturnValue("void");
         for (Enemy enemy : gameElements.enemies) {
             Position currentPosition = enemy.getPosition();
             if (Skeleton.getBoolean("Elérte ez az ellenség a Végzet hegyét?" + "( Ellenség pozíciója: (" + currentPosition.getX() + ", " + currentPosition.getY() + ") )")) {
                 isGameOver();
             }
         }
-        Skeleton.writeReturnValue("void");
     }
 
     public Direction getDirection(Enemy enemy){

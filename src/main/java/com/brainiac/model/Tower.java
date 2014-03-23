@@ -24,7 +24,7 @@ public class Tower {
     public void fire(Enemy enemy) {
         Skeleton.writeFunctionDetails("Tower.fire(Enemy enemy)");
         enemy.hurt(damage);
-        Skeleton.writeReturnValue("void");
+        Skeleton.writeReturnValue("");
     }
 
     public Position getPosition() {

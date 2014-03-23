@@ -10,7 +10,7 @@ public class Position {
         this.x = x;
         this.y = y;
         Skeleton.writeFunctionDetails("Position(int:"+x+","+"int: "+ y+")");
-        Skeleton.writeReturnValue("void");
+        Skeleton.writeReturnValue("");
     }
 
     public int getX() {

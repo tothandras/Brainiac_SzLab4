@@ -16,7 +16,8 @@ public abstract class Enemy {
 
 
     public void hurt(Damage damage) {
-
+        Skeleton.writeFunctionDetails("Enemy.hurt()");
+        Skeleton.writeReturnValue("void");
     }
 
     public void move(Direction direction, Blockage blockage) {
