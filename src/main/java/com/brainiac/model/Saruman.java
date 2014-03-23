@@ -4,6 +4,8 @@ public class Saruman {
     private int spellPower;
 
     public Saruman() {
+        Skeleton.writeFunctionDetails("Saruman()");
+        Skeleton.writeReturnValue("void");
     }
 
     // atneveztem
