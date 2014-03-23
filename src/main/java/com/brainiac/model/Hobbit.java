@@ -4,6 +4,7 @@ import com.brainiac.controller.Skeleton;
 
 public class Hobbit extends Enemy {
     public Hobbit() {
+        this.position = new Position(0,0);
         Skeleton.writeFunctionDetails("Hobbit()");
         Skeleton.writeReturnValue("void");
     }

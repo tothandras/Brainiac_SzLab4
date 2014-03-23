@@ -11,9 +11,13 @@ public class Game {
 
     // ujdonsag: konstruktor
     public Game() {
+        gameElements = new GameElements();
+        gameEngine = new GameEngine(gameElements);
+        gameFrame = new GameFrame(gameEngine, gameElements);
     }
 
     public static void main(String[] args) {
-
+        Game game = new Game();
+        game.gameEngine.startNewGame();
     }
 }

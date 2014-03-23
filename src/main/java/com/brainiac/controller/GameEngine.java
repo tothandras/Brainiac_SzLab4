@@ -11,11 +11,17 @@ public class GameEngine {
         this.gameElements = gameElements;
     }
 
+    public void startNewGame(){
+        this.newRound();
+        this.checkGameState();
+    }
+
     public void newRound(){
         Random rn = new Random();
         int nEnemies = Skeleton.getInt("Hány ellenség jön az új körben?");
         for (int i = 0; i < nEnemies; ++i){
-            int j = rn.nextInt() % 4;
+            System.out.println(i);
+            int j = Math.abs(rn.nextInt()) % 4;
             switch (j){
                 case 0:
                     gameElements.enemies.add(new Dwarf());

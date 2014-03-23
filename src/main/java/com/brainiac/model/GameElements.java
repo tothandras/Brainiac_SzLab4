@@ -1,5 +1,6 @@
 package com.brainiac.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameElements {
@@ -10,5 +11,10 @@ public class GameElements {
     public Map map;
 
     public GameElements() {
+        enemies = new ArrayList<Enemy>();
+        towers = new ArrayList<Tower>();
+        blockages = new ArrayList<Blockage>();
+        saruman = new Saruman();
+        map = new Map(100, 100);
     }
 }

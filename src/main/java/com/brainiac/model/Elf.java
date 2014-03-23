@@ -10,6 +10,7 @@ import com.brainiac.controller.Skeleton;
  */
 public class Elf extends Enemy {
     public Elf() {
+        this.position = new Position(0,0);
         Skeleton.writeFunctionDetails("Elf()");
         Skeleton.writeReturnValue("void");
     }
