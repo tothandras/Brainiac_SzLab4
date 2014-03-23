@@ -1,7 +1,10 @@
 package com.brainiac.controller;
 
+import com.brainiac.model.*;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.List;
 
 public class Skeleton {
 
@@ -84,6 +87,27 @@ public class Skeleton {
     public static void writeReturnValue(String s) {
         tab = tab.substring(0, tab.length() - 1);
         System.out.println(tab + "<--" + s);
+    }
+
+    /**
+     * Tesztesetek
+     */
+    public void testTimer(GameEngine ge){
+        ge.tick();
+    }
+
+    public void testEnemyStep(GameEngine gen, GameElements gel){
+        List<Path> paths = gel.map.getPaths();
+        for(Blockage b: gel.blockages){
+            Position b_pos = b.getPosition();
+            for(Enemy e: gel.enemies){
+                Position e_pos = e.getPosition();
+                Direction d = gen.CalcDirection(e_pos,paths);
+                if(e_pos==b_pos) e.move(d,b);
+                else e.move(d,null);
+            }
+
+        }
     }
 
 }

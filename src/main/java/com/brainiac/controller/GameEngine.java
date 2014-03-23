@@ -2,6 +2,7 @@ package com.brainiac.controller;
 
 import com.brainiac.model.*;
 
+import java.util.List;
 import java.util.Random;
 
 public class GameEngine {
@@ -62,7 +63,16 @@ public class GameEngine {
         }
         Skeleton.writeReturnValue("void");
     }
-
+    public void tick(){
+        Skeleton.writeFunctionDetails("GameEngine.tick()");
+        Skeleton.writeReturnValue("void");
+    }
+    public Direction CalcDirection(Position e_pos, List<Path> paths){
+        Direction d;
+        Skeleton.writeFunctionDetails("GameEngine.CalcDirection()");
+        Skeleton.writeReturnValue("Direction d");
+        return d;
+    }
     public void isGameOver(){
         Skeleton.writeFunctionDetails("isGameOver()");
         Skeleton.writeReturnValue("void");

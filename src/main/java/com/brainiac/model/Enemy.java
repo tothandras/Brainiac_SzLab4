@@ -20,7 +20,8 @@ public abstract class Enemy {
     }
 
     public void move(Direction direction, Blockage blockage) {
-
+        Skeleton.writeFunctionDetails("Enemy.move()");
+        Skeleton.writeReturnValue("void");
     }
 
     public Position getPosition() {
