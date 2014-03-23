@@ -35,6 +35,11 @@ public class Skeleton {
         tab = tab + '\t';
     }
 
+    public static void writeLine(String s){
+        System.out.println(s);
+
+    }
+
     /**
      * akkor használjuk, ha a tesztelőtől egy boolean értéket szeretnénk kérni.
      * megfelelő válaszlehetőségek: true/false

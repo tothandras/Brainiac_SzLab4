@@ -14,11 +14,15 @@ public class GameEngine {
     }
 
     public void startNewGame(){
+        Skeleton.writeFunctionDetails("GameEngine.startNewGame()");
+        Skeleton.writeReturnValue("void");
         this.newRound();
         this.checkGameState();
     }
 
     public void newRound(){
+        Skeleton.writeFunctionDetails("GameEngine.newRound()");
+        Skeleton.writeReturnValue("void");
         Random rn = new Random();
         int nEnemies = Skeleton.getInt("Hány ellenség jön az új körben?");
         for (int i = 0; i < nEnemies; ++i){
@@ -39,6 +43,13 @@ public class GameEngine {
                     break;
             }
         }
+        int nTowers= Skeleton.getInt("Hány torony legyen?");
+        int x=5,y=5;
+        for(int i=0;i<nTowers;++i){
+            Skeleton.writeFunctionDetails("gameElements.towers.add(Tower tower)");
+            gameElements.towers.add(new Tower(new Position(++x,++y)));
+            Skeleton.writeReturnValue("void");
+        }
     }
 
     public void checkGameState(){
@@ -49,9 +60,12 @@ public class GameEngine {
                 isGameOver();
             }
         }
+        Skeleton.writeReturnValue("void");
     }
 
     public void isGameOver(){
+        Skeleton.writeFunctionDetails("isGameOver()");
+        Skeleton.writeReturnValue("void");
 
     }
 }

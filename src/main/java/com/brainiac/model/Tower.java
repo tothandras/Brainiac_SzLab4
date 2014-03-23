@@ -13,7 +13,7 @@ public class Tower {
 
     public Tower(Position position) {
         this.position = position;
-        Skeleton.writeFunctionDetails("Tower(Position: "+position+")");
+        Skeleton.writeFunctionDetails("Tower(Position: ("+position.getX()+","+position.getY()+"))");
         Skeleton.writeReturnValue("void");
     }
 
