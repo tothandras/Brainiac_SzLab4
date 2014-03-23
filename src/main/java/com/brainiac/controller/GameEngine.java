@@ -73,6 +73,24 @@ public class GameEngine {
         Skeleton.writeReturnValue("Direction d");
         return d;
     }
+    public void Oraleptetes(){
+        tick();
+    }
+
+    public void EnemyStep(){
+        List<Path> paths = gameElements.map.getPaths();
+        for(Blockage b: gameElements.blockages){
+            Position b_pos = b.getPosition();
+            for(Enemy e: gameElements.enemies){
+                Position e_pos = e.getPosition();
+                Direction d = CalcDirection(e_pos, paths);
+                if(e_pos==b_pos) e.move(d,b);
+                else e.move(d,null);
+            }
+
+        }
+    }
+
     public void isGameOver(){
         Skeleton.writeFunctionDetails("isGameOver()");
         Skeleton.writeReturnValue("void");

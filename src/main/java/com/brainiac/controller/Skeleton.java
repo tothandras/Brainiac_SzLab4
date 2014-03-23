@@ -89,26 +89,6 @@ public class Skeleton {
         System.out.println(tab + "<--" + s);
     }
 
-    /**
-     * Tesztesetek
-     */
-    public void testTimer(GameEngine ge){
-        ge.tick();
-    }
-
-    public void testEnemyStep(GameEngine gen, GameElements gel){
-        List<Path> paths = gel.map.getPaths();
-        for(Blockage b: gel.blockages){
-            Position b_pos = b.getPosition();
-            for(Enemy e: gel.enemies){
-                Position e_pos = e.getPosition();
-                Direction d = gen.CalcDirection(e_pos,paths);
-                if(e_pos==b_pos) e.move(d,b);
-                else e.move(d,null);
-            }
-
-        }
-    }
 
 }
 
