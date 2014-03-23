@@ -17,16 +17,16 @@ public class Tower {
         this.damage = new Damage();
         this.fireRate = 1;
         this.range = 10;
-        crystals=new ArrayList<TowerCrystal>();
+        crystals = new ArrayList<TowerCrystal>();
         Skeleton.writeFunctionDetails("Tower(Range: (" + range + "))");
-        Skeleton.writeFunctionDetails("Tower(Position: (" + position.getX() + "," + position.getY() + "))");
-        Skeleton.writeReturnValue("void");
+        Skeleton.writeFunctionDetails("Tower(Position position))");
+        Skeleton.writeReturnValue("");
     }
 
     public void fire(Enemy enemy) {
         Skeleton.writeFunctionDetails("Tower.fire(Enemy enemy)");
         enemy.hurt(damage);
-        Skeleton.writeReturnValue("");
+        Skeleton.writeReturnValue("void");
     }
 
     public Position getPosition() {
