@@ -13,7 +13,11 @@ public class Tower {
 
     public Tower(Position position) {
         this.position = position;
-        Skeleton.writeFunctionDetails("Tower(Position: ("+position.getX()+","+position.getY()+"))");
+        this.damage = new Damage();
+        this.fireRate = 1;
+        this.range = 10;
+        Skeleton.writeFunctionDetails("Tower(Range: (" + range + "))");
+        Skeleton.writeFunctionDetails("Tower(Position: (" + position.getX() + "," + position.getY() + "))");
         Skeleton.writeReturnValue("void");
     }
 
@@ -32,6 +36,8 @@ public class Tower {
     }
 
     public void upgrade(TowerCrystal crystal) {
-
+        Skeleton.writeFunctionDetails("Tower.upgrade()");
+        this.crystals.add(crystal);
+        Skeleton.writeReturnValue("void");
     }
 }

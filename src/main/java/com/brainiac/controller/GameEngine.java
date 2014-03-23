@@ -13,22 +13,28 @@ public class GameEngine {
         Skeleton.writeReturnValue("void");
     }
 
-    public void startNewGame(){
-        Skeleton.writeFunctionDetails("GameEngine.startNewGame()");
-        Skeleton.writeReturnValue("void");
-        this.newRound();
-        this.checkGameState();
+    public void startNewGame() {
+        do {
+            Skeleton.writeFunctionDetails("GameEngine.startNewGame()");
+            Skeleton.writeReturnValue("void");
+            this.newRound();
+            for (int i = 0; i < gameElements.towers.size(); ++i) {
+                if (Skeleton.getBoolean((i+1) + " torony lő?")) {
+                    gameElements.towers.get(i).fire(gameElements.enemies.get(0));
+                }
+            }
+            this.checkGameState();
+        } while (Skeleton.getBoolean("Új kör indítása?"));
     }
 
-    public void newRound(){
+    public void newRound() {
         Skeleton.writeFunctionDetails("GameEngine.newRound()");
         Skeleton.writeReturnValue("void");
         Random rn = new Random();
         int nEnemies = Skeleton.getInt("Hány ellenség jön az új körben?");
-        for (int i = 0; i < nEnemies; ++i){
-            System.out.println(i);
+        for (int i = 0; i < nEnemies; ++i) {
             int j = Math.abs(rn.nextInt()) % 4;
-            switch (j){
+            switch (j) {
                 case 0:
                     gameElements.enemies.add(new Dwarf());
                     break;
@@ -43,29 +49,39 @@ public class GameEngine {
                     break;
             }
         }
-        int nTowers= Skeleton.getInt("Hány torony legyen?");
-        int x=5,y=5;
-        for(int i=0;i<nTowers;++i){
+        int nTowers = Skeleton.getInt("Hány torony legyen?");
+        for (int i = 0; i < nTowers; ++i) {
+            Skeleton.writeLine("Hova kerüljön a(z) " + (i + 1) + ". torony?");
+            int x = Skeleton.getInt("X: ");
+            int y = Skeleton.getInt("Y: ");
             Skeleton.writeFunctionDetails("gameElements.towers.add(Tower tower)");
-            gameElements.towers.add(new Tower(new Position(++x,++y)));
+            gameElements.towers.add(new Tower(new Position(x, y)));
+            Skeleton.writeReturnValue("void");
+        }
+        int nBlockages = Skeleton.getInt("Hány akadály legyen?");
+        for (int i = 0; i < nBlockages; ++i) {
+            Skeleton.writeLine("Hova kerüljön a(z) " + (i + 1) + ". akadály?");
+            int x = Skeleton.getInt("X: ");
+            int y = Skeleton.getInt("Y: ");
+            Skeleton.writeFunctionDetails("gameElements.blockages.add(Blockage blockage)");
+            gameElements.blockages.add(new Blockage(new Position(x, y)));
             Skeleton.writeReturnValue("void");
         }
     }
 
-    public void checkGameState(){
+    public void checkGameState() {
         Skeleton.writeFunctionDetails("GameEngine.checkGameState()");
-        for (Enemy enemy: gameElements.enemies) {
+        for (Enemy enemy : gameElements.enemies) {
             Position currentPosition = enemy.getPosition();
-            if (Skeleton.getBoolean("Elérte az ellenség a Végzet hegyét?")){
+            if (Skeleton.getBoolean("Elérte ez az ellenség a Végzet hegyét?" + "( Ellenség pozíciója: (" + currentPosition.getX() + ", " + currentPosition.getY() + ") )")) {
                 isGameOver();
             }
         }
         Skeleton.writeReturnValue("void");
     }
 
-    public void isGameOver(){
+    public void isGameOver() {
         Skeleton.writeFunctionDetails("isGameOver()");
         Skeleton.writeReturnValue("void");
-
     }
 }
