@@ -58,6 +58,9 @@ public class GameEngine {
             Skeleton.writeFunctionDetails("gameElements.towers.add(Tower tower)");
             gameElements.towers.add(new Tower(new Position(x, y)));
             Skeleton.writeReturnValue("void");
+            if(Skeleton.getBoolean("Fejlesztjük a tornyot?"))
+                gameElements.towers.get(i).upgrade(new TowerCrystal(EnemyType.Dwarf,10));
+
         }
         int nBlockages = Skeleton.getInt("Hány akadály legyen?");
         for (int i = 0; i < nBlockages; ++i) {
@@ -67,6 +70,8 @@ public class GameEngine {
             Skeleton.writeFunctionDetails("gameElements.blockages.add(Blockage blockage)");
             gameElements.blockages.add(new Blockage(new Position(x, y)));
             Skeleton.writeReturnValue("void");
+            if(Skeleton.getBoolean("Fejlesztjük az akadályt?"))
+                gameElements.blockages.get(i).upgrade(new BlockageCrystal(EnemyType.Dwarf,10));
         }
     }
 

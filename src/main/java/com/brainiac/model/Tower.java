@@ -2,6 +2,7 @@ package com.brainiac.model;
 
 import com.brainiac.controller.Skeleton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Tower {
@@ -16,6 +17,7 @@ public class Tower {
         this.damage = new Damage();
         this.fireRate = 1;
         this.range = 10;
+        crystals=new ArrayList<TowerCrystal>();
         Skeleton.writeFunctionDetails("Tower(Range: (" + range + "))");
         Skeleton.writeFunctionDetails("Tower(Position: (" + position.getX() + "," + position.getY() + "))");
         Skeleton.writeReturnValue("void");

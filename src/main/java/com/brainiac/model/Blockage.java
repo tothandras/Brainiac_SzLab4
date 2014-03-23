@@ -2,6 +2,7 @@ package com.brainiac.model;
 
 import com.brainiac.controller.Skeleton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Blockage {
@@ -10,6 +11,7 @@ public class Blockage {
 
     public Blockage(Position position) {
         this.position = position;
+        crystals=new ArrayList<BlockageCrystal>();
         Skeleton.writeFunctionDetails("Blockage(Position position)");
         Skeleton.writeReturnValue("");
     }
@@ -20,13 +22,13 @@ public class Blockage {
         return position;
     }
 
-    void upgrade(BlockageCrystal crystal) {
+    public void upgrade(BlockageCrystal crystal) {
         Skeleton.writeFunctionDetails("Blockage.upgrade()");
         this.crystals.add(crystal);
         Skeleton.writeReturnValue("void");
     }
 
-    int block(EnemyType enemyType) {
+    public int block(EnemyType enemyType) {
         Skeleton.writeFunctionDetails("Blockage.block(EnemyType enemyType)");
         Skeleton.writeReturnValue("int: 0");
         return 0;
