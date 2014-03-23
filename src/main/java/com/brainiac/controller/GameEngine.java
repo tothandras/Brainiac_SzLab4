@@ -96,10 +96,10 @@ public class GameEngine {
 
     public void EnemyStep(){
         List<Path> paths = gameElements.map.getPaths();
-        for(Blockage b: gameElements.blockages){
-            Position b_pos = b.getPosition();
-            for(Enemy e: gameElements.enemies){
-                Position e_pos = e.getPosition();
+        for(Enemy e: gameElements.enemies){
+            Position e_pos = e.getPosition();
+            for(Blockage b: gameElements.blockages){
+                Position b_pos = b.getPosition();
                 Direction d = CalcDirection(e_pos, paths);
                 if(e_pos==b_pos) e.move(d,b);
                 else e.move(d,null);
