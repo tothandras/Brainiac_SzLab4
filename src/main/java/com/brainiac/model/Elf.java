@@ -26,7 +26,9 @@ public class Elf extends Enemy {
     public void move(Direction direction, Blockage blockage) {
 
         Skeleton.writeFunctionDetails("Enemy.move(Direction direction, Blockage blockage)");
+        if(blockage!=null){
         blockage.block(EnemyType.Elf);
+        }
         Skeleton.writeReturnValue("void");
     }
 }

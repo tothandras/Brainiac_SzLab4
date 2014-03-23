@@ -26,7 +26,9 @@ public class Dwarf extends Enemy {
     public void move(Direction direction, Blockage blockage) {
 
         Skeleton.writeFunctionDetails("Enemy.move(Direction direction, Blockage blockage)");
-        blockage.block(EnemyType.Dwarf);
+        if(blockage!=null){
+         blockage.block(EnemyType.Dwarf);
+        }
         Skeleton.writeReturnValue("void");
     }
 }
