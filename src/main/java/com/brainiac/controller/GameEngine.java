@@ -80,32 +80,27 @@ public class GameEngine {
         }
         Skeleton.writeReturnValue("void");
     }
-    public void tick(){
-        Skeleton.writeFunctionDetails("GameEngine.tick()");
-        Skeleton.writeReturnValue("void");
-    }
-    public Direction CalcDirection(Position e_pos, List<Path> paths){
-        Direction d;
-        Skeleton.writeFunctionDetails("GameEngine.CalcDirection()");
-        Skeleton.writeReturnValue("Direction d");
-        return d;
-    }
-    public void Oraleptetes(){
-        tick();
-    }
 
-    public void EnemyStep(){
-        List<Path> paths = gameElements.map.getPaths();
-        for(Enemy e: gameElements.enemies){
-            Position e_pos = e.getPosition();
-            for(Blockage b: gameElements.blockages){
-                Position b_pos = b.getPosition();
-                Direction d = CalcDirection(e_pos, paths);
-                if(e_pos==b_pos) e.move(d,b);
-                else e.move(d,null);
-            }
-
+    public Direction getDirection(Enemy enemy){
+        int n = Skeleton.getInt("Melyik irányba haladjon az ellenség? (alapértelmezett: észak, 1: kelet, 2: dél, 3: nyugat)");
+        Direction direction;
+        switch (n) {
+            case 1:
+                direction = Direction.WEST;
+                break;
+            case 2:
+                direction = Direction.SOUTH;
+                break;
+            case 3:
+                direction = Direction.EAST;
+                break;
+            default:
+                direction = Direction.NORTH;
+                break;
         }
+        Skeleton.writeFunctionDetails("GameEngine.getDirection()");
+        Skeleton.writeReturnValue("Direction d");
+        return direction;
     }
 
     public void isGameOver() {
