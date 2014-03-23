@@ -2,6 +2,7 @@ package com.brainiac.controller;
 
 import com.brainiac.model.*;
 
+import java.util.List;
 import java.util.Random;
 
 public class GameEngine {
@@ -78,6 +79,33 @@ public class GameEngine {
             }
         }
         Skeleton.writeReturnValue("void");
+    }
+    public void tick(){
+        Skeleton.writeFunctionDetails("GameEngine.tick()");
+        Skeleton.writeReturnValue("void");
+    }
+    public Direction CalcDirection(Position e_pos, List<Path> paths){
+        Direction d;
+        Skeleton.writeFunctionDetails("GameEngine.CalcDirection()");
+        Skeleton.writeReturnValue("Direction d");
+        return d;
+    }
+    public void Oraleptetes(){
+        tick();
+    }
+
+    public void EnemyStep(){
+        List<Path> paths = gameElements.map.getPaths();
+        for(Blockage b: gameElements.blockages){
+            Position b_pos = b.getPosition();
+            for(Enemy e: gameElements.enemies){
+                Position e_pos = e.getPosition();
+                Direction d = CalcDirection(e_pos, paths);
+                if(e_pos==b_pos) e.move(d,b);
+                else e.move(d,null);
+            }
+
+        }
     }
 
     public void isGameOver() {
