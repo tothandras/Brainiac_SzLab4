@@ -82,6 +82,7 @@ public class GameEngine {
             Position currentPosition = enemy.getPosition();
             if (Skeleton.getBoolean("Elérte ez az ellenség a Végzet hegyét?" + "( Ellenség pozíciója: (" + currentPosition.getX() + ", " + currentPosition.getY() + ") )")) {
                 isGameOver();
+                break;
             }
         }
     }
