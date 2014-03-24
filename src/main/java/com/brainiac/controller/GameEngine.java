@@ -3,6 +3,7 @@ package com.brainiac.controller;
 import com.brainiac.Skeleton;
 import com.brainiac.model.*;
 
+import java.util.Iterator;
 import java.util.Random;
 
 public class GameEngine {
@@ -64,9 +65,10 @@ public class GameEngine {
             if (Skeleton.getBoolean("Fejlesztjük az akadályt?"))
                 gameElements.blockages.get(i).upgrade(new BlockageCrystal(EnemyType.Dwarf, 10));
         }
-        Skeleton.writeReturnValue("void");
 
-        for (Enemy enemy : gameElements.enemies) {
+        Iterator<Enemy> iterator = gameElements.enemies.iterator();
+        while (iterator.hasNext()) {
+            Enemy enemy = iterator.next();
             gameElements.map.getPaths();
             int n = Skeleton.getInt("Melyik irányba haladjon az ellenség? (alapértelmezett: észak, 1: kelet, 2: dél, 3: nyugat)");
             Direction direction;
@@ -99,16 +101,18 @@ public class GameEngine {
                     if (Skeleton.getBoolean("Lövi a torony az elleséget?")) {
                         gameElements.towers.get(i).fire(firstEnemy);
                         if (Skeleton.getBoolean("Meghalt az ellenség?")) {
+                            iterator.remove();
                             Saruman saruman = gameElements.saruman;
                             saruman.setSpellPower(saruman.getSpellPower() + Skeleton.getInt("Mennyivel növeljük Saruman varázserejét?"));
                         }
                     }
                 }
             }
-
-            if (!this.checkGameState()) {
-                newRound();
-            }
+        }
+        if (!this.checkGameState()) {
+            newRound();
+        } else {
+            Skeleton.writeReturnValue("void");
         }
     }
 
@@ -117,12 +121,12 @@ public class GameEngine {
         Skeleton.writeFunctionDetails("GameEngine.checkGameState()");
         for (Enemy enemy : gameElements.enemies) {
             Position currentPosition = enemy.getPosition();
-            if (Skeleton.getBoolean("Elérte ez az ellenség a Végzet hegyét?" + "( Ellenség pozíciója: (" + currentPosition.getX() + ", " + currentPosition.getY() + ") )")) {
-                end = true;
+            end = Skeleton.getBoolean("Elérte ez az ellenség a Végzet hegyét?" + "( Ellenség pozíciója: (" + currentPosition.getX() + ", " + currentPosition.getY() + ") )");
+            if (end) {
                 break;
             }
         }
         Skeleton.writeReturnValue(Boolean.toString(end));
-        return false;
+        return end;
     }
 }
