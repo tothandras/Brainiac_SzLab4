@@ -14,7 +14,7 @@ public class Saruman {
     public int getSpellPower() {
 
         Skeleton.writeFunctionDetails("Saruman.getSpellPower()");
-        Skeleton.writeReturnValue("int: "+spellPower);
+        Skeleton.writeReturnValue("int: "+ spellPower);
         return spellPower;
     }
 

@@ -67,6 +67,7 @@ public class GameEngine {
         Skeleton.writeReturnValue("void");
 
         for (Enemy enemy : gameElements.enemies) {
+            gameElements.map.getPaths();
             int n = Skeleton.getInt("Melyik irányba haladjon az ellenség? (alapértelmezett: észak, 1: kelet, 2: dél, 3: nyugat)");
             Direction direction;
             switch (n) {
@@ -83,6 +84,10 @@ public class GameEngine {
                     direction = Direction.NORTH;
                     break;
             }
+            for (Blockage blockage : gameElements.blockages) {
+                blockage.getPosition();
+            }
+            enemy.getPosition();
             enemy.move(direction, nBlockages == 0 ? null : gameElements.blockages.get(0));
 
             for (int i = 0; i < gameElements.towers.size(); ++i) {
@@ -91,7 +96,13 @@ public class GameEngine {
                     gameElements.towers.get(i).getPosition();
                     gameElements.towers.get(i).getRange();
                     firstEnemy.getPosition();
-                    gameElements.towers.get(i).fire(firstEnemy);
+                    if (Skeleton.getBoolean("Lövi a torony az elleséget?")) {
+                        gameElements.towers.get(i).fire(firstEnemy);
+                    }
+                    if (Skeleton.getBoolean("Meghalt az ellenség?")) {
+                        Saruman saruman = gameElements.saruman;
+                        saruman.setSpellPower(saruman.getSpellPower() + Skeleton.getInt("Mennyivel növeljük Saruman varázserejét?"));
+                    }
                 }
             }
 
