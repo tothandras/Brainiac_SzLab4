@@ -41,7 +41,7 @@ public class GameEngine {
                     break;
             }
         }
-        int nTowers = Skeleton.getInt("Hány torony legyen?");
+        int nTowers = Skeleton.getInt("Hány új torony legyen?");
         for (int i = 0; i < nTowers; ++i) {
             Skeleton.writeLine("Hova kerüljön a(z) " + (i + 1) + ". torony?");
             int x = Skeleton.getInt("X: ");
@@ -98,10 +98,10 @@ public class GameEngine {
                     firstEnemy.getPosition();
                     if (Skeleton.getBoolean("Lövi a torony az elleséget?")) {
                         gameElements.towers.get(i).fire(firstEnemy);
-                    }
-                    if (Skeleton.getBoolean("Meghalt az ellenség?")) {
-                        Saruman saruman = gameElements.saruman;
-                        saruman.setSpellPower(saruman.getSpellPower() + Skeleton.getInt("Mennyivel növeljük Saruman varázserejét?"));
+                        if (Skeleton.getBoolean("Meghalt az ellenség?")) {
+                            Saruman saruman = gameElements.saruman;
+                            saruman.setSpellPower(saruman.getSpellPower() + Skeleton.getInt("Mennyivel növeljük Saruman varázserejét?"));
+                        }
                     }
                 }
             }
