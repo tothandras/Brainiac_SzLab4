@@ -15,7 +15,7 @@ public class Skeleton {
     /**
      * a tab változó mutatja meg, hogy mekkora behúzást kell alkalmazni egy-egy függvénynél
      */
-    public static String tab="";
+    public static String tab = "";
 
     /**
      * ezt a függvény hívjuk meg a main függvényben. itt dől el, hogy melyik tesztesetet futtatjuk.
@@ -38,7 +38,7 @@ public class Skeleton {
         tab = tab + '\t';
     }
 
-    public static void writeLine(String s){
+    public static void writeLine(String s) {
         System.out.println(s);
 
     }
@@ -74,8 +74,9 @@ public class Skeleton {
             return Integer.parseInt(value);
         } catch (Exception ex) {
             ex.printStackTrace();
+        } finally {
+            return 1;
         }
-        return 1;
     }
 
     /**

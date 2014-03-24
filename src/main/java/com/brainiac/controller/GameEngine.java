@@ -11,13 +11,12 @@ public class GameEngine {
     public GameEngine(GameElements gameElements) {
         this.gameElements = gameElements;
         Skeleton.writeFunctionDetails("GameEngine(GameElements gameElements)");
-        Skeleton.writeReturnValue("void");
+        Skeleton.writeReturnValue("");
     }
 
     public void startNewGame() {
+        Skeleton.writeFunctionDetails("GameEngine.startNewGame()");
         do {
-            Skeleton.writeFunctionDetails("GameEngine.startNewGame()");
-            Skeleton.writeReturnValue("void");
             this.newRound();
             for (int i = 0; i < gameElements.towers.size(); ++i) {
                 if (Skeleton.getBoolean((i+1) + " torony lő?")) {
@@ -26,11 +25,11 @@ public class GameEngine {
             }
             this.checkGameState();
         } while (Skeleton.getBoolean("Új kör indítása?"));
+        Skeleton.writeReturnValue("void");
     }
 
     public void newRound() {
         Skeleton.writeFunctionDetails("GameEngine.newRound()");
-        Skeleton.writeReturnValue("void");
         Random rn = new Random();
         int nEnemies = Skeleton.getInt("Hány ellenség jön az új körben?");
         for (int i = 0; i < nEnemies; ++i) {
@@ -73,18 +72,20 @@ public class GameEngine {
             if(Skeleton.getBoolean("Fejlesztjük az akadályt?"))
                 gameElements.blockages.get(i).upgrade(new BlockageCrystal(EnemyType.Dwarf,10));
         }
+        Skeleton.writeReturnValue("void");
     }
 
     public void checkGameState() {
+        boolean end = false;
         Skeleton.writeFunctionDetails("GameEngine.checkGameState()");
-        Skeleton.writeReturnValue("void");
         for (Enemy enemy : gameElements.enemies) {
             Position currentPosition = enemy.getPosition();
-            if (Skeleton.getBoolean("Elérte ez az ellenség a Végzet hegyét?" + "( Ellenség pozíciója: (" + currentPosition.getX() + ", " + currentPosition.getY() + ") )")) {
-                isGameOver();
+            if (!end && Skeleton.getBoolean("Elérte ez az ellenség a Végzet hegyét?" + "( Ellenség pozíciója: (" + currentPosition.getX() + ", " + currentPosition.getY() + ") )")) {
+                end = true;
                 break;
             }
         }
+        Skeleton.writeReturnValue(new Boolean(end).toString());
     }
 
     public Direction getDirection(Enemy enemy){
