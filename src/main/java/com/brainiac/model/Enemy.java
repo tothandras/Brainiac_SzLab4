@@ -1,6 +1,6 @@
 package com.brainiac.model;
 
-import com.brainiac.controller.Skeleton;
+import com.brainiac.Skeleton;
 
 /**
  * Project name: Brainiac_SzLab4
@@ -21,7 +21,28 @@ public abstract class Enemy {
     }
 
     public void move(Direction direction, Blockage blockage) {
-        Skeleton.writeFunctionDetails("Enemy.move()");
+        Skeleton.writeFunctionDetails("Enemy.move(Direction direction, Blockage blockage)");
+        boolean blocked = false;
+        if (blockage != null) {
+            blocked = Skeleton.getBoolean("Lépés blokkolása?");
+        }
+        if (blocked) {
+            blockage.block(EnemyType.Dwarf);
+        }
+        switch (direction) {
+            case NORTH:
+                Skeleton.writeLine("Ellenség léptetése északi irányba blokkolás" + (blocked ? "sal." : " nélkül."));
+                break;
+            case WEST:
+                Skeleton.writeLine("Ellenség léptetése keleti irányba blokkolás" + (blocked ? "sal." : " nélkül."));
+                break;
+            case SOUTH:
+                Skeleton.writeLine("Ellenség léptetése déli irányba blokkolás" + (blocked ? "sal." : " nélkül."));
+                break;
+            case EAST:
+                Skeleton.writeLine("Ellenség léptetése nyugati irányba blokkolás" + (blocked ? "sal." : " nélkül."));
+                break;
+        }
         Skeleton.writeReturnValue("void");
     }
 

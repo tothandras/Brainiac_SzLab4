@@ -1,7 +1,6 @@
 package com.brainiac;
 
 import com.brainiac.controller.GameEngine;
-import com.brainiac.controller.Skeleton;
 import com.brainiac.model.GameElements;
 import com.brainiac.view.GameFrame;
 

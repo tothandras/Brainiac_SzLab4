@@ -1,4 +1,4 @@
-package com.brainiac.controller;
+package com.brainiac;
 
 import com.brainiac.model.*;
 
@@ -74,8 +74,7 @@ public class Skeleton {
             return Integer.parseInt(value);
         } catch (Exception ex) {
             ex.printStackTrace();
-        } finally {
-            return 1;
+            return 0;
         }
     }
 

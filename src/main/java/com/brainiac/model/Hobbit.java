@@ -1,6 +1,6 @@
 package com.brainiac.model;
 
-import com.brainiac.controller.Skeleton;
+import com.brainiac.Skeleton;
 
 public class Hobbit extends Enemy {
     public Hobbit() {

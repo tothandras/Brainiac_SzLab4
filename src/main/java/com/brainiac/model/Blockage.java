@@ -1,6 +1,6 @@
 package com.brainiac.model;
 
-import com.brainiac.controller.Skeleton;
+import com.brainiac.Skeleton;
 
 import java.util.ArrayList;
 import java.util.List;

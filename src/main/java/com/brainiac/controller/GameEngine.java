@@ -1,8 +1,8 @@
 package com.brainiac.controller;
 
+import com.brainiac.Skeleton;
 import com.brainiac.model.*;
 
-import java.util.List;
 import java.util.Random;
 
 public class GameEngine {
@@ -16,15 +16,7 @@ public class GameEngine {
 
     public void startNewGame() {
         Skeleton.writeFunctionDetails("GameEngine.startNewGame()");
-        do {
-            this.newRound();
-            for (int i = 0; i < gameElements.towers.size(); ++i) {
-                if (Skeleton.getBoolean((i+1) + " torony lő?")) {
-                    gameElements.towers.get(i).fire(gameElements.enemies.get(0));
-                }
-            }
-            this.checkGameState();
-        } while (Skeleton.getBoolean("Új kör indítása?"));
+        this.newRound();
         Skeleton.writeReturnValue("void");
     }
 
@@ -57,8 +49,8 @@ public class GameEngine {
             Skeleton.writeFunctionDetails("gameElements.towers.add(Tower tower)");
             gameElements.towers.add(new Tower(new Position(x, y)));
             Skeleton.writeReturnValue("void");
-            if(Skeleton.getBoolean("Fejlesztjük a tornyot?"))
-                gameElements.towers.get(i).upgrade(new TowerCrystal(EnemyType.Dwarf,10));
+            if (Skeleton.getBoolean("Fejlesztjük a tornyot?"))
+                gameElements.towers.get(i).upgrade(new TowerCrystal(EnemyType.Dwarf, 10));
 
         }
         int nBlockages = Skeleton.getInt("Hány akadály legyen?");
@@ -69,49 +61,57 @@ public class GameEngine {
             Skeleton.writeFunctionDetails("gameElements.blockages.add(Blockage blockage)");
             gameElements.blockages.add(new Blockage(new Position(x, y)));
             Skeleton.writeReturnValue("void");
-            if(Skeleton.getBoolean("Fejlesztjük az akadályt?"))
-                gameElements.blockages.get(i).upgrade(new BlockageCrystal(EnemyType.Dwarf,10));
+            if (Skeleton.getBoolean("Fejlesztjük az akadályt?"))
+                gameElements.blockages.get(i).upgrade(new BlockageCrystal(EnemyType.Dwarf, 10));
         }
         Skeleton.writeReturnValue("void");
+
+        for (Enemy enemy : gameElements.enemies) {
+            int n = Skeleton.getInt("Melyik irányba haladjon az ellenség? (alapértelmezett: észak, 1: kelet, 2: dél, 3: nyugat)");
+            Direction direction;
+            switch (n) {
+                case 1:
+                    direction = Direction.WEST;
+                    break;
+                case 2:
+                    direction = Direction.SOUTH;
+                    break;
+                case 3:
+                    direction = Direction.EAST;
+                    break;
+                default:
+                    direction = Direction.NORTH;
+                    break;
+            }
+            enemy.move(direction, nBlockages == 0 ? null : gameElements.blockages.get(0));
+
+            for (int i = 0; i < gameElements.towers.size(); ++i) {
+                if (Skeleton.getBoolean((i + 1) + " torony lő?")) {
+                    Enemy firstEnemy = gameElements.enemies.get(0);
+                    gameElements.towers.get(i).getPosition();
+                    gameElements.towers.get(i).getRange();
+                    firstEnemy.getPosition();
+                    gameElements.towers.get(i).fire(firstEnemy);
+                }
+            }
+
+            if (!this.checkGameState()) {
+                newRound();
+            }
+        }
     }
 
-    public void checkGameState() {
+    public boolean checkGameState() {
         boolean end = false;
         Skeleton.writeFunctionDetails("GameEngine.checkGameState()");
         for (Enemy enemy : gameElements.enemies) {
             Position currentPosition = enemy.getPosition();
-            if (!end && Skeleton.getBoolean("Elérte ez az ellenség a Végzet hegyét?" + "( Ellenség pozíciója: (" + currentPosition.getX() + ", " + currentPosition.getY() + ") )")) {
+            if (Skeleton.getBoolean("Elérte ez az ellenség a Végzet hegyét?" + "( Ellenség pozíciója: (" + currentPosition.getX() + ", " + currentPosition.getY() + ") )")) {
                 end = true;
                 break;
             }
         }
-        Skeleton.writeReturnValue(new Boolean(end).toString());
-    }
-
-    public Direction getDirection(Enemy enemy){
-        int n = Skeleton.getInt("Melyik irányba haladjon az ellenség? (alapértelmezett: észak, 1: kelet, 2: dél, 3: nyugat)");
-        Direction direction;
-        switch (n) {
-            case 1:
-                direction = Direction.WEST;
-                break;
-            case 2:
-                direction = Direction.SOUTH;
-                break;
-            case 3:
-                direction = Direction.EAST;
-                break;
-            default:
-                direction = Direction.NORTH;
-                break;
-        }
-        Skeleton.writeFunctionDetails("GameEngine.getDirection()");
-        Skeleton.writeReturnValue("Direction d");
-        return direction;
-    }
-
-    public void isGameOver() {
-        Skeleton.writeFunctionDetails("isGameOver()");
-        Skeleton.writeReturnValue("void");
+        Skeleton.writeReturnValue(Boolean.toString(end));
+        return false;
     }
 }
