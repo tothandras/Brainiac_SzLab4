@@ -14,30 +14,64 @@ public class Damage {
     private int toHobbit;
     private int toMan;
 
-    public Damage() {
+    /**
+     * Damage osztály konstruktora. Minden ellenfélnek alapértelmezetten 10 a sebzése
+     */
 
+    public Damage() {
+        toDwarf = 10;
+        toElf = 10;
+        toHobbit = 10;
+        toMan = 10;
     }
+
+    /**
+     *
+     * @param enemyType
+     * paraméterül kap egy ellenfél típust, és visszatér annak a sebzésével
+     * @return
+     */
 
     public int getDamage(EnemyType enemyType) {
-        Skeleton.writeFunctionDetails("Damage.getDamage(EnemyType enemyType)");
+
         switch (enemyType){
             case Dwarf:
-                Skeleton.writeReturnValue("int: " + toDwarf);
+
                 return toDwarf;
             case Elf:
-                Skeleton.writeReturnValue("int: " + toElf);
+
                 return toElf;
             case Hobbit:
-                Skeleton.writeReturnValue("int: " + toHobbit);
+
                 return toHobbit;
-            case Man:
-                Skeleton.writeReturnValue("int: " + toMan);
+            default:
+
                 return toMan;
         }
-        return 0;
+
     }
 
-    void setDamage(int damage, EnemyType enemyType) {
+    /**
+     *
+     * @param damage
+     * a paraméterül átvett damaget hozzáadja a másik paraméterül kapott ellenség típushoz
+     * @param enemyType
+     */
 
+    void setDamage(int damage, EnemyType enemyType) {
+        switch (enemyType){
+            case Dwarf:
+
+                toDwarf = toDwarf + damage;
+            case Elf:
+
+                toElf = toElf + damage;
+            case Hobbit:
+
+                toHobbit = toHobbit + damage;
+            default:
+
+                toMan = toMan + damage;
+        }
     }
 }
