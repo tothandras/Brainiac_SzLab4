@@ -23,7 +23,7 @@ public class Man extends Enemy {
     }
 
     /**
-     *
+     * mozgatjuk az ellenefelet a megfelelő irányba és sebeséggel
      * @param direction: milyen irányba mozogjon
      * @param blockage: kap e blokkolót
      */
