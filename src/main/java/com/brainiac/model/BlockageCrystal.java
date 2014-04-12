@@ -12,16 +12,28 @@ public class BlockageCrystal {
     private EnemyType against;
     private int increment;
 
+    /**
+     * Varázskő létrehozása
+     * @param against
+     * @param increment
+     */
     public BlockageCrystal(EnemyType against, int increment) {
-        Skeleton.writeFunctionDetails("BlockageCrystal(EnemyType against, int increment)");
-        Skeleton.writeReturnValue("");
         this.against = against;
         this.increment = increment;
+
     }
 
-    public int getIncrement() {
-        Skeleton.writeFunctionDetails("BlockageCrystal.getIncrement()");
-        Skeleton.writeReturnValue("int: "+ increment);
-        return increment;
+    /**
+     * Varázskő hatásának lekérdezése
+     * Ha a paraméterben megadott enemyvel megegyezik ,akkor visszatér a növelés mértékével
+     * egyébként 0-val.
+     * @return increment
+     * @param enemyType
+     */
+    public int getIncrement(EnemyType enemyType) {
+        if(enemyType==against){
+            return increment;
+        }
+        return 0;
     }
 }

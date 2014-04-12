@@ -9,28 +9,45 @@ public class Blockage {
     private Position position;
     private List<BlockageCrystal> crystals;
 
+    /**
+     * A Blockage osztály konstruktora.
+     *
+     * @param position Az új akadály pozíciója.
+     */
     public Blockage(Position position) {
         this.position = position;
-        crystals=new ArrayList<BlockageCrystal>();
-        Skeleton.writeFunctionDetails("Blockage(Position position)");
-        Skeleton.writeReturnValue("");
+        crystals = new ArrayList<BlockageCrystal>();
     }
 
+    /**
+     * Visszaadja az akadály pozícióját a pályán.
+     *
+     * @return Az akadály pozíciója.
+     */
     public Position getPosition() {
-        Skeleton.writeFunctionDetails("Blockage.getPosition()");
-        Skeleton.writeReturnValue("Position: position");
         return position;
     }
 
+    /**
+     * Az akadály fejlesztése egy adott kristállyal.
+     *
+     * @param crystal A hozzáadott kristály.
+     */
     public void upgrade(BlockageCrystal crystal) {
-        Skeleton.writeFunctionDetails("Blockage.upgrade()");
         this.crystals.add(crystal);
-        Skeleton.writeReturnValue("void");
     }
 
+    /**
+     * Megmondja a lassulás mértéket, amikor egy ellenség az akadályon megpróbál áthaladni.
+     *
+     * @param enemyType Milyen fajta ellenség ellen vagyunk kíváncsiak a lassulás mértékére.
+     * @return Visszaadja hányadára csökkenjen az egység sebessége.
+     */
     public int block(EnemyType enemyType) {
-        Skeleton.writeFunctionDetails("Blockage.block(EnemyType enemyType)");
-        Skeleton.writeReturnValue("int: 0");
-        return 0;
+        int retValue = 0;
+        for (BlockageCrystal crystal : crystals) {
+            retValue += crystal.getIncrement(enemyType);
+        }
+        return retValue;
     }
 }

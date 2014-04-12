@@ -12,19 +12,15 @@ public class GameElements {
     public Saruman saruman;
     public Map map;
 
+    /**
+     * Létrehozzuk a megfelelő tárolókat és játék elemeket.
+     */
     public GameElements() {
-        Skeleton.writeFunctionDetails("GameElements()");
-        Skeleton.writeFunctionDetails("ArrayList<Enemy>()");
         enemies = new ArrayList<Enemy>();
-        Skeleton.writeReturnValue("");
-        Skeleton.writeFunctionDetails("ArrayList<Tower>()");
         towers = new ArrayList<Tower>();
-        Skeleton.writeReturnValue("");
-        Skeleton.writeFunctionDetails("ArrayList<Blockage>()");
         blockages = new ArrayList<Blockage>();
-        Skeleton.writeReturnValue("");
         saruman = new Saruman();
         map = new Map(100, 100);
-        Skeleton.writeReturnValue("");
+
     }
 }
