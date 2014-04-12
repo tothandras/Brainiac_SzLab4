@@ -4,31 +4,46 @@ import com.brainiac.Skeleton;
 
 public class TowerCrystal {
     private EnemyType against;
-    private int increment;
-    private int speedIncrement;
+    private double increment;
+    private double speedIncrement;
 
-    public TowerCrystal(EnemyType against, int increment) {
-        Skeleton.writeFunctionDetails("TowerCrystal(EnemyType against, int increment)");
+    /**
+     * Új varázskő a sebzés növelésére
+     * @param against
+     * @param increment
+     */
+    public TowerCrystal(EnemyType against, double increment) {
         this.against = against;
         this.increment = increment;
-        Skeleton.writeReturnValue("");
     }
 
-    public TowerCrystal(int speedIncrement) {
-        Skeleton.writeFunctionDetails("TowerCrystal(int speedIncrement)");
+    /**
+     *  Új varázskő a lövési gyakoriság növelésére
+     * @param speedIncrement
+     */
+    public TowerCrystal(double speedIncrement) {
         this.speedIncrement = speedIncrement;
-        Skeleton.writeReturnValue("");
     }
 
-    public int getIncrement(EnemyType enemyType) {
-        Skeleton.writeFunctionDetails("TowerCrystal.getIncrement(EnemyType enemyType)");
-        Skeleton.writeReturnValue("int: "+increment);
-        return increment;
+    /**
+     * Varázskő sebzésének lekérdezése
+     * Ha a paraméterben megadott enemyvel megegyezik akkor visszatér a növelés mértékével
+     * egyébként 1-el.
+     * @param enemyType
+     * @return increment
+     */
+    public double getIncrement(EnemyType enemyType) {
+        if(enemyType==against){
+            return increment;
+        }
+        return 1;
     }
 
-    public int getSpeedIncrement() {
-        Skeleton.writeFunctionDetails("TowerCrystal.getIncrement(EnemyType enemyType)");
-        Skeleton.writeReturnValue("int: "+increment);
+    /**
+     * Verázskő lővési gyakoriságra gyakorolt hatása
+     * @return
+     */
+    public double getSpeedIncrement() {
         return speedIncrement;
     }
 }
