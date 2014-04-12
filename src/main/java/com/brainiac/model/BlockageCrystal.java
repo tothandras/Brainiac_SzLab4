@@ -30,10 +30,10 @@ public class BlockageCrystal {
      * @return increment
      * @param enemyType
      */
-    public double getIncrement(EnemyType enemyType) {
+    public int getIncrement(EnemyType enemyType) {
         if(enemyType==against){
             return increment;
         }
-        return 1;
+        return 0;
     }
 }
