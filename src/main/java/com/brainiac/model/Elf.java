@@ -15,7 +15,7 @@ public class Elf extends Enemy {
     public Elf() {
         life = 100;
         speed = 2;
-        this.position = new Position(0,0);
+        this.position = new Position(0, 0);
     }
 
     /**
@@ -29,8 +29,9 @@ public class Elf extends Enemy {
 
     /**
      * mozgatjuk az ellenefelet a megfelelő irányba és sebeséggel
+     *
      * @param direction: milyen irányba mozogjon
-     * @param blockage: kap e blokkolót
+     * @param blockage:  kap e blokkolót
      */
     @Override
     public void move(Direction direction, Blockage blockage) {
@@ -55,13 +56,5 @@ public class Elf extends Enemy {
         }
     }
 
-    @Override
-    public void move(Direction direction, Blockage blockage) {
 
-        Skeleton.writeFunctionDetails("Enemy.move(Direction direction, Blockage blockage)");
-        if(blockage!=null){
-        blockage.block(EnemyType.Elf);
-        }
-        Skeleton.writeReturnValue("void");
-    }
 }
