@@ -14,41 +14,24 @@ public abstract class Enemy {
     protected Position position;
 
 
+    /**
+     * @param damage: a sebzés
+     */
+    public abstract void hurt(Damage damage);
 
-    public void hurt(Damage damage) {
-        Skeleton.writeFunctionDetails("Enemy.hurt()");
-        Skeleton.writeReturnValue("void");
-    }
 
-    public void move(Direction direction, Blockage blockage) {
-        Skeleton.writeFunctionDetails("Enemy.move(Direction direction, Blockage blockage)");
-        boolean blocked = false;
-        if (blockage != null) {
-            blocked = Skeleton.getBoolean("Lépés blokkolása?");
-        }
-        if (blocked) {
-            blockage.block(EnemyType.Dwarf);
-        }
-        switch (direction) {
-            case NORTH:
-                Skeleton.writeLine("Ellenség léptetése északi irányba blokkolás" + (blocked ? "sal." : " nélkül."));
-                break;
-            case WEST:
-                Skeleton.writeLine("Ellenség léptetése keleti irányba blokkolás" + (blocked ? "sal." : " nélkül."));
-                break;
-            case SOUTH:
-                Skeleton.writeLine("Ellenség léptetése déli irányba blokkolás" + (blocked ? "sal." : " nélkül."));
-                break;
-            case EAST:
-                Skeleton.writeLine("Ellenség léptetése nyugati irányba blokkolás" + (blocked ? "sal." : " nélkül."));
-                break;
-        }
-        Skeleton.writeReturnValue("void");
-    }
+    /**
+     *
+     * @param direction: milyen irányba mozogjon
+     * @param blockage: kap e blokkolót
+     */
+    public abstract void move(Direction direction, Blockage blockage);
 
+
+    /*
+    Visszatér az ellenség pozícióval
+     */
     public Position getPosition() {
-        Skeleton.writeFunctionDetails("Enemy.getPosition()");
-        Skeleton.writeReturnValue("Position: position");
         return position;
     }
 }

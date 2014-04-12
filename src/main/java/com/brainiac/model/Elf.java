@@ -9,16 +9,49 @@ import com.brainiac.Skeleton;
  * Time: 12:12
  */
 public class Elf extends Enemy {
+    /**
+     * Beállítjuk a megfellelő sebességet és életet.
+     */
     public Elf() {
+        life = 100;
+        speed = 2;
         this.position = new Position(0,0);
-        Skeleton.writeFunctionDetails("Elf()");
-        Skeleton.writeReturnValue("");
     }
 
+    /**
+     * @param damage: a sebzés
+     */
     @Override
     public void hurt(Damage damage) {
-        Skeleton.writeFunctionDetails("Elf.hurt(Damage damage)");
-        damage.getDamage(EnemyType.Elf);
-        Skeleton.writeReturnValue("void");
+        int d = damage.getDamage(EnemyType.Elf);
+        life -= d;
+    }
+
+    /**
+     *
+     * @param direction: milyen irányba mozogjon
+     * @param blockage: kap e blokkolót
+     */
+    @Override
+    public void move(Direction direction, Blockage blockage) {
+        int speed_actual = speed - blockage.block(EnemyType.Elf);
+
+        switch (direction) {
+            case EAST:
+                position.setX(position.getX() + speed_actual);
+                break;
+            case NORTH:
+                position.setY(position.getY() + speed_actual);
+                break;
+            case SOUTH:
+                position.setY(position.getY() - speed_actual);
+                break;
+            case WEST:
+                position.setX(position.getX() - speed_actual);
+                break;
+            default:
+                break;
+
+        }
     }
 }
