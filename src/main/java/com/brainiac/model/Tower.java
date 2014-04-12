@@ -5,40 +5,57 @@ import com.brainiac.Skeleton;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Torony osztály
+ */
 public class Tower {
     private Position position;
-    private List<TowerCrystal> crystals;
     private Damage damage;
     private int fireRate;
     private int range;
 
+    /**
+     * Új torony létrehozása a pálya egy adott pozíciójára
+     * @param position A torony pozíciója
+     */
     public Tower(Position position) {
         this.position = position;
         this.damage = new Damage();
         this.fireRate = 1;
         this.range = 10;
-        crystals = new ArrayList<TowerCrystal>();
-        Skeleton.writeFunctionDetails("Tower(Position position))");
-        Skeleton.writeReturnValue("");
     }
 
+    /**
+     * Torony lő egyet a paramáterében megkapott ellenfélre.
+     * @param enemy Az ellenfél
+     */
     public void fire(Enemy enemy) {
-        Skeleton.writeFunctionDetails("Tower.fire(Enemy enemy)");
         enemy.hurt(damage);
-        Skeleton.writeReturnValue("void");
     }
 
+    /**
+     * Visszatér a torony pozíciójával
+     * @return position A pozíció
+     */
     public Position getPosition() {
         return position;
     }
 
+    /**
+     * Torony hatótávjának lekérdezése
+     * @return range A hatótáv
+     */
     public int getRange() {
         return range;
     }
 
+    /**
+     * Torony fejlesztése kristállyal
+     * @param crystal a kristály
+     */
     public void upgrade(TowerCrystal crystal) {
-        Skeleton.writeFunctionDetails("Tower.upgrade()");
-        this.crystals.add(crystal);
-        Skeleton.writeReturnValue("void");
+        range *=  (int)crystal.getRangeIncrement();
+        fireRate *= (int)crystal.getIncrement();
+        damage.setDamage((int)crystal.getIncrement(), crystal.getAgainst());
     }
 }
