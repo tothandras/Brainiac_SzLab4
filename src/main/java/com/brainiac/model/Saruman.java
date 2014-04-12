@@ -5,23 +5,26 @@ import com.brainiac.Skeleton;
 public class Saruman {
     private int spellPower;
 
+    /**
+     * Szarumán konstruktora. Szarumánnak a játék kezdetén 100 varázsereje lesz.
+     */
     public Saruman() {
-        Skeleton.writeFunctionDetails("Saruman()");
-        Skeleton.writeReturnValue("");
+        spellPower = 100;
     }
 
-    // atneveztem
+    /**
+     * Szarumán varázserejét lehet ezzel a függvénnyel lekérdezni.
+     * @return Szarumán varázsereje.
+     */
     public int getSpellPower() {
-
-        Skeleton.writeFunctionDetails("Saruman.getSpellPower()");
-        Skeleton.writeReturnValue("int: "+ spellPower);
         return spellPower;
     }
 
-    // atneveztem
+    /**
+     * Szarumán varázserejét lehet ezzel a függvénnyel beállítani.
+     * @param spellPower Szarumán varázsereje ennyi lesz. Ez NEM a változás mértéke!
+     */
     public void setSpellPower(int spellPower) {
-        Skeleton.writeFunctionDetails("Saruman.setSpellPower()");
         this.spellPower = spellPower;
-        Skeleton.writeReturnValue("void");
     }
 }
