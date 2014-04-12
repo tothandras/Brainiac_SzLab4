@@ -26,14 +26,14 @@ public class BlockageCrystal {
     /**
      * Varázskő hatásának lekérdezése
      * Ha a paraméterben megadott enemyvel megegyezik ,akkor visszatér a növelés mértékével
-     * egyébként 1-el.
+     * egyébként 0-val.
      * @return increment
      * @param enemyType
      */
-    public double getIncrement(EnemyType enemyType) {
+    public int getIncrement(EnemyType enemyType) {
         if(enemyType==against){
             return increment;
         }
-        return 1;
+        return 0;
     }
 }

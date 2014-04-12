@@ -43,11 +43,11 @@ public class Blockage {
      * @param enemyType Milyen fajta ellenség ellen vagyunk kíváncsiak a lassulás mértékére.
      * @return Visszaadja hányadára csökkenjen az egység sebessége.
      */
-    public double block(EnemyType enemyType) {
-        double retValue = 1.0;
+    public int block(EnemyType enemyType) {
+        int retValue = 0;
         for (BlockageCrystal crystal : crystals) {
-            retValue *= crystal.getIncrement(enemyType);
+            retValue += crystal.getIncrement(enemyType);
         }
-        return 0;
+        return retValue;
     }
 }

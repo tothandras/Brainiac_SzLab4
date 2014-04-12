@@ -28,7 +28,7 @@ public class Elf extends Enemy {
     }
 
     /**
-     *
+     * mozgatjuk az ellenefelet a megfelelő irányba és sebeséggel
      * @param direction: milyen irányba mozogjon
      * @param blockage: kap e blokkolót
      */
@@ -53,5 +53,15 @@ public class Elf extends Enemy {
                 break;
 
         }
+    }
+
+    @Override
+    public void move(Direction direction, Blockage blockage) {
+
+        Skeleton.writeFunctionDetails("Enemy.move(Direction direction, Blockage blockage)");
+        if(blockage!=null){
+        blockage.block(EnemyType.Elf);
+        }
+        Skeleton.writeReturnValue("void");
     }
 }
