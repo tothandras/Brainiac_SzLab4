@@ -20,6 +20,7 @@ public class BlockageCrystal {
     public BlockageCrystal(EnemyType against, int increment) {
         this.against = against;
         this.increment = increment;
+
     }
 
     /**
