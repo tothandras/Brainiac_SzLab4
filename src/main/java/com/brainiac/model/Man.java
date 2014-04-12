@@ -13,6 +13,7 @@ public class Man extends Enemy {
     }
 
     /**
+
      * @param damage: a sebzés
      */
     @Override
