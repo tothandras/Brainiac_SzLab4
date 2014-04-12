@@ -1,7 +1,8 @@
 package com.brainiac.model;
 
-import com.brainiac.controller.Skeleton;
+import com.brainiac.Skeleton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Tower {
@@ -13,8 +14,12 @@ public class Tower {
 
     public Tower(Position position) {
         this.position = position;
-        Skeleton.writeFunctionDetails("Tower(Position: ("+position.getX()+","+position.getY()+"))");
-        Skeleton.writeReturnValue("void");
+        this.damage = new Damage();
+        this.fireRate = 1;
+        this.range = 10;
+        crystals = new ArrayList<TowerCrystal>();
+        Skeleton.writeFunctionDetails("Tower(Position position))");
+        Skeleton.writeReturnValue("");
     }
 
     public void fire(Enemy enemy) {
@@ -32,6 +37,8 @@ public class Tower {
     }
 
     public void upgrade(TowerCrystal crystal) {
-
+        Skeleton.writeFunctionDetails("Tower.upgrade()");
+        this.crystals.add(crystal);
+        Skeleton.writeReturnValue("void");
     }
 }

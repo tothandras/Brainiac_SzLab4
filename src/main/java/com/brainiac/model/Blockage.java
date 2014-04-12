@@ -1,38 +1,53 @@
 package com.brainiac.model;
 
-import com.brainiac.controller.Skeleton;
+import com.brainiac.Skeleton;
 
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Project name: Brainiac_SzLab4
- * User: tothandras
- * Date: 2014.03.20.
- * Time: 12:09
- */
 public class Blockage {
     private Position position;
     private List<BlockageCrystal> crystals;
 
+    /**
+     * A Blockage osztály konstruktora.
+     *
+     * @param position Az új akadály pozíciója.
+     */
     public Blockage(Position position) {
         this.position = position;
+        crystals = new ArrayList<BlockageCrystal>();
     }
 
+    /**
+     * Visszaadja az akadály pozícióját a pályán.
+     *
+     * @return Az akadály pozíciója.
+     */
     public Position getPosition() {
-
         return position;
     }
 
-
-    void upgrade(BlockageCrystal crystal) {
-
+    /**
+     * Az akadály fejlesztése egy adott kristállyal.
+     *
+     * @param crystal A hozzáadott kristály.
+     */
+    public void upgrade(BlockageCrystal crystal) {
+        this.crystals.add(crystal);
     }
 
-    int block(EnemyType enemyType) {
-
-        Skeleton.writeFunctionDetails("Blockage.block(EnemyType enemyType)");
-        Skeleton.writeReturnValue("0");
-
-        return 0;
+    /**
+     * Megmondja a lassulás mértéket, amikor egy ellenség az akadályon megpróbál áthaladni.
+     *
+     * @param enemyType Milyen fajta ellenség ellen vagyunk kíváncsiak a lassulás mértékére.
+     * @return Visszaadja hányadára csökkenjen az egység sebessége.
+     */
+    public int block(EnemyType enemyType) {
+        int retValue = 0;
+        for (BlockageCrystal crystal : crystals) {
+            retValue += crystal.getIncrement(enemyType);
+        }
+        return retValue;
     }
 }

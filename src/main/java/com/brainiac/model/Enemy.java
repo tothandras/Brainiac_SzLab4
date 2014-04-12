@@ -1,6 +1,6 @@
 package com.brainiac.model;
 
-import com.brainiac.controller.Skeleton;
+import com.brainiac.Skeleton;
 
 /**
  * Project name: Brainiac_SzLab4
@@ -14,18 +14,24 @@ public abstract class Enemy {
     protected Position position;
 
 
+    /**
+     * @param damage: a sebzés
+     */
+    public abstract void hurt(Damage damage);
 
-    public void hurt(Damage damage) {
 
-    }
+    /**
+     * mozgatjuk az ellenefelet a megfelelő irányba és sebeséggel
+     * @param direction: milyen irányba mozogjon
+     * @param blockage: kap e blokkolót
+     */
+    public abstract void move(Direction direction, Blockage blockage);
 
-    public void move(Direction direction, Blockage blockage) {
 
-    }
-
+    /*
+    Visszatér az ellenség pozícióval
+     */
     public Position getPosition() {
-        Skeleton.writeFunctionDetails("Enemy.getPosition()");
-        Skeleton.writeReturnValue("Position.x: " + position.getX() + " Position.y: " + position.getY());
         return position;
     }
 }

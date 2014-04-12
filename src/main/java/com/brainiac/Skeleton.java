@@ -1,7 +1,10 @@
-package com.brainiac.controller;
+package com.brainiac;
+
+import com.brainiac.model.*;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.List;
 
 public class Skeleton {
 
@@ -12,7 +15,7 @@ public class Skeleton {
     /**
      * a tab változó mutatja meg, hogy mekkora behúzást kell alkalmazni egy-egy függvénynél
      */
-    public static String tab="";
+    public static String tab = "";
 
     /**
      * ezt a függvény hívjuk meg a main függvényben. itt dől el, hogy melyik tesztesetet futtatjuk.
@@ -35,7 +38,7 @@ public class Skeleton {
         tab = tab + '\t';
     }
 
-    public static void writeLine(String s){
+    public static void writeLine(String s) {
         System.out.println(s);
 
     }
@@ -71,8 +74,8 @@ public class Skeleton {
             return Integer.parseInt(value);
         } catch (Exception ex) {
             ex.printStackTrace();
+            return 0;
         }
-        return 1;
     }
 
     /**
@@ -85,6 +88,7 @@ public class Skeleton {
         tab = tab.substring(0, tab.length() - 1);
         System.out.println(tab + "<--" + s);
     }
+
 
 }
 
