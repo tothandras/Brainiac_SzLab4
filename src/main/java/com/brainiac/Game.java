@@ -9,7 +9,9 @@ public class Game {
     private GameElements gameElements;
     private GameFrame gameFrame;
 
-    // ujdonsag: konstruktor
+    /**
+     * A konstruktorban létrehozzuk a tagváltozókat
+     */
     public Game() {
         gameElements = new GameElements();
         gameEngine = new GameEngine(gameElements);
@@ -17,8 +19,29 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        Skeleton.writeLine("Main: A játékhoz szükséges elemek létrehozása megkezdődött!");
         Game game = new Game();
         game.gameEngine.startNewGame();
+    }
+
+    /**
+     * A proto ezen keresztül tudja elérni a gameEngine változót
+     * @return a Game osztály gameEngine változója
+     */
+    public GameEngine getGameEngine(){
+        return gameEngine;
+    }
+    /**
+     * A proto ezen keresztül tudja elérni a gameElements változót
+     * @return a Game osztály gameElemets változója
+     */
+    public GameElements getGameElements(){
+        return gameElements;
+    }
+    /**
+     * A proto ezen keresztül tudja elérni a gameFrame változót
+     * @return a Game osztály gameFrame változója
+     */
+    public GameFrame getGameFrame(){
+        return gameFrame;
     }
 }
