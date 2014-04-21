@@ -1,0 +1,10 @@
+teszt18.txt betöltése sikeres
+Fájlba írás kezdete>
+Pályán lévő tornyok felsorolásának kezdete>
+Torony: pozíció: 2, 3; hatósugár:2; Tüzelési gyakoriság: 1
+<Pályán lévő tornyok felsorolásának vége
+Köd: pozíció: 3, 3; hatósugár: 2 : ereszkedik
+Pályán lévő tornyok felsorolásának kezdete>
+Torony: pozíció: 2, 3; hatósugár:1; Tüzelési gyakoriság: 1
+<Pályán lévő tornyok felsorolásának vége
+<Fájlba írás vége

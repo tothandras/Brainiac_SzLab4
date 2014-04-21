@@ -1,0 +1,18 @@
+teszt2.txt betöltése sikeres
+Fájlba írás kezdete>
+----------
+--O-------
+X         
+----------
+----------
+Szarumán varázsereje: 50
+Pályaelemek építésének kezdete>
+Akadály építése sikertelen: az akadályt csak útra szabad építeni.
+<Pályaelemek építésének vége
+----------
+--O-------
+X         
+----------
+----------
+Szarumán varázsereje: 50
+<Fájlba írás vége

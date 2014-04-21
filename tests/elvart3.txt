@@ -1,0 +1,18 @@
+teszt3.txt betöltése sikeres
+Fájlba írás kezdete>
+----------
+--O-------
+X         
+----------
+----------
+Szarumán varázsereje: 5
+Pályaelemek építésének kezdete>
+Akadály építése sikertelen: nincs elég varázserő.
+<Pályaelemek építésének vége
+----------
+--O-------
+X         
+----------
+----------
+Szarumán varázsereje: 5
+<Fájlba írás vége

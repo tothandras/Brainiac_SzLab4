@@ -1,0 +1,27 @@
+teszt17.txt betöltése sikeres
+Fájlba írás kezdete>
+----------
+--O-------
+X X  	
+----------
+----------
+Szarumán varázsereje: 50
+Pályán lévő ellenségek felsorolásának kezdete>
+Tünde: pozíció: 0, 2; életerő: 50; sebesség: 1
+Tünde: pozíció: 2, 2; életerő: 50; sebesség: 1
+<Pályán lévő ellenségek felsorolásának vége
+Tünde (1, 2): lép
+Tünde (3, 2): lép
+Torony (2, 3): lő
+Tünde (3, 2): sérül
+----------
+--O-------
+ X X       
+----------
+----------
+Szarumán varázsereje: 50
+Pályán lévő ellenségek felsorolásának kezdete>
+Tünde: pozíció: 3, 2; életerő: 40; sebesség: 1
+Tünde: pozíció: 1, 2; életerő: 50; sebesség: 1
+<Pályán lévő ellenségek felsorolásának vége
+<Fájlba írás vége

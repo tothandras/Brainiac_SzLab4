@@ -1,0 +1,8 @@
+loadCommands teszt8.txt
+beginWriteCommands teszteset8_out.txt
+showGameState
+listEnemies
+simulate
+showGameState
+listEnemies
+endWriteCommands

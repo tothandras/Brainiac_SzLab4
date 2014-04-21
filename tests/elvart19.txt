@@ -1,0 +1,11 @@
+teszt19.txt betöltése sikeres
+Fájlba írás kezdete>
+----------
+----------
+         X
+----------
+----------
+Szarumán varázsereje: 50
+Tünde (9, 2): nyer
+Az ellenséges csapat nyert.
+<Fájlba írás vége

@@ -1,0 +1,16 @@
+teszt14.txt betöltése sikeres
+Fájlba írás kezdete>
+----------
+--O-------
+X         
+----------
+----------
+Szarumán varázsereje: 50
+Torony fejlesztése sikertelen: nem létezik a megadott helyen torony.
+----------
+--O-------
+X         
+----------
+----------
+Szarumán varázsereje: 50
+<Fájlba írás vége

@@ -1,0 +1,16 @@
+teszt21.txt betöltése sikeres
+Fájlba írás kezdete>
+----------
+----------
+ X       
+----------
+----------
+Szarumán varázsereje: 50
+Tünde (2, 2): lép
+----------
+----------
+  X       
+----------
+----------
+Szarumán varázsereje: 50
+<Fájlba írás vége
