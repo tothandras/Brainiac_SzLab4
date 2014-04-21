@@ -2,6 +2,8 @@ package com.brainiac;
 
 import com.brainiac.controller.GameEngine;
 import com.brainiac.model.GameElements;
+import com.brainiac.model.Position;
+import com.brainiac.model.Tower;
 import com.brainiac.view.GameFrame;
 
 public class Game {
@@ -21,6 +23,7 @@ public class Game {
     public static void main(String[] args) {
         Game game = new Game();
         game.gameEngine.startNewGame();
+        new Thread(game.gameFrame).start();
     }
 
     /**

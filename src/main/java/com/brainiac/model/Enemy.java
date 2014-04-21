@@ -1,7 +1,5 @@
 package com.brainiac.model;
 
-import com.brainiac.Skeleton;
-
 /**
  * Project name: Brainiac_SzLab4
  * User: tothandras

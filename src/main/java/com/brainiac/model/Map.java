@@ -15,7 +15,7 @@ public class Map {
         paths = new ArrayList<Path>();
         Path path = new Path();
         Line2D road1 = new Line2D.Double(0, height / 2.0, width / 3.0, height / 2.0);
-        Line2D road2 = new Line2D.Double(width / 3.0, height / 3.0, 2.0 * width / 3.0, 2.0 * height / 3.0);
+        Line2D road2 = new Line2D.Double(width / 3.0, height / 2.0, width / 3.0, 2.0 * height / 3.0);
         Line2D road3 = new Line2D.Double(width / 3.0, 2.0 * height / 3.0, 2.0 * width / 3.0, 2.0 * height / 3.0);
         Line2D road4 = new Line2D.Double(2.0 * width / 3.0, 2.0 * height / 3.0, 2.0 * width / 3.0, height / 2.0);
         Line2D road5 = new Line2D.Double(2.0 * width / 3.0, height / 2.0, width, height / 2.0);
