@@ -50,4 +50,13 @@ public class Hobbit extends Enemy {
         }
     }
 
+    @Override
+    public Enemy cut() {
+        this.life = this.life / 2;
+        Hobbit hobbit = new Hobbit();
+        hobbit.life = this.life;
+        hobbit.position = this.position;
+        return hobbit;
+    }
+
 }

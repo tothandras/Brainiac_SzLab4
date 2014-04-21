@@ -15,6 +15,10 @@ public class Position {
         this.y = y;
     }
 
+    public double distance(Position position){
+        return Math.sqrt(Math.pow(x - position.getX(), 2) + Math.pow(y - position.getY(), 2));
+    }
+
     /**
      *
      * @return: visszatér az x koordinátával

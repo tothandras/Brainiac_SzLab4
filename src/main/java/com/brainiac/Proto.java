@@ -16,9 +16,30 @@ public class Proto {
         canBuild = false;
     }
 
+    /**
+     * A game osztályból is meghívható függvény. Ezzel kezdjük el a tesztelést.
+     */
+    public void doCommands(){
+        try{
+            while (true){
+                String line = bufferedReader.readLine();
+                execute(line);
+            }
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Biztonságosan csinál egész számot egy stringből
+     * @param value a kapott string
+     * @return a stringből képzett egész szám. ha nem értelmes szöveget adtunk meg, 0-val tér vissza
+     */
     int tryParseInt(String value) {
         try {
-            return Integer.parseInt(value);
+            int x = Integer.parseInt(value);
+            return x;
         } catch(NumberFormatException nfe) {
             System.out.println("Nem megfelelő formátumú bemenet. 0-val számolunk tovább helyette.");
             return 0;
@@ -27,12 +48,9 @@ public class Proto {
 
     /**
      * Ez a függvény fogja értelmezni a tesztelés során megadott parancsokat.
-     * Egyelőre csak 1 sort olvas!
      */
-    //TODO: szabad neki szebb nevet adni :)
-    public void sdfghjkl() {
+    private void execute(String line) {
         try {
-            String line = bufferedReader.readLine();
             String[] cmd = line.split(" ");
             if (cmd[0].equalsIgnoreCase("loadCommands")) {
                 loadCommands(cmd);
@@ -78,6 +96,10 @@ public class Proto {
                 exit();
             } else if (cmd[0].equalsIgnoreCase("showGameState")){
                 showGameState();
+            } else if (cmd[0].equalsIgnoreCase("listEnemies")){
+                listEnemies();
+            } else if (cmd[0].equalsIgnoreCase("listTowers")){
+                listTowers();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -95,15 +117,62 @@ public class Proto {
 
             BufferedReader br = null;
             try {
+                if (cmd[1].equalsIgnoreCase("teszt1.txt")) {
+                    //TODO
+                } else if (cmd[1].equalsIgnoreCase("teszt2.txt")) {
+                    //TODO
+                } else if (cmd[1].equalsIgnoreCase("teszt3.txt")) {
+                    //TODO
+                } else if (cmd[1].equalsIgnoreCase("teszt4.txt")) {
+                    //TODO
+                } else if (cmd[1].equalsIgnoreCase("teszt5.txt")) {
+                    //TODO
+                } else if (cmd[1].equalsIgnoreCase("teszt6.txt")) {
+                    //TODO
+                } else if (cmd[1].equalsIgnoreCase("teszt7.txt")) {
+                    //TODO
+                } else if (cmd[1].equalsIgnoreCase("teszt8.txt")) {
+                    //TODO
+                } else if (cmd[1].equalsIgnoreCase("teszt9.txt")) {
+                    //TODO
+                } else if (cmd[1].equalsIgnoreCase("teszt10.txt")) {
+                    //TODO
+                } else if (cmd[1].equalsIgnoreCase("teszt11.txt")) {
+                    //TODO
+                } else if (cmd[1].equalsIgnoreCase("teszt12.txt")) {
+                    //TODO
+                } else if (cmd[1].equalsIgnoreCase("teszt13.txt")) {
+                    //TODO
+                } else if (cmd[1].equalsIgnoreCase("teszt14.txt")) {
+                    //TODO
+                } else if (cmd[1].equalsIgnoreCase("teszt15.txt")) {
+                    //TODO
+                } else if (cmd[1].equalsIgnoreCase("teszt16.txt")) {
+                    //TODO
+                } else if (cmd[1].equalsIgnoreCase("teszt17.txt")) {
+                    //TODO
+                } else if (cmd[1].equalsIgnoreCase("teszt18.txt")) {
+                    //TODO
+                } else if (cmd[1].equalsIgnoreCase("teszt19.txt")) {
+                    //TODO
+                } else if (cmd[1].equalsIgnoreCase("teszt20.txt")) {
+                    //TODO
+                } else if (cmd[1].equalsIgnoreCase("teszt21.txt")) {
+                    //TODO
+                } else if (cmd[1].equalsIgnoreCase("teszt22.txt")) {
+                    //TODO
+                } else if (cmd[1].equalsIgnoreCase("teszt23.txt")) {
+                    //TODO
+                }
                 String line;
                 br = new BufferedReader(new FileReader(cmd[1]));
                 while ((line = br.readLine()) != null) {
-                    feldolgoz(line);
+                    execute(line);
                 }
                 System.out.println(cmd[1] + " betoltese sikeres.");
             } catch (IOException e) {
                 System.out.println(cmd[1] + " betoltesi hiba!");
-                //e.printStackTrace();
+                e.printStackTrace();
             } finally {
                 try {
                     if (br != null)
@@ -475,14 +544,37 @@ public class Proto {
         System.out.println("Szaruman varázsereje: " + game.getGameElements().saruman.getSpellPower());
     }
 
-    //TODO: komment megírása
-    private void exit();
+    /**
+     * Az ellenségeket listázza ki a függvény a következő sablon szerint:
+     * Ellenség<azonosító>: pozíció: <x>, <y>; életerő: <életerő>; sebesség: <sebesség>
+     */
+    private void listEnemies(){
+        int db = 0;
+        for (Enemy enemy : game.getGameElements().enemies) {
+            System.out.println("Ellenség" + (db++) + ": pozíció: " + enemy.getPosition().getX() + ", " +
+                                enemy.getPosition().getY() + "; életerő: " + enemy.getLife() + "; sebesség: " + enemy.getSpeed());
+        }
+    }
 
     /**
-     * a loadCommandsból hívjuk meg. a loadCommands-fájl minden sorára meghívódik
-     * @param a: a loadCommands-fájl következő sora
+     * A tornyokat listázza ki a függvény a következő sablon szerint:
+     * Torony<azonosító>: pozíció: <x>, <y>; hatósugár:<hatósugár>; Tüzelési gyakoriság: <fireRate>
      */
-    //TODO: átnevezhető, hirtelenjében ezt sikerült kitalálnom...
-    private void feldolgoz(String a) {
+    private void listTowers(){
+        int db = 0;
+        for (Tower tower : game.getGameElements().towers) {
+            int towerRange = tower.getRange();
+            if (game.getGameElements().fog != null){
+                if (game.getGameElements().fog.getMiddle().distance(tower.getPosition()) < game.getGameElements().fog.getRange()){
+                    towerRange = towerRange / 2;
+                }
+            }
+            System.out.println("Torony" + (db++) + ": pozíció: " + tower.getPosition().getX() + ", " + tower.getPosition().getY() +
+                    "; hatósugár:" + towerRange + "; Tüzelési gyakoriság: " + tower.getSpeed());
+        }
     }
+
+    //TODO: komment megírása
+    private void exit();
 }
+

@@ -22,6 +22,7 @@ public class Game {
         gameEngine = new GameEngine(gameElements);
         gameFrame = new GameFrame(gameEngine, gameElements);
         proto = new Proto(this);
+        proto.doCommands();
     }
 
     public static void main(String[] args) {

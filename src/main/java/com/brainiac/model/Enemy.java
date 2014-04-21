@@ -32,4 +32,25 @@ public abstract class Enemy {
     public Position getPosition() {
         return position;
     }
+
+    /**
+     * Az ellenség életerejének lekérdezésére szolgáló függvény.
+     * @return Az ellenség életerejével tér vissza.
+     */
+    public int getLife(){
+        return life;
+    }
+
+    /**
+     * Az ellenség sebességének lekérdezésére szolgáló függvény.
+     * @return Az ellenség sebességével tér vissza.
+     */
+    public int getSpeed(){
+        return speed;
+    }
+
+    /**
+     * Csinál egy másolatot magából, ugyanolyan tulajdonságokkal, mint az eredeti egyed.
+     */
+    public abstract Enemy cut();
 }

@@ -58,4 +58,13 @@ public class Dwarf extends Enemy {
 
     }
 
+    @Override
+    public Enemy cut() {
+        this.life = this.life / 2;
+        Dwarf dwarf = new Dwarf();
+        dwarf.life = this.life;
+        dwarf.position = this.position;
+        return dwarf;
+    }
+
 }

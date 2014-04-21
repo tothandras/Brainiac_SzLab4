@@ -50,4 +50,13 @@ public class Man extends Enemy {
         }
     }
 
+    @Override
+    public Enemy cut() {
+        this.life = this.life / 2;
+        Man man = new Man();
+        man.life = this.life;
+        man.position = this.position;
+        return man;
+    }
+
 }

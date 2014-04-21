@@ -1,6 +1,7 @@
 package com.brainiac.model;
 
 import com.brainiac.Skeleton;
+import sun.net.www.content.audio.x_aiff;
 
 /**
  * Project name: Brainiac_SzLab4
@@ -56,5 +57,12 @@ public class Elf extends Enemy {
         }
     }
 
-
+    @Override
+    public Enemy cut() {
+        this.life = this.life / 2;
+        Elf elf = new Elf();
+        elf.life = this.life;
+        elf.position = this.position;
+        return elf;
+    }
 }

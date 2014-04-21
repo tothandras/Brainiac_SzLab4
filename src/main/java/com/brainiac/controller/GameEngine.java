@@ -89,9 +89,18 @@ public class GameEngine {
 
     private void fire() {
         for (Tower tower : gameElements.towers) {
+            int towerRange = tower.getRange();
+            if (gameElements.fog != null){
+                if (gameElements.fog.getMiddle().distance(tower.getPosition()) < gameElements.fog.getRange()){
+                    towerRange = towerRange / 2;
+                }
+            }
             for (Enemy enemy : gameElements.enemies) {
-                if (Math.sqrt(Math.pow(tower.getPosition().getX() - enemy.getPosition().getX(), 2) + Math.pow(tower.getPosition().getY() - enemy.getPosition().getY(), 2)) < tower.getRange()) {
-                    tower.fire(enemy);
+                if (tower.getPosition().distance(enemy.getPosition()) < towerRange) {
+                    Enemy temp = tower.fire(enemy);
+                    if (temp != null){
+                        gameElements.enemies.add(temp);
+                    }
                     break;
                 }
             }
