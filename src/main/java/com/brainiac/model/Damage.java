@@ -56,20 +56,26 @@ public class Damage {
      * @param enemyType
      */
 
-    void setDamage(int damage, EnemyType enemyType) {
+    void setDamage(double damage, EnemyType enemyType) {
         switch (enemyType){
             case Dwarf:
 
-                toDwarf = toDwarf + damage;
+                toDwarf = (int)(toDwarf * damage);
+                break;
             case Elf:
 
-                toElf = toElf + damage;
+                toElf = (int)(toElf * damage);
+                break;
             case Hobbit:
 
-                toHobbit = toHobbit + damage;
-            default:
+                toHobbit = (int)(toHobbit * damage);
+                break;
+            case Man:
 
-                toMan = toMan + damage;
+                toMan = (int)(toMan * damage);
+                break;
+            default:
+                break;
         }
     }
 }

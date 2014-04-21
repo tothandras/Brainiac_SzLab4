@@ -1,10 +1,28 @@
 package com.brainiac;
 
+import com.brainiac.model.*;
+
 import java.io.*;
 
 public class Proto {
     private BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
     private PrintWriter fileOut = null;
+    Game game;
+    boolean canBuild;
+
+    public Proto(Game game){
+        this.game = game;
+        canBuild = false;
+    }
+
+    int tryParseInt(String value) {
+        try {
+            return Integer.parseInt(value);
+        } catch(NumberFormatException nfe) {
+            System.out.println("Nem megfelelő formátumú bemenet. 0-val számolunk tovább helyette.");
+            return 0;
+        }
+    }
 
     /**
      * Ez a függvény fogja értelmezni a tesztelés során megadott parancsokat.
@@ -55,6 +73,8 @@ public class Proto {
                 help();
             } else if (cmd[0].equalsIgnoreCase("exit")){
                 exit();
+            } else if (cmd[0].equalsIgnoreCase("showGameStates")){
+                showGameStates();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -62,7 +82,7 @@ public class Proto {
     }
 
     /**
-     * A loadCommands utasítás kiadását kezeljük le ebben a függványben.
+     * A loadCommands utasítás kiadását kezeljük le ebben a függvényben.
      * @param cmd a beírt utasítás szavakra tördelve
      */
     private void loadCommands(String[] cmd) {
@@ -126,25 +146,48 @@ public class Proto {
      * A startGame utasítás kiadását kezeljük le ebben a függványben.
      * Meghívásakor elindul a játék.
      */
-    private void startGame();
+    private void startGame(){
+        game.getGameEngine().startNewGame();
+    }
 
     /**
      * A startBuild utasítás kiadását kezeljük le ebben a függványben.
      * Meghívása után elkezdhetünk építkezni.
      */
-    private void startBuild();
+    private void startBuild(){
+        if (canBuild){
+            //TODO
+            System.out.println("Butaság még egyszer engedélyezni az építést.");
+        } else {
+            canBuild = true;
+        }
+    }
 
     /**
      * A endBuild utasítás kiadását kezeljük le ebben a függványben.
      * Meghívása után már nem tudunk építkezni.
      */
-    private void endBuild();
+    private void endBuild(){
+        if (!canBuild){
+            System.out.println("Hogyan fejezzük be az építést, ha el sem kezdtük?");
+        } else {
+            canBuild = false;
+        }
+    }
 
     /**
      * Az addTower utasítás kiadását kezeljük le ebben a függványben.
      * Meghívásakor lerakhatunk egy tornyot a megadott pozícióra.
      */
-    private void addTower(String[] cmd);
+    private void addTower(String[] cmd){
+        if (cmd.length > 2){
+            int x = tryParseInt(cmd[1]);
+            int y = tryParseInt(cmd[2]);
+            //TODO: itt megnézzük, hogy az adott helyre szabad-e építkeznünk: nem út-e, van-e ott már torony
+        } else {
+            System.out.println("Nem megfelelő bemeneti paraméterek.");
+        }
+    }
 
     /**
      * Az addBlockage utasítás kiadását kezeljük le ebben a függványben.
@@ -156,7 +199,31 @@ public class Proto {
      * Az upgradeTowerAgainstDwarves utasítás kiadását kezeljük le ebben a függványben.
      * Meghívásakor fejlesztjük a megadott korrdinátán lévő tornyot ez ellen az ellenség ellen.
      */
-    private void upgradeTowerAgainstDwarves(String[] cmd);
+    private void upgradeTowerAgainstDwarves(String[] cmd){
+        if (cmd.length > 2){
+            int x = tryParseInt(cmd[1]);
+            int y = tryParseInt(cmd[2]);
+            boolean thereIsTower = false;
+            for (Tower tower : game.getGameElements().towers) {
+                if ((tower.getPosition().getX() == x) && (tower.getPosition().getY() == y)){
+                    thereIsTower = true;
+                    double damageIncrement = 1.3;
+                    int costOfUpgrade = 5;
+                    if (game.getGameElements().saruman.getSpellPower() < costOfUpgrade){
+                        System.out.println("Torony fejlesztése sikertelen: nincs elég varázserő.");
+                    } else {
+                        tower.upgrade(new TowerCrystal(EnemyType.Dwarf, damageIncrement, 1.0, 1.0));
+                        System.out.println("Torony fejlesztése sikeres.");
+                    }
+                }
+            }
+            if (!thereIsTower){
+                System.out.println("Torony fejlesztése sikertelen: nem létezik a megadott helyen torony.");
+            }
+        } else {
+            System.out.println("Nem megfelelő bemeneti paraméterek.");
+        }
+    }
 
     /**
      * Az upgradeTowerAgainstElves utasítás kiadását kezeljük le ebben a függványben.
@@ -216,7 +283,50 @@ public class Proto {
      * A help utasítás kiadását kezeljük le ebben a függványben.
      * Meghívásakor kiírjuk a lehetséges parancsokat.
      */
-    private void help();
+    private void help()
+    {
+        System.out.println("Lehetseges parancsok: ");
+        System.out.println("A kacsacsőrben levő paraméterek azok az adott függvény paraméterei, amit a parancs megadása után kell megadni");
+        System.out.println("beginWriteCommands<fileName>");
+        System.out.println("endWriteCommands");
+        System.out.println("startGame");
+        System.out.println("startBuild");
+        System.out.println("endBuild");
+        System.out.println("addTower<x><y>");
+        System.out.println("addBlockage<x><y>");
+        System.out.println("upgradeTowerAgainstDwarves<x><y>");
+        System.out.println("upgradeTowerAgainstElves<x><y>");
+        System.out.println("upgradeTowerAgainstHobbits<x><y>");
+        System.out.println("upgradeTowerAgainstMen<x><y>");
+        System.out.println("upgradeTowerShootingSpeed<x><y>");
+        System.out.println("upgradeBlockageAgainstDwarves<x><y>");
+        System.out.println("upgradeBlockageAgainstElves<x><y>");
+        System.out.println("upgradeBlockageAgainstHobbits<x><y>");
+        System.out.println("upgradeBlockageAgainstMen<x><y>");
+        System.out.println("simulate");
+        System.out.println("help");
+        System.out.println("exit");
+    }
+
+    /**
+     * ShowGameStates metódus. Kiírja az állapotokat.
+     */
+
+    private void showGameStates()
+    {
+        // A kiírásnál Sarumán varázserejét kellene kiírni. AZ 50 az csak ideiglenesen van.
+        int power = 50;
+        Map temp = new Map(50,50);
+        //Ideiglenes pálya
+        //Pálya kirajzolása
+        for(int i = 0; i<temp.getWidth(); i++){
+            for(int j = 0; i<temp.getHeight(); j++)
+            {
+                if(temp.)
+            }
+        }
+        System.out.println("Szaruman varázsereje: " + power);
+    }
 
     //TODO: komment megírása
     private void exit();

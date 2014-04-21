@@ -54,8 +54,8 @@ public class Tower {
      * @param crystal a kristály
      */
     public void upgrade(TowerCrystal crystal) {
-        range *=  (int)crystal.getRangeIncrement();
-        fireRate *= (int)crystal.getIncrement();
-        damage.setDamage((int)crystal.getIncrement(), crystal.getAgainst());
+        range =  (int)(range * crystal.getRangeIncrement());
+        fireRate = (int)(fireRate * crystal.getIncrement());
+        damage.setDamage(crystal.getIncrement(), crystal.getAgainst());
     }
 }
