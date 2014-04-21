@@ -22,7 +22,7 @@ public class Tower {
         this.position = position;
         this.damage = new Damage();
         this.fireRate = 1;
-        this.range = 10;
+        this.range = 100;
     }
 
     /**

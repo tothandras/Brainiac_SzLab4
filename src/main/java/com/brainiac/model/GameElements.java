@@ -1,7 +1,5 @@
 package com.brainiac.model;
 
-import com.brainiac.Skeleton;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +18,6 @@ public class GameElements {
         towers = new ArrayList<Tower>();
         blockages = new ArrayList<Blockage>();
         saruman = new Saruman();
-        map = new Map(100, 100);
-
+        map = new Map(600, 600);
     }
 }

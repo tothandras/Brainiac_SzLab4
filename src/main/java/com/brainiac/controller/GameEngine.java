@@ -2,11 +2,13 @@ package com.brainiac.controller;
 
 import com.brainiac.model.*;
 
+import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.Random;
 
-public class GameEngine implements Runnable {
+public class GameEngine {
     private GameElements gameElements;
     private GameState gameState;
 
@@ -16,8 +18,6 @@ public class GameEngine implements Runnable {
 
     public void startNewGame() {
         gameElements.saruman.setSpellPower(100);
-        Thread gameThread = new Thread(this);
-        gameThread.start();
     }
 
     /**
@@ -51,24 +51,9 @@ public class GameEngine implements Runnable {
         }
     }
 
-    /**
-     * Játék futtatása.
-     */
-    @Override
-    public void run() {
-        if (checkGameState()) {
-            System.out.println("Game Over");
-        } else {
-            if (gameState == GameState.Step) {
-                step();
-                fire();
-            }
-        }
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
-        }
+    public void update() {
+        step();
+        fire();
     }
 
     private void step() {
@@ -132,5 +117,48 @@ public class GameEngine implements Runnable {
         }
 
         return end;
+    }
+
+    /**
+     * Egér kattintás lekezelése.
+     * @param event
+     */
+    public void handleMouseEvent(MouseEvent event) {
+        if (event.getButton() == MouseEvent.BUTTON1) {
+            // az utvonalon
+            boolean onRoad = false;
+            int onRoadX = event.getX();
+            int onRoadY = event.getY();
+            boolean onBlockage = false;
+            boolean onTower = false;
+            
+            for (Path path : gameElements.map.getPaths()) {
+                for (Line2D road : path.roads) {
+                    if (road.intersects(event.getX() - 5, event.getY() - 5, 10, 10)) {
+
+                        onRoad = true;
+                    }
+                }
+            }
+
+            // TODO
+            for (Blockage blockage : gameElements.blockages) {
+
+            }
+
+            // TODO
+            for (Tower tower : gameElements.towers) {
+
+            }
+
+            // ekkor blockaget akarunk
+            if (onRoad) {
+                gameElements.blockages.add(new Blockage(new Position(onRoadX,onRoadY)));
+            }
+            // amugy towert
+            else {
+                gameElements.towers.add(new Tower(new Position(event.getX(),event.getY())));
+            }
+        }
     }
 }
