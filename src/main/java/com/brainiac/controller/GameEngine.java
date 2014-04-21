@@ -236,47 +236,4 @@ public class GameEngine {
                 break;
         }
     }
-
-    /**
-     * Egér kattintás lekezelése.
-     * @param event
-     */
-    public void handleMouseEvent(MouseEvent event) {
-        if (event.getButton() == MouseEvent.BUTTON1) {
-            // az utvonalon
-            boolean onRoad = false;
-            int onRoadX = event.getX();
-            int onRoadY = event.getY();
-            boolean onBlockage = false;
-            boolean onTower = false;
-            
-            for (Path path : gameElements.map.getPaths()) {
-                for (Line2D road : path.roads) {
-                    if (road.intersects(event.getX() - 5, event.getY() - 5, 10, 10)) {
-
-                        onRoad = true;
-                    }
-                }
-            }
-
-            // TODO
-            for (Blockage blockage : gameElements.blockages) {
-
-            }
-
-            // TODO
-            for (Tower tower : gameElements.towers) {
-
-            }
-
-            // ekkor blockaget akarunk
-            if (onRoad) {
-                gameElements.blockages.add(new Blockage(new Position(onRoadX,onRoadY)));
-            }
-            // amugy towert
-            else {
-                gameElements.towers.add(new Tower(new Position(event.getX(),event.getY())));
-            }
-        }
-    }
 }

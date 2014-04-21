@@ -1,0 +1,16 @@
+teszt15.txt betöltése sikeres
+Fájlba írás kezdete>
+----------
+--O-------
+X +       
+----------
+----------
+Szarumán varázsereje: 4
+Torony fejlesztése sikertelen: nincs elég varázserő.
+----------
+--O-------
+X +       
+----------
+----------
+Szarumán varázsereje: 4
+<Fájlba írás vége

@@ -1,0 +1,18 @@
+teszt11.txt betöltése sikeres
+Fájlba írás kezdete>
+----------
+--O-------
+         
+----------
+----------
+Szarumán varázsereje: 50
+Pályaelemek építésének kezdete>
+Torony építése sikertelen: a tornyot csak üres helyre lehet építeni
+<Pályaelemek építésének vége
+----------
+--O-------
+         
+----------
+----------
+Szarumán varázsereje: 50
+<Fájlba írás vége

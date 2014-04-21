@@ -1,0 +1,9 @@
+teszt20.txt betöltése sikeres
+Fájlba írás kezdete>
+----------
+--O-------
+ X  +     
+----------
+----------
+Szarumán varázsereje: 50
+<Fájlba írás vége

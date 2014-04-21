@@ -1,0 +1,18 @@
+teszt12.txt betöltése sikeres
+Fájlba írás kezdete>
+----------
+----------
+X         
+----------
+----------
+Szarumán varázsereje: 5
+Pályaelemek építésének kezdete>
+Torony építése sikertelen: nincs elég varázserő.
+<Pályaelemek építésének vége
+----------
+----------
+X         
+----------
+----------
+Szarumán varázsereje: 5
+<Fájlba írás vége

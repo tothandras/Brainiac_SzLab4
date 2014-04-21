@@ -1,0 +1,19 @@
+teszt22.txt betöltése sikeres
+Fájlba írás kezdete>
+----------
+----------
+ X+       
+----------
+----------
+Szarumán varázsereje: 50
+Pályán lévő egységek felsorolásának kezdete>
+Tünde: pozíció: 1, 2; életerő: 5; sebesség: 2
+<Pályán lévő egységek felsorolásának vége
+Tünde (2, 2): lép
+----------
+----------
+  X       
+----------
+----------
+Szarumán varázsereje: 50
+<Fájlba írás vége

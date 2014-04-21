@@ -1,0 +1,16 @@
+teszt5.txt betöltése sikeres
+Fájlba írás kezdete>
+----------
+--O-------
+X         
+----------
+----------
+Szarumán varázsereje: 50
+Akadály fejlesztése sikertelen: nem létezik a megadott helyen akadály.
+----------
+--O-------
+X         
+----------
+----------
+Szarumán varázsereje: 50
+<Fájlba írás vége

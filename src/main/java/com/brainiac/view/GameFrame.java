@@ -46,7 +46,7 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
         gamePanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                gameEngine.handleMouseEvent(e);
+                //gameEngine.handleMouseEvent(e);
             }
         });
 

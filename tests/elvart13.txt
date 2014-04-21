@@ -1,0 +1,16 @@
+teszt13.txt betöltése sikeres
+Fájlba írás kezdete>
+----------
+--O-------
+X +       
+----------
+----------
+Szarumán varázsereje: 50
+Torony fejlesztése sikeres.
+----------
+--Ó-------
+X +       
+----------
+----------
+Szarumán varázsereje: 45
+<Fájlba írás vége
