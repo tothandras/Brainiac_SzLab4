@@ -13,12 +13,18 @@ public class Tower {
     private Damage damage;
     private int fireRate;
     private int range;
+    /**
+     * mivel már nincs lista a kristályokról, így tudunk a legegyszerűbben
+     * információt kapni arról, hogy fejlesztett-e a torony
+     */
+    public boolean upgraded;
 
     /**
      * Új torony létrehozása a pálya egy adott pozíciójára
      * @param position A torony pozíciója
      */
     public Tower(Position position) {
+        this.upgraded = false;
         this.position = position;
         this.damage = new Damage();
         this.fireRate = 1;
@@ -57,5 +63,6 @@ public class Tower {
         range =  (int)(range * crystal.getRangeIncrement());
         fireRate = (int)(fireRate * crystal.getIncrement());
         damage.setDamage(crystal.getIncrement(), crystal.getAgainst());
+        upgraded = true;
     }
 }

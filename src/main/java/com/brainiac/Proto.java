@@ -60,6 +60,8 @@ public class Proto {
                 upgradeTowerAgainstMen(cmd);
             } else if (cmd[0].equalsIgnoreCase("upgradeTowerShootingSpeed")){
                 upgradeTowerShootingSpeed(cmd);
+            } else if (cmd[0].equalsIgnoreCase("upgradeTowerRange")){
+                upgradeTowerRange(cmd);
             } else if (cmd[0].equalsIgnoreCase("upgradeBlockageAgainstDwarves")){
                 upgradeBlockageAgainstDwarves(cmd);
             } else if (cmd[0].equalsIgnoreCase("upgradeBlockageAgainstElves")){
@@ -74,8 +76,8 @@ public class Proto {
                 help();
             } else if (cmd[0].equalsIgnoreCase("exit")){
                 exit();
-            } else if (cmd[0].equalsIgnoreCase("showGameStates")){
-                showGameStates();
+            } else if (cmd[0].equalsIgnoreCase("showGameState")){
+                showGameState();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -90,6 +92,7 @@ public class Proto {
         if (cmd.length < 2) {
             System.out.println("Nincs megadva fajlnev.");
         } else {
+
             BufferedReader br = null;
             try {
                 String line;
@@ -113,7 +116,7 @@ public class Proto {
     }
 
     /**
-     * A beginWriteCommands utasítás kiadását kezeljük le ebben a függványben.
+     * A beginWriteCommands utasítás kiadását kezeljük le ebben a függvényben.
      * @param cmd a beírt utasítás szavakra tördelve
      */
     private void beginWriteCommands(String[] cmd) {
@@ -132,7 +135,7 @@ public class Proto {
     }
 
     /**
-     * Az endWriteCommands utasítás kiadását kezeljük le ebben a függványben.
+     * Az endWriteCommands utasítás kiadását kezeljük le ebben a függvényben.
      * Meghíváskor lezárjuk a fájlt, ha még nem lett lezárva.
      */
     private void endWriteCommands(){
@@ -144,7 +147,7 @@ public class Proto {
     }
 
     /**
-     * A startGame utasítás kiadását kezeljük le ebben a függványben.
+     * A startGame utasítás kiadását kezeljük le ebben a függvényben.
      * Meghívásakor elindul a játék.
      */
     private void startGame(){
@@ -152,7 +155,7 @@ public class Proto {
     }
 
     /**
-     * A startBuild utasítás kiadását kezeljük le ebben a függványben.
+     * A startBuild utasítás kiadását kezeljük le ebben a függvényben.
      * Meghívása után elkezdhetünk építkezni.
      */
     private void startBuild(){
@@ -164,7 +167,7 @@ public class Proto {
     }
 
     /**
-     * A endBuild utasítás kiadását kezeljük le ebben a függványben.
+     * A endBuild utasítás kiadását kezeljük le ebben a függvényben.
      * Meghívása után már nem tudunk építkezni.
      */
     private void endBuild(){
@@ -176,122 +179,229 @@ public class Proto {
     }
 
     /**
-     * Az addTower utasítás kiadását kezeljük le ebben a függványben.
+     * Az addTower utasítás kiadását kezeljük le ebben a függvényben.
      * Meghívásakor lerakhatunk egy tornyot a megadott pozícióra.
      */
     private void addTower(String[] cmd){
-        if (cmd.length > 2){
-            int x = tryParseInt(cmd[1]);
-            int y = tryParseInt(cmd[2]);
-            //TODO: itt megnézzük, hogy az adott helyre szabad-e építkeznünk: nem út-e, van-e ott már torony
-            for (Path path : game.getGameElements().map.getPaths()) {
-                for (Line2D road : path.roads) {
-
-                }
+        if (canBuild){
+            if (cmd.length > 2){
+                int x = tryParseInt(cmd[1]);
+                int y = tryParseInt(cmd[2]);
+                game.getGameEngine().handleEvent(new Event(x, y, Action.BUILD_TOWER));
+            } else {
+                System.out.println("Nem megfelelő bemeneti paraméterek.");
             }
         } else {
-            System.out.println("Nem megfelelő bemeneti paraméterek.");
+            System.out.println("startBuild parancs nélkül nem lehet építeni!");
         }
     }
 
     /**
-     * Az addBlockage utasítás kiadását kezeljük le ebben a függványben.
+     * Az addBlockage utasítás kiadását kezeljük le ebben a függvényben.
      * Meghívásakor lerakhatunk egy tornyot a megadott pozícióra.
      */
-    private void addBlockage(String[] cmd);
+    private void addBlockage(String[] cmd){
+        if (canBuild){
+            if (cmd.length > 2){
+                int x = tryParseInt(cmd[1]);
+                int y = tryParseInt(cmd[2]);
+                game.getGameEngine().handleEvent(new Event(x, y, Action.BUILD_BLOCKAGE));
+            } else {
+                System.out.println("Nem megfelelő bemeneti paraméterek.");
+            }
+        } else {
+            System.out.println("startbuild parancs nélkül nem lehet építeni!");
+        }
+    }
 
     /**
-     * Az upgradeTowerAgainstDwarves utasítás kiadását kezeljük le ebben a függványben.
+     * Az upgradeTowerAgainstDwarves utasítás kiadását kezeljük le ebben a függvényben.
      * Meghívásakor fejlesztjük a megadott korrdinátán lévő tornyot ez ellen az ellenség ellen.
      */
     private void upgradeTowerAgainstDwarves(String[] cmd){
         if (cmd.length > 2){
             int x = tryParseInt(cmd[1]);
             int y = tryParseInt(cmd[2]);
-            boolean thereIsTower = false;
-            for (Tower tower : game.getGameElements().towers) {
-                if ((tower.getPosition().getX() == x) && (tower.getPosition().getY() == y)){
-                    thereIsTower = true;
-                    double damageIncrement = 1.3;
-                    int costOfUpgrade = 5;
-                    if (game.getGameElements().saruman.getSpellPower() < costOfUpgrade){
-                        System.out.println("Torony fejlesztése sikertelen: nincs elég varázserő.");
-                    } else {
-                        tower.upgrade(new TowerCrystal(EnemyType.Dwarf, damageIncrement, 1.0, 1.0));
-                        System.out.println("Torony fejlesztése sikeres.");
-                    }
-                }
-            }
-            if (!thereIsTower){
-                System.out.println("Torony fejlesztése sikertelen: nem létezik a megadott helyen torony.");
-            }
+            Event event = new Event(x, y, Action.UPGRADE_TOWER);
+            event.against = EnemyType.Dwarf;
+            event.damageIncrement = 1.3;
+            game.getGameEngine().handleEvent(event);
         } else {
             System.out.println("Nem megfelelő bemeneti paraméterek.");
         }
     }
 
     /**
-     * Az upgradeTowerAgainstElves utasítás kiadását kezeljük le ebben a függványben.
+     * Az upgradeTowerAgainstElves utasítás kiadását kezeljük le ebben a függvényben.
      * Meghívásakor fejlesztjük a megadott korrdinátán lévő tornyot ez ellen az ellenség ellen.
      */
-    private void upgradeTowerAgainstElves(String[] cmd);
+    private void upgradeTowerAgainstElves(String[] cmd){
+        if (cmd.length > 2){
+            int x = tryParseInt(cmd[1]);
+            int y = tryParseInt(cmd[2]);
+            Event event = new Event(x, y, Action.UPGRADE_TOWER);
+            event.against = EnemyType.Elf;
+            event.damageIncrement = 1.3;
+            game.getGameEngine().handleEvent(event);
+        } else {
+            System.out.println("Nem megfelelő bemeneti paraméterek.");
+        }
+    }
 
     /**
-     * Az upgradeTowerAgainstHobbits utasítás kiadását kezeljük le ebben a függványben.
+     * Az upgradeTowerAgainstHobbits utasítás kiadását kezeljük le ebben a függvényben.
      * Meghívásakor fejlesztjük a megadott korrdinátán lévő tornyot ez ellen az ellenség ellen.
      */
-    private void upgradeTowerAgainstHobbits(String[] cmd);
+    private void upgradeTowerAgainstHobbits(String[] cmd){
+        if (cmd.length > 2){
+            int x = tryParseInt(cmd[1]);
+            int y = tryParseInt(cmd[2]);
+            Event event = new Event(x, y, Action.UPGRADE_TOWER);
+            event.against = EnemyType.Hobbit;
+            event.damageIncrement = 1.3;
+            game.getGameEngine().handleEvent(event);
+        } else {
+            System.out.println("Nem megfelelő bemeneti paraméterek.");
+        }
+    }
 
     /**
-     * Az upgradeTowerAgainstMen utasítás kiadását kezeljük le ebben a függványben.
+     * Az upgradeTowerAgainstMen utasítás kiadását kezeljük le ebben a függvényben.
      * Meghívásakor fejlesztjük a megadott korrdinátán lévő tornyot ez ellen az ellenség ellen.
      */
-    private void upgradeTowerAgainstMen(String[] cmd);
+    private void upgradeTowerAgainstMen(String[] cmd){
+        if (cmd.length > 2){
+            int x = tryParseInt(cmd[1]);
+            int y = tryParseInt(cmd[2]);
+            Event event = new Event(x, y, Action.UPGRADE_TOWER);
+            event.against = EnemyType.Man;
+            event.damageIncrement = 1.3;
+            game.getGameEngine().handleEvent(event);
+        } else {
+            System.out.println("Nem megfelelő bemeneti paraméterek.");
+        }
+    }
 
     /**
-     * Az upgradeTowerAgainstSpeed utasítás kiadását kezeljük le ebben a függványben.
+     * Az upgradeTowerShootingSpeed utasítás kiadását kezeljük le ebben a függvényben.
      * Meghívásakor fejlesztjük a megadott korrdinátán lévő torony tüzelési gyakoriságát.
      */
-    private void upgradeTowerShootingSpeed(String[] cmd);
+    private void upgradeTowerShootingSpeed(String[] cmd){
+        if (cmd.length > 2){
+            int x = tryParseInt(cmd[1]);
+            int y = tryParseInt(cmd[2]);
+            Event event = new Event(x, y, Action.UPGRADE_TOWER);
+            event.fireRateIncrement = 1.3;
+            game.getGameEngine().handleEvent(event);
+        } else {
+            System.out.println("Nem megfelelő bemeneti paraméterek.");
+        }
+    }
 
     /**
-     * Az upgradeBlockageAgainstDwarves utasítás kiadását kezeljük le ebben a függványben.
+     * Az upgradeTowerRange utasítás kiadását kezeljük le ebben a függvényben.
+     * Meghívásakor fejlesztjük a megadott korrdinátán lévő torony hatótávolságát.
+     */
+    private void upgradeTowerRange(String[] cmd){
+        if (cmd.length > 2){
+            int x = tryParseInt(cmd[1]);
+            int y = tryParseInt(cmd[2]);
+            Event event = new Event(x, y, Action.UPGRADE_TOWER);
+            event.rangeIncrement = 1.3;
+            game.getGameEngine().handleEvent(event);
+        } else {
+            System.out.println("Nem megfelelő bemeneti paraméterek.");
+        }
+    }
+
+    /**
+     * Az upgradeBlockageAgainstDwarves utasítás kiadását kezeljük le ebben a függvényben.
      * Meghívásakor fejlesztjük a megadott korrdinátán lévő akadályt ez ellen az ellenség ellen.
      */
-    private void upgradeBlockageAgainstDwarves(String[] cmd);
+    private void upgradeBlockageAgainstDwarves(String[] cmd){
+        if (cmd.length > 2){
+            int x = tryParseInt(cmd[1]);
+            int y = tryParseInt(cmd[2]);
+            Event event = new Event(x, y, Action.UPGRADE_BLOCKAGE);
+            event.against = EnemyType.Dwarf;
+            event.slowIncrement = 1;
+            game.getGameEngine().handleEvent(event);
+        } else {
+            System.out.println("Nem megfelelő bemeneti paraméterek.");
+        }
+    }
 
     /**
-     * Az upgradeBlockageAgainstElves utasítás kiadását kezeljük le ebben a függványben.
+     * Az upgradeBlockageAgainstElves utasítás kiadását kezeljük le ebben a függvényben.
      * Meghívásakor fejlesztjük a megadott korrdinátán lévő akadályt ez ellen az ellenség ellen.
      */
-    private void upgradeBlockageAgainstElves(String[] cmd);
+    private void upgradeBlockageAgainstElves(String[] cmd){
+        if (cmd.length > 2){
+            int x = tryParseInt(cmd[1]);
+            int y = tryParseInt(cmd[2]);
+            Event event = new Event(x, y, Action.UPGRADE_BLOCKAGE);
+            event.against = EnemyType.Elf;
+            event.slowIncrement = 1;
+            game.getGameEngine().handleEvent(event);
+        } else {
+            System.out.println("Nem megfelelő bemeneti paraméterek.");
+        }
+    }
 
     /**
-     * Az upgradeBlockageAgainstHobbits utasítás kiadását kezeljük le ebben a függványben.
+     * Az upgradeBlockageAgainstHobbits utasítás kiadását kezeljük le ebben a függvényben.
      * Meghívásakor fejlesztjük a megadott korrdinátán lévő akadályt ez ellen az ellenség ellen.
      */
-    private void upgradeBlockageAgainstHobbits(String[] cmd);
+    private void upgradeBlockageAgainstHobbits(String[] cmd){
+        if (cmd.length > 2){
+            int x = tryParseInt(cmd[1]);
+            int y = tryParseInt(cmd[2]);
+            Event event = new Event(x, y, Action.UPGRADE_BLOCKAGE);
+            event.against = EnemyType.Hobbit;
+            event.slowIncrement = 1;
+            game.getGameEngine().handleEvent(event);
+        } else {
+            System.out.println("Nem megfelelő bemeneti paraméterek.");
+        }
+    }
 
     /**
-     * Az upgradeBlockageAgainstMen utasítás kiadását kezeljük le ebben a függványben.
+     * Az upgradeBlockageAgainstMen utasítás kiadását kezeljük le ebben a függvényben.
      * Meghívásakor fejlesztjük a megadott korrdinátán lévő akadályt ez ellen az ellenség ellen.
      */
-    private void upgradeBlockageAgainstMen(String[] cmd);
+    private void upgradeBlockageAgainstMen(String[] cmd){
+        if (cmd.length > 2){
+            int x = tryParseInt(cmd[1]);
+            int y = tryParseInt(cmd[2]);
+            Event event = new Event(x, y, Action.UPGRADE_BLOCKAGE);
+            event.against = EnemyType.Man;
+            event.slowIncrement = 1;
+            game.getGameEngine().handleEvent(event);
+        } else {
+            System.out.println("Nem megfelelő bemeneti paraméterek.");
+        }
+    }
 
     /**
-     * A simulate utasítás kiadását kezeljük le ebben a függványben.
+     * A simulate utasítás kiadását kezeljük le ebben a függvényben.
      * Meghívásakor egy időegységnyit léptetünk a tornyokon és az ellenségeken.
      */
-    private void simulate();
+    private void simulate(){
+        if (canBuild){
+            System.out.println("Amíg építés fázisban vagy, nem tudod léptetni a játékot");
+        } else {
+            game.getGameEngine().update();
+        }
+    }
 
     /**
-     * A help utasítás kiadását kezeljük le ebben a függványben.
+     * A help utasítás kiadását kezeljük le ebben a függvényben.
      * Meghívásakor kiírjuk a lehetséges parancsokat.
      */
     private void help()
     {
-        System.out.println("Lehetseges parancsok: ");
         System.out.println("A kacsacsőrben levő paraméterek azok az adott függvény paraméterei, amit a parancs megadása után kell megadni");
+        System.out.println("Lehetseges parancsok: ");
         System.out.println("beginWriteCommands<fileName>");
         System.out.println("endWriteCommands");
         System.out.println("startGame");
@@ -304,11 +414,13 @@ public class Proto {
         System.out.println("upgradeTowerAgainstHobbits<x><y>");
         System.out.println("upgradeTowerAgainstMen<x><y>");
         System.out.println("upgradeTowerShootingSpeed<x><y>");
+        System.out.println("upgradeTowerRange<x><y>");
         System.out.println("upgradeBlockageAgainstDwarves<x><y>");
         System.out.println("upgradeBlockageAgainstElves<x><y>");
         System.out.println("upgradeBlockageAgainstHobbits<x><y>");
         System.out.println("upgradeBlockageAgainstMen<x><y>");
         System.out.println("simulate");
+        System.out.println("showGameState");
         System.out.println("help");
         System.out.println("exit");
     }
@@ -317,20 +429,50 @@ public class Proto {
      * ShowGameStates metódus. Kiírja az állapotokat.
      */
 
-    private void showGameStates()
+    private void showGameState()
     {
-        // A kiírásnál Sarumán varázserejét kellene kiírni. AZ 50 az csak ideiglenesen van.
-        int power = 50;
-        Map temp = new Map(50,50);
-        //Ideiglenes pálya
-        //Pálya kirajzolása
-        for(int i = 0; i<temp.getWidth(); i++){
-            for(int j = 0; i<temp.getHeight(); j++)
-            {
-                if(temp.)
+        Map theMap = game.getGameElements().map;
+        char[][] out = new char[theMap.getWidth()][theMap.getHeight()];
+        for (int i = 0; i < theMap.getHeight(); i++) {
+            for (int j = 0; j < theMap.getWidth(); j++) {
+                out[j][i] = '-';
             }
         }
-        System.out.println("Szaruman varázsereje: " + power);
+        for (Tower tower : game.getGameElements().towers) {
+            out[tower.getPosition().getY()][tower.getPosition().getX()] =
+                    tower.upgraded ? 'Ó' : 'O';
+        }
+        for (Path path : theMap.getPaths()) {
+            for (Line2D road : path.roads) {
+                Position p1 = new Position((int)road.getP1().getX(), (int)road.getP1().getY());
+                Position p2 = new Position((int)road.getP2().getX(), (int)road.getP2().getY());
+                //ha ez az út egy függőleges út
+                if (p1.getX() == p2.getX()){
+                    for (int i = Math.min(p1.getY(), p2.getY()); i < Math.max(p1.getY(), p2.getY()); i++) {
+                        out[p1.getX()][i] = ' ';
+                    }
+                } else { //ha ez az út egy vízszintes út
+                    for (int i = Math.min(p1.getX(), p2.getX()); i < Math.max(p1.getX(), p2.getX()); i++) {
+                        out[i][p1.getY()] = ' ';
+                    }
+                }
+            }
+        }
+        for (Blockage blockage : game.getGameElements().blockages) {
+            out[blockage.getPosition().getX()][blockage.getPosition().getY()] =
+                    blockage.upgraded ? '#' : '+';
+        }
+        for (Enemy enemy : game.getGameElements().enemies) {
+            out[enemy.getPosition().getX()][enemy.getPosition().getY()] = 'X';
+        }
+        for (int i = 0; i < theMap.getWidth(); i++) {
+            for (int j = 0; j < theMap.getHeight(); j++) {
+                System.out.print(out[i][j]);
+            }
+            System.out.println("");
+
+        }
+        System.out.println("Szaruman varázsereje: " + game.getGameElements().saruman.getSpellPower());
     }
 
     //TODO: komment megírása

@@ -8,6 +8,11 @@ import java.util.List;
 public class Blockage {
     private Position position;
     private List<BlockageCrystal> crystals;
+    /**
+     * mivel már nincs lista a kristályokról, így tudunk a legegyszerűbben
+     * információt kapni arról, hogy fejlesztett-e a torony
+     */
+    public boolean upgraded;
 
     /**
      * A Blockage osztály konstruktora.
@@ -17,6 +22,7 @@ public class Blockage {
     public Blockage(Position position) {
         this.position = position;
         crystals = new ArrayList<BlockageCrystal>();
+        upgraded = false;
     }
 
     /**
@@ -35,6 +41,7 @@ public class Blockage {
      */
     public void upgrade(BlockageCrystal crystal) {
         this.crystals.add(crystal);
+        upgraded = true;
     }
 
     /**
