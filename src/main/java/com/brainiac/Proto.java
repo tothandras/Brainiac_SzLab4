@@ -98,7 +98,7 @@ public class Proto {
                 String line;
                 br = new BufferedReader(new FileReader(cmd[1]));
                 while ((line = br.readLine()) != null) {
-                    feldolgoz(line);
+                    execute(line);
                 }
                 System.out.println(cmd[1] + " betoltese sikeres.");
             } catch (IOException e) {
@@ -483,6 +483,6 @@ public class Proto {
      * @param a: a loadCommands-fájl következő sora
      */
     //TODO: átnevezhető, hirtelenjében ezt sikerült kitalálnom...
-    private void feldolgoz(String a) {
+    private void execute(String a) {
     }
 }
