@@ -56,7 +56,7 @@ public class Damage {
      * @param enemyType
      */
 
-    void setDamage(double damage, EnemyType enemyType) {
+   public void setDamage(double damage, EnemyType enemyType) {
         switch (enemyType){
             case Dwarf:
 

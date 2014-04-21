@@ -27,6 +27,11 @@ public class Map {
         paths.add(path);
     }
 
+    public void setPaths(Path path)
+    {
+        paths.add(path);
+    }
+
     public int getWidth() {
         return width;
     }

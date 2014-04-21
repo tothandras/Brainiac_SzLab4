@@ -58,5 +58,9 @@ public class Man extends Enemy {
         man.position = this.position;
         return man;
     }
+    @Override
+    public void setPosition(Position pos) {
+        this.position=pos;
+    }
 
 }

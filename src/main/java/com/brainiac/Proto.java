@@ -4,6 +4,8 @@ import com.brainiac.model.*;
 
 import java.awt.geom.Line2D;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Proto {
     private BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
@@ -117,52 +119,209 @@ public class Proto {
 
             BufferedReader br = null;
             try {
+
+                //Szükség volt írni egy setPaths, illetve egy setPosition függvényt írni az enemyhez
+
+                /*Alapértelmezett beállítások:
+                    A pálya 5 magas, 10 hosszú
+                    Van egy egyenes út a (0,2) (9,2) koordináták között
+                    Egy ellenség indul az úton a (0,2)-es koordinátából
+                    Szarumán varázsereje 50
+
+                */
+                game.getGameElements().saruman.setSpellPower(50);
+                Path path = new Path();
+                Line2D road = new Line2D.Double(0, 2, 9, 2);
+                path.roads.add(road);
+                game.getGameElements().map = new Map(10, 5);
+                game.getGameElements().map.setPaths(path);
+                Enemy enemy = new Elf();
+                enemy.setPosition(new Position(0, 2));
+                game.getGameElements().enemies.add(enemy);
+
+                //gyakran kell, de nem default: Blockage blockage = new Blockage(new Position(2, 2));
+                //game.getGameElements().blockages.add(blockage);
+
                 if (cmd[1].equalsIgnoreCase("teszt1.txt")) {
-                    //TODO
+
+                    //Egy tornyot rakunk a pályára a (2,3) koordinátákra
+                    Tower tower = new Tower(new Position(2, 3));
+                    tower.setCutChance(0.0);
+                    game.getGameElements().towers.add(tower);
+
                 } else if (cmd[1].equalsIgnoreCase("teszt2.txt")) {
-                    //TODO
+
+                    //Egy tornyot rakunk a pályára a (2,3) koordinátákra
+                    Tower tower = new Tower(new Position(2, 3));
+                    tower.setCutChance(0.0);
+                    game.getGameElements().towers.add(tower);
+
                 } else if (cmd[1].equalsIgnoreCase("teszt3.txt")) {
-                    //TODO
+
+                    //Szarumánnak nincs elég varázsereje
+                    //Egy tornyot rakunk a pályára a (2,3) koordinátákra
+                    game.getGameElements().saruman.setSpellPower(5);
+                    Tower tower = new Tower(new Position(2, 3));
+                    tower.setCutChance(0.0);
+                    game.getGameElements().towers.add(tower);
+
                 } else if (cmd[1].equalsIgnoreCase("teszt4.txt")) {
-                    //TODO
+
+                    //Szarumán akadályt fejleszt
+                    //Egy tornyot rakunk a pályára a (2,3) koordinátákra
+                    //Meglévő akadály a (2,2) helyen
+                    Tower tower = new Tower(new Position(2, 3));
+                    tower.setCutChance(0.0);
+                    game.getGameElements().towers.add(tower);
+                    Blockage blockage = new Blockage(new Position(2,2));
+                    game.getGameElements().blockages.add(blockage);
+
                 } else if (cmd[1].equalsIgnoreCase("teszt5.txt")) {
-                    //TODO
+
+                    //Akadály fejlesztés sikertelen, mert nincs a megadott helyen akadály
+                    //Egy tornyot rakunk a pályára a (2,3) koordinátákra
+
                 } else if (cmd[1].equalsIgnoreCase("teszt6.txt")) {
-                    //TODO
+
+                    //Egy tornyot rakunk a pályára a (2,3) koordinátákra
+                    //Van akadály, de nincs varázserő
+                    Tower tower = new Tower(new Position(2, 3));
+                    tower.setCutChance(0.0);
+                    game.getGameElements().towers.add(tower);
+                    game.getGameElements().saruman.setSpellPower(4);
+                    Blockage blockage = new Blockage(new Position(2,2));
+                    game.getGameElements().blockages.add(blockage);
+
                 } else if (cmd[1].equalsIgnoreCase("teszt7.txt")) {
-                    //TODO
+
+                    //Egy tornyot rakunk a pályára a (2,3) koordinátákra
+                    //Azt teszteljük, hogy eltűnik e az akadály
+                    //Akadály van a pályán, ellenség viszont nincs
+                    Tower tower = new Tower(new Position(2, 3));
+                    tower.setCutChance(0.0);
+                    game.getGameElements().towers.add(tower);
+                    game.getGameElements().enemies.clear();
+                    Blockage blockage = new Blockage(new Position(2,2));
+                    game.getGameElements().blockages.add(blockage);
+
                 } else if (cmd[1].equalsIgnoreCase("teszt8.txt")) {
-                    //TODO
+
+                    //Egy tünde van a pályán a 0,r-es pozícióban 5 életerővel 1-es sebességgel
+                    //Utolsó lövésre meg kell hallnia
+                    Tower tower = new Tower(new Position(2, 3));
+                    tower.setCutChance(0.0);
+                    game.getGameElements().towers.add(tower);
+                    Damage damage = new Damage();
+                    damage.setDamage(9.5, EnemyType.Elf); //Levon 95 életet
+                    enemy.hurt(damage);
+                    damage.setDamage((10/95), EnemyType.Elf); //majd visszaállítjuk, hogy csak 10-et vonjon le
+
                 } else if (cmd[1].equalsIgnoreCase("teszt9.txt")) {
-                    //TODO
+
+                    // Tünde 50 élettel
+                    Tower tower = new Tower(new Position(2, 3));
+                    tower.setCutChance(0.0);
+                    game.getGameElements().towers.add(tower);
+                    Damage damage = new Damage();
+                    damage.setDamage(5, EnemyType.Elf); //Levon 50 életet
+                    enemy.hurt(damage);
+                    damage.setDamage((10/50), EnemyType.Elf); //Majd visszaállítja, hogy csak 10-et vonjon le
+
                 } else if (cmd[1].equalsIgnoreCase("teszt10.txt")) {
-                    //TODO
+
+                    //Torony lerakása egyenlőre üres pályára
+
+
                 } else if (cmd[1].equalsIgnoreCase("teszt11.txt")) {
-                    //TODO
+
+                    //Torony lerakása foglalt helyre
+                    Tower tower = new Tower(new Position(2, 3));
+                    tower.setCutChance(0.0);
+                    game.getGameElements().towers.add(tower);
+
                 } else if (cmd[1].equalsIgnoreCase("teszt12.txt")) {
-                    //TODO
+
+                    //Torony lerakása viszont kevés varázserő van
+                    game.getGameElements().saruman.setSpellPower(5);
+
                 } else if (cmd[1].equalsIgnoreCase("teszt13.txt")) {
-                    //TODO
+
+                    //Torony fejlesztése sikeresen
+                    //Van a pályán egy torony, illetve egy akadály
+                    Tower tower = new Tower(new Position(2, 3));
+                    tower.setCutChance(0.0);
+                    game.getGameElements().towers.add(tower);
+                    Blockage blockage = new Blockage(new Position(2,2));
+                    game.getGameElements().blockages.add(blockage);
+
                 } else if (cmd[1].equalsIgnoreCase("teszt14.txt")) {
-                    //TODO
+
+                    //Torony fejlesztése azon a helyen ahol nincs torony
+                    //alapértelmezett beállítások
+
                 } else if (cmd[1].equalsIgnoreCase("teszt15.txt")) {
-                    //TODO
+
+                    //Torony fejlesztése kevés varázserővel
+                    Tower tower = new Tower(new Position(2, 3));
+                    tower.setCutChance(0.0);
+                    game.getGameElements().towers.add(tower);
+
                 } else if (cmd[1].equalsIgnoreCase("teszt16.txt")) {
-                    //TODO
+
+                    //Ellenfél kettőbevágása
+                    Tower tower = new Tower(new Position(2, 3));
+                    tower.setCutChance(1.0);
+                    game.getGameElements().towers.add(tower);
+
                 } else if (cmd[1].equalsIgnoreCase("teszt17.txt")) {
-                    //TODO
+
+                    //Torony lövés tesztelése. Van egy torony a pályán, illetve egy ellenfél a (2,2) positionnál
+                    Tower tower = new Tower(new Position(2, 3));
+                    tower.setCutChance(0.0);
+                    game.getGameElements().towers.add(tower);
+                    Enemy enemy_2 = new Elf();
+                    enemy_2.setPosition(new Position(2, 2));
+
                 } else if (cmd[1].equalsIgnoreCase("teszt18.txt")) {
-                    //TODO
+
+                    //A pályán van egy torony, amire köd ereszkedik
+                    Tower tower = new Tower(new Position(2, 3));
+                    tower.setCutChance(0.0);
+                    game.getGameElements().towers.add(tower);
+
                 } else if (cmd[1].equalsIgnoreCase("teszt19.txt")) {
-                    //TODO
+
+                    //Nincs torony a pályán. Egy ellenfél az út utolsó blokkjában van
+                    enemy.setPosition(new Position(9, 2));
+
                 } else if (cmd[1].equalsIgnoreCase("teszt20.txt")) {
+
+                    //Betöltünk egy pályát
                     //TODO
+
                 } else if (cmd[1].equalsIgnoreCase("teszt21.txt")) {
-                    //TODO
+
+                    //Az ellenfél mozog előre
+                    //Alapértelmezett beállítások
+
                 } else if (cmd[1].equalsIgnoreCase("teszt22.txt")) {
-                    //TODO
+
+                    //Egy ellenfél a megadott helyen és előtte az (1,2) pozícióban egy akadály
+                    Blockage blockage = new Blockage(new Position(1,2));
+                    game.getGameElements().blockages.add(blockage);
+
                 } else if (cmd[1].equalsIgnoreCase("teszt23.txt")) {
-                    //TODO
+
+                    //Van egy torony a pályán, illetve egy ellenfél 5 életerővel
+                    Tower tower = new Tower(new Position(2, 3));
+                    tower.setCutChance(0.0);
+                    game.getGameElements().towers.add(tower);
+                    Damage damage = new Damage();
+                    damage.setDamage(9.5, EnemyType.Elf); //Levon 95 életet
+                    enemy.hurt(damage);
+                    damage.setDamage((10/95), EnemyType.Elf); //majd visszaállítjuk, hogy csak 10-et vonjon le
+
+
                 }
                 String line;
                 br = new BufferedReader(new FileReader(cmd[1]));
@@ -455,6 +614,8 @@ public class Proto {
      * A simulate utasítás kiadását kezeljük le ebben a függvényben.
      * Meghívásakor egy időegységnyit léptetünk a tornyokon és az ellenségeken.
      */
+
+    //Todo Írja ki a létrejött változásokat
     private void simulate(){
         if (canBuild){
             System.out.println("Amíg építés fázisban vagy, nem tudod léptetni a játékot");

@@ -67,4 +67,9 @@ public class Dwarf extends Enemy {
         return dwarf;
     }
 
+    @Override
+    public void setPosition(Position pos) {
+        this.position=pos;
+    }
+
 }

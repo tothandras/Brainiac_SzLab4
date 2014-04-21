@@ -53,4 +53,7 @@ public abstract class Enemy {
      * Csinál egy másolatot magából, ugyanolyan tulajdonságokkal, mint az eredeti egyed.
      */
     public abstract Enemy cut();
+
+    public abstract void setPosition(Position pos);
+
 }

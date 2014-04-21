@@ -65,4 +65,8 @@ public class Elf extends Enemy {
         elf.position = this.position;
         return elf;
     }
+    @Override
+    public void setPosition(Position pos) {
+        this.position=pos;
+    }
 }

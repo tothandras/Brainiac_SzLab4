@@ -58,5 +58,9 @@ public class Hobbit extends Enemy {
         hobbit.position = this.position;
         return hobbit;
     }
+    @Override
+    public void setPosition(Position pos) {
+        this.position=pos;
+    }
 
 }
