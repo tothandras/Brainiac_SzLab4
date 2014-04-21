@@ -2,6 +2,7 @@ package com.brainiac;
 
 import com.brainiac.model.*;
 
+import java.awt.geom.Line2D;
 import java.io.*;
 
 public class Proto {
@@ -156,7 +157,6 @@ public class Proto {
      */
     private void startBuild(){
         if (canBuild){
-            //TODO
             System.out.println("Butaság még egyszer engedélyezni az építést.");
         } else {
             canBuild = true;
@@ -184,6 +184,11 @@ public class Proto {
             int x = tryParseInt(cmd[1]);
             int y = tryParseInt(cmd[2]);
             //TODO: itt megnézzük, hogy az adott helyre szabad-e építkeznünk: nem út-e, van-e ott már torony
+            for (Path path : game.getGameElements().map.getPaths()) {
+                for (Line2D road : path.roads) {
+
+                }
+            }
         } else {
             System.out.println("Nem megfelelő bemeneti paraméterek.");
         }
