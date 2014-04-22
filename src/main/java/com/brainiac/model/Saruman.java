@@ -12,6 +12,7 @@ public class Saruman {
 
     /**
      * Szarumán varázserejét lehet ezzel a függvénnyel lekérdezni.
+     *
      * @return Szarumán varázsereje.
      */
     public int getSpellPower() {
@@ -20,6 +21,7 @@ public class Saruman {
 
     /**
      * Szarumán varázserejét lehet ezzel a függvénnyel beállítani.
+     *
      * @param spellPower Szarumán varázsereje ennyi lesz. Ez NEM a változás mértéke!
      */
     public void setSpellPower(int spellPower) {

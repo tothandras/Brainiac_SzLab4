@@ -13,12 +13,11 @@ public class Position {
         this.y = y;
     }
 
-    public double distance(Position position){
+    public double distance(Position position) {
         return Math.sqrt(Math.pow(x - position.getX(), 2) + Math.pow(y - position.getY(), 2));
     }
 
     /**
-     *
      * @return: visszatér az x koordinátával
      */
     public int getX() {
@@ -26,7 +25,6 @@ public class Position {
     }
 
     /**
-     *
      * @return: visszatér az í koordinátával
      */
     public int getY() {
@@ -36,7 +34,6 @@ public class Position {
     // kulon setter mindegyikre, elteres az eredetitol
 
     /**
-     *
      * @param x: az érték amire átállítjuk az x koordinátát
      */
     public void setX(int x) {
@@ -44,7 +41,6 @@ public class Position {
     }
 
     /**
-     *
      * @param y: az érték amire átállítjuk az y koordinátát
      */
     public void setY(int y) {

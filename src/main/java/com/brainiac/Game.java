@@ -10,7 +10,6 @@ public class Game {
     private GameEngine gameEngine;
     private GameElements gameElements;
     //private GameFrame gameFrame; //protohoz kiszedve
-    //TODO
     ///Ezt nézzétek majd át, hogy így jó-e.
     private Proto proto;
 

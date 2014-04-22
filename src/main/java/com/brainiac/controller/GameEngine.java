@@ -28,6 +28,12 @@ public class GameEngine {
      * @param numberOfEnemies Ellenségek száma.
      */
     public void newRound(int numberOfEnemies) {
+        for (Blockage blockage : gameElements.blockages) {
+            System.out.println("Akadály (" + blockage.getPosition().getX() + ", " + blockage.getPosition().getY()+ "): megszűnik");
+            if (Proto.fileOut != null){
+                Proto.fileOut.println("Akadály (" + blockage.getPosition().getX() + ", " + blockage.getPosition().getY()+ "): megszűnik");
+            }
+        }
         gameElements.blockages.clear();
         gameElements.enemies.clear();
         Random random = new Random();
@@ -47,15 +53,19 @@ public class GameEngine {
                     enemy = new Man();
                     break;
             }
-            enemy.getPosition().setX(0);
-            enemy.getPosition().setY((int) gameElements.map.getPaths().get(0).roads.get(0).getY1());
+            //enemy.getPosition().setX(0);
+            //enemy.getPosition().setY((int) gameElements.map.getPaths().get(0).roads.get(0).getY1());
             gameElements.enemies.add(enemy);
         }
     }
 
     public void update() {
-        step();
-        fire();
+        if (gameElements.enemies.isEmpty()){
+            newRound(0);
+        } else {
+            step();
+            fire();
+        }
     }
 
     private void step() {
@@ -68,7 +78,7 @@ public class GameEngine {
             }
             for (Path path : gameElements.map.getPaths()) {
                 for (Line2D road : path.roads) {
-                    if (road.contains(enemy.getPosition().getX(), enemy.getPosition().getY())) {
+                    if (road.ptLineDist((double)enemy.getPosition().getX(), (double)enemy.getPosition().getY()) == 0) {
                         if (road.getX2() == road.getX1() && road.getY2() > road.getY1()) {
                             // eszak
                             enemy.move(Direction.NORTH, blockage);
@@ -98,9 +108,24 @@ public class GameEngine {
             }
             for (Enemy enemy : gameElements.enemies) {
                 if (tower.getPosition().distance(enemy.getPosition()) < towerRange) {
+                    System.out.println("Torony (" + tower.getPosition().getX() + ", " + tower.getPosition().getY() + "): Lő");
+                    if (Proto.fileOut != null){
+                        Proto.fileOut.println("Torony (" + tower.getPosition().getX() + ", " + tower.getPosition().getY() + "): Lő");
+                    }
                     Enemy temp = tower.fire(enemy);
-                    if (temp != null){
+                    if (enemy.getLife() <= 0){
+                        gameElements.enemies.remove(enemy);
+                        System.out.println("Ellenség (" + enemy.getPosition().getX() + ", " + enemy.getPosition().getY() + "): Meghal");
+                        if (Proto.fileOut != null){
+                            Proto.fileOut.println("Ellenség (" + enemy.getPosition().getX() + ", " + enemy.getPosition().getY() + "): Meghal");
+                        }
+                        gameElements.saruman.setSpellPower(gameElements.saruman.getSpellPower() + 1);
+                    } else if (temp != null){
                         gameElements.enemies.add(temp);
+                        System.out.println("Ellenség (" + enemy.getPosition().getX() + ", " + enemy.getPosition().getY() + "): félbevágódik");
+                        if (Proto.fileOut != null){
+                            Proto.fileOut.println("Ellenség (" + enemy.getPosition().getX() + ", " + enemy.getPosition().getY() + "): félbevágódik");
+                        }
                     }
                     break;
                 }
@@ -137,7 +162,7 @@ public class GameEngine {
                     boolean isOnRoad = false;
                     for (Path path : gameElements.map.getPaths()) {
                         for (Line2D road : path.roads) {
-                            if (road.contains(event.x, event.y)){
+                            if (road.ptLineDist((double)event.x, (double)event.y) == 0){
                                 isOnRoad = true;
                             }
                         }

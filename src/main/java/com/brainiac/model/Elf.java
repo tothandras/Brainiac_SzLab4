@@ -1,5 +1,7 @@
 package com.brainiac.model;
 
+import com.brainiac.Proto;
+
 /**
  * Project name: Brainiac_SzLab4
  * User: tothandras
@@ -23,6 +25,10 @@ public class Elf extends Enemy {
     public void hurt(Damage damage) {
         int d = damage.getDamage(EnemyType.Elf);
         life -= d;
+        System.out.println("Tünde (" + position.getX() + ", " + position.getY() + "): Sérül ");
+        if (Proto.fileOut != null) {
+            Proto.fileOut.println("Tünde (" + position.getX() + ", " + position.getY() + "): Sérül ");
+        }
     }
 
     /**
@@ -33,7 +39,10 @@ public class Elf extends Enemy {
      */
     @Override
     public void move(Direction direction, Blockage blockage) {
-        int speed_actual = speed - blockage.block(EnemyType.Elf);
+        int speed_actual = speed;
+        if (blockage != null){
+            speed_actual = speed - blockage.block(EnemyType.Elf);
+        }
 
         switch (direction) {
             case EAST:
@@ -51,6 +60,10 @@ public class Elf extends Enemy {
             default:
                 break;
 
+        }
+        System.out.println("Tünde (" + position.getX() + ", " + position.getY() + "): Lép ");
+        if (Proto.fileOut != null) {
+            Proto.fileOut.println("Tünde (" + position.getX() + ", " + position.getY() + "): Lép ");
         }
     }
 

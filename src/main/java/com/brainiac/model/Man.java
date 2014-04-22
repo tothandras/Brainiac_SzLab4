@@ -1,5 +1,7 @@
 package com.brainiac.model;
 
+import com.brainiac.Proto;
+
 public class Man extends Enemy {
     /**
      * Beállítjuk a megfellelő kezdő sebességet, életet és pozíciót.
@@ -17,6 +19,10 @@ public class Man extends Enemy {
     public void hurt(Damage damage) {
         int d = damage.getDamage(EnemyType.Man);
         life -= d;
+        System.out.println("Ember (" + position.getX() + ", " + position.getY() + "): Sérül ");
+        if (Proto.fileOut != null) {
+            Proto.fileOut.println("Ember (" + position.getX() + ", " + position.getY() + "): Sérül ");
+        }
     }
 
     /**
@@ -46,6 +52,10 @@ public class Man extends Enemy {
                 break;
 
         }
+        System.out.println("Ember (" + position.getX() + ", " + position.getY() + "): Lép ");
+        if (Proto.fileOut != null) {
+            Proto.fileOut.println("Ember (" + position.getX() + ", " + position.getY() + "): Lép ");
+        }
     }
 
     @Override
@@ -56,9 +66,10 @@ public class Man extends Enemy {
         man.position = this.position;
         return man;
     }
+
     @Override
     public void setPosition(Position pos) {
-        this.position=pos;
+        this.position = pos;
     }
 
 }

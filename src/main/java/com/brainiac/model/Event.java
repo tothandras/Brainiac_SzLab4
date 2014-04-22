@@ -6,7 +6,8 @@ public class Event {
     public EnemyType against;
     public double damageIncrement, fireRateIncrement, rangeIncrement;
     public int slowIncrement;
-    public Event(int x, int y, Action action){
+
+    public Event(int x, int y, Action action) {
         this.x = x;
         this.y = y;
         this.action = action;

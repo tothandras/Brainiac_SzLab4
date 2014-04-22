@@ -183,6 +183,9 @@ public class Proto {
 
                     //Akadály fejlesztés sikertelen, mert nincs a megadott helyen akadály
                     //Egy tornyot rakunk a pályára a (2,3) koordinátákra
+                    Tower tower = new Tower(new Position(2, 3));
+                    tower.setCutChance(0.0);
+                    game.getGameElements().towers.add(tower);
 
                 } else if (cmd[1].equalsIgnoreCase("teszt6.txt")) {
 
@@ -217,6 +220,7 @@ public class Proto {
                     Damage damage = new Damage();
                     damage.setDamage(9.5, EnemyType.Elf); //Levon 95 életet
                     enemy.hurt(damage);
+                    enemy.setSpeed(1);
                     damage.setDamage((10/95), EnemyType.Elf); //majd visszaállítjuk, hogy csak 10-et vonjon le
 
                 } else if (cmd[1].equalsIgnoreCase("teszt9.txt")) {
@@ -228,6 +232,7 @@ public class Proto {
                     Damage damage = new Damage();
                     damage.setDamage(5, EnemyType.Elf); //Levon 50 életet
                     enemy.hurt(damage);
+                    enemy.setSpeed(1);
                     damage.setDamage((10/50), EnemyType.Elf); //Majd visszaállítja, hogy csak 10-et vonjon le
 
                 } else if (cmd[1].equalsIgnoreCase("teszt10.txt")) {
@@ -240,6 +245,7 @@ public class Proto {
                     //Torony lerakása foglalt helyre
                     Tower tower = new Tower(new Position(2, 3));
                     tower.setCutChance(0.0);
+                    game.getGameElements().enemies.clear();
                     game.getGameElements().towers.add(tower);
 
                 } else if (cmd[1].equalsIgnoreCase("teszt12.txt")) {
@@ -267,6 +273,7 @@ public class Proto {
                     //Torony fejlesztése kevés varázserővel
                     Tower tower = new Tower(new Position(2, 3));
                     tower.setCutChance(0.0);
+                    game.getGameElements().saruman.setSpellPower(4);
                     game.getGameElements().towers.add(tower);
 
                 } else if (cmd[1].equalsIgnoreCase("teszt16.txt")) {
@@ -274,6 +281,7 @@ public class Proto {
                     //Ellenfél kettőbevágása
                     Tower tower = new Tower(new Position(2, 3));
                     tower.setCutChance(1.0);
+                    enemy.setSpeed(1);
                     game.getGameElements().towers.add(tower);
 
                 } else if (cmd[1].equalsIgnoreCase("teszt17.txt")) {
@@ -300,7 +308,6 @@ public class Proto {
                 } else if (cmd[1].equalsIgnoreCase("teszt20.txt")) {
 
                     //Betöltünk egy pályát
-                    //TODO
 
                 } else if (cmd[1].equalsIgnoreCase("teszt21.txt")) {
 
@@ -626,7 +633,6 @@ public class Proto {
      * Meghívásakor egy időegységnyit léptetünk a tornyokon és az ellenségeken.
      */
 
-    //Todo Írja ki a létrejött változásokat
     private void simulate(){
         if (canBuild){
             System.out.println("Amíg építés fázisban vagy, nem tudod léptetni a játékot");
@@ -680,7 +686,7 @@ public class Proto {
             }
         }
         for (Tower tower : game.getGameElements().towers) {
-            out[tower.getPosition().getY()][tower.getPosition().getX()] =
+            out[tower.getPosition().getX()][tower.getPosition().getY()] =
                     tower.upgraded ? 'Ó' : 'O';
         }
         for (Path path : theMap.getPaths()) {
@@ -704,9 +710,11 @@ public class Proto {
                     blockage.upgraded ? '#' : '+';
         }
         for (Enemy enemy : game.getGameElements().enemies) {
-            out[enemy.getPosition().getX()][enemy.getPosition().getY()] = 'X';
+            if (enemy.getPosition().getX() < theMap.getWidth() && enemy.getPosition().getY() < theMap.getHeight()){
+                out[enemy.getPosition().getX()][enemy.getPosition().getY()] = 'X';
+            }
         }
-        for (int i = 0; i < theMap.getHeight(); i++) {
+        for (int i = theMap.getHeight() - 1; i >= 0; i--) {
             for (int j = 0; j < theMap.getWidth(); j++) {
                 System.out.print(out[j][i]);
                 if (fileOut != null){
@@ -731,6 +739,10 @@ public class Proto {
      */
     private void listEnemies(){
         int db = 0;
+        System.out.println("Pályán lévő egységek felsorolásának kezdete>");
+        if (fileOut != null){
+            fileOut.println("Pályán lévő egységek felsorolásának kezdete>");
+        }
         for (Enemy enemy : game.getGameElements().enemies) {
             System.out.println("Ellenség" + (db++) + ": pozíció: " + enemy.getPosition().getX() + ", " +
                                 enemy.getPosition().getY() + "; életerő: " + enemy.getLife() + "; sebesség: " + enemy.getSpeed());
@@ -738,6 +750,10 @@ public class Proto {
                 fileOut.println("Ellenség" + db + ": pozíció: " + enemy.getPosition().getX() + ", " +
                         enemy.getPosition().getY() + "; életerő: " + enemy.getLife() + "; sebesség: " + enemy.getSpeed());
             }
+        }
+        System.out.println("<Pályán lévő egységek felsorolásának vége");
+        if (fileOut != null){
+            fileOut.println("<Pályán lévő egységek felsorolásának vége");
         }
     }
 

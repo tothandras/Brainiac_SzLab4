@@ -20,11 +20,19 @@ public abstract class Enemy {
 
     /**
      * mozgatjuk az ellenefelet a megfelelő irányba és sebeséggel
+     *
      * @param direction: milyen irányba mozogjon
-     * @param blockage: kap e blokkolót
+     * @param blockage:  kap e blokkolót
      */
     public abstract void move(Direction direction, Blockage blockage);
 
+    /**
+     * protohoz kell csak
+     * @param speed az új sebesggég
+     */
+    public void setSpeed(int speed){
+        this.speed = speed;
+    }
 
     /*
     Visszatér az ellenség pozícióval
@@ -35,17 +43,19 @@ public abstract class Enemy {
 
     /**
      * Az ellenség életerejének lekérdezésére szolgáló függvény.
+     *
      * @return Az ellenség életerejével tér vissza.
      */
-    public int getLife(){
+    public int getLife() {
         return life;
     }
 
     /**
      * Az ellenség sebességének lekérdezésére szolgáló függvény.
+     *
      * @return Az ellenség sebességével tér vissza.
      */
-    public int getSpeed(){
+    public int getSpeed() {
         return speed;
     }
 

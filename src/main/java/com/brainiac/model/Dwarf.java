@@ -1,5 +1,7 @@
 package com.brainiac.model;
 
+import com.brainiac.Proto;
+
 /**
  * Project name: Brainiac_SzLab4
  * User: tothandras
@@ -24,12 +26,17 @@ public class Dwarf extends Enemy {
     public void hurt(Damage damage) {
         int d = damage.getDamage(EnemyType.Dwarf);
         life -= d;
+        System.out.println("Törp (" + position.getX() + ", " + position.getY() + "): Sérül ");
+        if (Proto.fileOut != null) {
+            Proto.fileOut.println("Törp (" + position.getX() + ", " + position.getY() + "): Sérül ");
+        }
     }
 
     /**
      * mozgatjuk az ellenefelet a megfelelő irányba és sebeséggel
+     *
      * @param direction: milyen irányba mozogjon
-     * @param blockage: kap e blokkolót
+     * @param blockage:  kap e blokkolót
      */
     @Override
     public void move(Direction direction, Blockage blockage) {
@@ -53,6 +60,10 @@ public class Dwarf extends Enemy {
                 break;
 
         }
+        System.out.println("Törp (" + position.getX() + ", " + position.getY() + "): Lép ");
+        if (Proto.fileOut != null) {
+            Proto.fileOut.println("Törp (" + position.getX() + ", " + position.getY() + "): Lép ");
+        }
 
     }
 
@@ -67,7 +78,7 @@ public class Dwarf extends Enemy {
 
     @Override
     public void setPosition(Position pos) {
-        this.position=pos;
+        this.position = pos;
     }
 
 }

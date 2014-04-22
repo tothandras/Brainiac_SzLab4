@@ -8,6 +8,7 @@ public class TowerCrystal {
 
     /**
      * Új varázskő a sebzés növelésére
+     *
      * @param against
      * @param increment
      */
@@ -21,23 +22,27 @@ public class TowerCrystal {
     /**
      * Varázskő sebzésének lekérdezése
      * Visszatér a növelés mértékével
+     *
      * @return increment
      */
     public double getIncrement() {
-            return increment;
+        return increment;
 
     }
 
     /**
      * Milyen ellenfélre hat
      * Visszatér egy ellenfél típussal
+     *
      * @return against az EnemyType
      */
-    public EnemyType getAgainst(){
+    public EnemyType getAgainst() {
         return against;
     }
+
     /**
      * Varázskő lővési gyakoriságra gyakorolt hatása
+     *
      * @return
      */
     public double getSpeedIncrement() {
@@ -46,6 +51,7 @@ public class TowerCrystal {
 
     /**
      * Varázskő hatótáv növelésének lekérdezése
+     *
      * @return hatótáv
      */
     public double getRangeIncrement() {

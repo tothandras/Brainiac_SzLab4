@@ -24,15 +24,13 @@ public class Damage {
     }
 
     /**
-     *
-     * @param enemyType
-     * paraméterül kap egy ellenfél típust, és visszatér annak a sebzésével
+     * @param enemyType paraméterül kap egy ellenfél típust, és visszatér annak a sebzésével
      * @return
      */
 
     public int getDamage(EnemyType enemyType) {
 
-        switch (enemyType){
+        switch (enemyType) {
             case Dwarf:
 
                 return toDwarf;
@@ -50,29 +48,27 @@ public class Damage {
     }
 
     /**
-     *
-     * @param damage
-     * a paraméterül átvett damaget hozzáadja a másik paraméterül kapott ellenség típushoz
+     * @param damage    a paraméterül átvett damaget hozzáadja a másik paraméterül kapott ellenség típushoz
      * @param enemyType
      */
 
-   public void setDamage(double damage, EnemyType enemyType) {
-        switch (enemyType){
+    public void setDamage(double damage, EnemyType enemyType) {
+        switch (enemyType) {
             case Dwarf:
 
-                toDwarf = (int)(toDwarf * damage);
+                toDwarf = (int) (toDwarf * damage);
                 break;
             case Elf:
 
-                toElf = (int)(toElf * damage);
+                toElf = (int) (toElf * damage);
                 break;
             case Hobbit:
 
-                toHobbit = (int)(toHobbit * damage);
+                toHobbit = (int) (toHobbit * damage);
                 break;
             case Man:
 
-                toMan = (int)(toMan * damage);
+                toMan = (int) (toMan * damage);
                 break;
             default:
                 break;

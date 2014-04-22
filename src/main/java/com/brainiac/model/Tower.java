@@ -36,7 +36,7 @@ public class Tower {
      */
     public Enemy fire(Enemy enemy) {
         enemy.hurt(damage);
-        if (Math.random() < cutChance){
+        if (Math.random() < cutChance) {
             return enemy.cut();
         }
         return null;
@@ -62,25 +62,28 @@ public class Tower {
 
     /**
      * Torony tüzelési gyakoriságának lekérdezése
+     *
      * @return a torony tüzelési gyakorisága
      */
-    public int getSpeed(){
+    public int getSpeed() {
         return fireRate;
     }
 
     /**
      * A félbevágós lövedék esélyének lekérdezése
+     *
      * @return a félbevágós lövedék esélye
      */
-    public double getCutChance(){
+    public double getCutChance() {
         return cutChance;
     }
 
     /**
      * A függvény segítségével beállíthatjuk a félbevágós lövés esélyét.
+     *
      * @param cutChance A félbevágós lövés új esélye.
      */
-    public void setCutChance(double cutChance){
+    public void setCutChance(double cutChance) {
         this.cutChance = cutChance;
     }
 
