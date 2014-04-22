@@ -1,5 +1,3 @@
-teszt10.txt betöltése sikeres
-Fájlba írás kezdete>
 ----------
 ----------
          
@@ -15,4 +13,3 @@ Torony építése sikeres.
 ----------
 ----------
 Szarumán varázsereje: 40
-<Fájlba írás vége

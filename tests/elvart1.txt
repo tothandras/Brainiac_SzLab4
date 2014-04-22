@@ -1,5 +1,3 @@
-teszt1.txt betöltése sikeres
-Fájlba írás kezdete>
 ----------
 --O-------
 X         
@@ -15,4 +13,3 @@ X +
 ----------
 ----------
 Szarumán varázsereje: 40
-<Fájlba írás vége

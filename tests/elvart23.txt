@@ -1,5 +1,3 @@
-teszt23.txt betöltése sikeres
-Fájlba írás kezdete>
 ----------
 --O-------
 X          
@@ -14,4 +12,3 @@ Torony (2, 3): Lő
 Tünde (1, 2): Sérül
 Tünde (1, 2): Meghal
 A hatalmas Szauron nyert.
-<Fájlba írás vége

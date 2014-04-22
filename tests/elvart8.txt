@@ -1,8 +1,21 @@
-loadCommands teszt8.txt
-beginWriteCommands teszteset8_out.txt
-showGameState
-listEnemies
-simulate
-showGameState
-listEnemies
-endWriteCommands
+----------
+--O-------
+X          
+----------
+----------
+Szarumán varázsereje: 50
+Pályán lévő egységek felsorolásának kezdete>
+Tünde: pozíció: 0, 2; életerő: 5; sebesség: 1
+<Pályán lévő egységek felsorolásának vége
+Tünde (1, 2): Lép
+Torony (2, 3): Lő
+Tünde (1, 2): Sérül
+Tünde (1, 2): Meghal
+----------
+--O-------
+          
+----------
+----------
+Szarumán varázsereje: 51
+Pályán lévő egységek felsorolásának kezdete>
+<Pályán lévő egységek felsorolásának vége
