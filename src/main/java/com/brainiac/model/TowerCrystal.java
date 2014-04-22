@@ -1,7 +1,5 @@
 package com.brainiac.model;
 
-import com.brainiac.Skeleton;
-
 public class TowerCrystal {
     private EnemyType against;
     private double increment;

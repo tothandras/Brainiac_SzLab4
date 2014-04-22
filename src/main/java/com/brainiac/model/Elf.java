@@ -1,8 +1,5 @@
 package com.brainiac.model;
 
-import com.brainiac.Skeleton;
-import sun.net.www.content.audio.x_aiff;
-
 /**
  * Project name: Brainiac_SzLab4
  * User: tothandras
@@ -65,8 +62,9 @@ public class Elf extends Enemy {
         elf.position = this.position;
         return elf;
     }
+
     @Override
     public void setPosition(Position pos) {
-        this.position=pos;
+        this.position = pos;
     }
 }

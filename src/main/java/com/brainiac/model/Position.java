@@ -1,7 +1,5 @@
 package com.brainiac.model;
 
-import com.brainiac.Skeleton;
-
 public class Position {
     private int x;
     private int y;

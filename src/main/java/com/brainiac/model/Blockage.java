@@ -1,7 +1,5 @@
 package com.brainiac.model;
 
-import com.brainiac.Skeleton;
-
 import java.util.ArrayList;
 import java.util.List;
 

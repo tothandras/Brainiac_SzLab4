@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Proto {
     private BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-    private PrintWriter fileOut = null;
+    public static PrintWriter fileOut = null;
     Game game;
     boolean canBuild;
 
@@ -36,7 +36,7 @@ public class Proto {
     /**
      * Biztonságosan csinál egész számot egy stringből
      * @param value a kapott string
-     * @return a stringből képzett egész szám. ha nem értelmes szöveget adtunk meg, 0-val tér vissza
+     * @return a stringből képzett egész szám. ha nem értelmes szövéget adtunk meg, 0-val tér vissza
      */
     int tryParseInt(String value) {
         try {
@@ -114,7 +114,7 @@ public class Proto {
      */
     private void loadCommands(String[] cmd) {
         if (cmd.length < 2) {
-            System.out.println("Nincs megadva fajlnev.");
+            System.out.println("Nincs megadva fájlnév.");
         } else {
 
             BufferedReader br = null;
@@ -129,6 +129,9 @@ public class Proto {
                     Szarumán varázsereje 50
 
                 */
+                game.getGameElements().towers.clear();
+                game.getGameElements().blockages.clear();
+                game.getGameElements().enemies.clear();
                 game.getGameElements().saruman.setSpellPower(50);
                 Path path = new Path();
                 Line2D road = new Line2D.Double(0, 2, 9, 2);
@@ -328,9 +331,9 @@ public class Proto {
                 while ((line = br.readLine()) != null) {
                     execute(line);
                 }
-                System.out.println(cmd[1] + " betoltese sikeres.");
+                System.out.println(cmd[1] + " betöltése sikeres.");
             } catch (IOException e) {
-                System.out.println(cmd[1] + " betoltesi hiba!");
+                System.out.println(cmd[1] + " betöltési hiba!");
                 e.printStackTrace();
             } finally {
                 try {
@@ -355,7 +358,7 @@ public class Proto {
         } else {
             try {
                 fileOut = new PrintWriter(cmd[1]);
-                System.out.println("Fajlba iras kezdete>");
+                System.out.println("Fájlba írás kezdete>");
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -369,7 +372,7 @@ public class Proto {
     private void endWriteCommands(){
         if (fileOut != null){
             fileOut.close();
-            System.out.println("<Fajlba iras vege.");
+            System.out.println("<Fájlba írás vége.");
             fileOut = null;
         }
     }
@@ -391,6 +394,10 @@ public class Proto {
             System.out.println("Butaság még egyszer engedélyezni az építést.");
         } else {
             canBuild = true;
+            System.out.println("Pályaelemek építésének kezdete>");
+            if (fileOut != null){
+                fileOut.println("Pályaelemek építésének kezdete>");
+            }
         }
     }
 
@@ -403,6 +410,10 @@ public class Proto {
             System.out.println("Hogyan fejezzük be az építést, ha el sem kezdtük?");
         } else {
             canBuild = false;
+            System.out.println("<Pályaelemek építésének vége");
+            if (fileOut != null){
+                fileOut.println("<Pályaelemek építésének vége");
+            }
         }
     }
 
@@ -678,11 +689,11 @@ public class Proto {
                 Position p2 = new Position((int)road.getP2().getX(), (int)road.getP2().getY());
                 //ha ez az út egy függőleges út
                 if (p1.getX() == p2.getX()){
-                    for (int i = Math.min(p1.getY(), p2.getY()); i < Math.max(p1.getY(), p2.getY()); i++) {
+                    for (int i = Math.min(p1.getY(), p2.getY()); i <= Math.max(p1.getY(), p2.getY()); i++) {
                         out[p1.getX()][i] = ' ';
                     }
                 } else { //ha ez az út egy vízszintes út
-                    for (int i = Math.min(p1.getX(), p2.getX()); i < Math.max(p1.getX(), p2.getX()); i++) {
+                    for (int i = Math.min(p1.getX(), p2.getX()); i <= Math.max(p1.getX(), p2.getX()); i++) {
                         out[i][p1.getY()] = ' ';
                     }
                 }
@@ -695,14 +706,23 @@ public class Proto {
         for (Enemy enemy : game.getGameElements().enemies) {
             out[enemy.getPosition().getX()][enemy.getPosition().getY()] = 'X';
         }
-        for (int i = 0; i < theMap.getWidth(); i++) {
-            for (int j = 0; j < theMap.getHeight(); j++) {
-                System.out.print(out[i][j]);
+        for (int i = 0; i < theMap.getHeight(); i++) {
+            for (int j = 0; j < theMap.getWidth(); j++) {
+                System.out.print(out[j][i]);
+                if (fileOut != null){
+                    fileOut.print(out[j][i]);
+                }
             }
             System.out.println("");
+            if (fileOut != null){
+                fileOut.println("");
+            }
 
         }
-        System.out.println("Szaruman varázsereje: " + game.getGameElements().saruman.getSpellPower());
+        System.out.println("Szarumán varázsereje: " + game.getGameElements().saruman.getSpellPower());
+        if (fileOut != null){
+            fileOut.println("Szarumán varázsereje: " + game.getGameElements().saruman.getSpellPower());
+        }
     }
 
     /**
@@ -714,6 +734,10 @@ public class Proto {
         for (Enemy enemy : game.getGameElements().enemies) {
             System.out.println("Ellenség" + (db++) + ": pozíció: " + enemy.getPosition().getX() + ", " +
                                 enemy.getPosition().getY() + "; életerő: " + enemy.getLife() + "; sebesség: " + enemy.getSpeed());
+            if (fileOut != null){
+                fileOut.println("Ellenség" + db + ": pozíció: " + enemy.getPosition().getX() + ", " +
+                        enemy.getPosition().getY() + "; életerő: " + enemy.getLife() + "; sebesség: " + enemy.getSpeed());
+            }
         }
     }
 
@@ -732,10 +756,18 @@ public class Proto {
             }
             System.out.println("Torony" + (db++) + ": pozíció: " + tower.getPosition().getX() + ", " + tower.getPosition().getY() +
                     "; hatósugár:" + towerRange + "; Tüzelési gyakoriság: " + tower.getSpeed());
+            if (fileOut != null){
+                fileOut.println("Torony" + db + ": pozíció: " + tower.getPosition().getX() + ", " + tower.getPosition().getY() +
+                        "; hatósugár:" + towerRange + "; Tüzelési gyakoriság: " + tower.getSpeed());
+            }
         }
     }
 
-    //TODO: komment megírása
-    private void exit();
+    /**
+     * Meghívásának hatására bezáródik a program.
+     */
+    private void exit(){
+        System.exit(0);
+    }
 }
 

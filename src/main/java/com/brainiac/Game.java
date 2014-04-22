@@ -9,7 +9,7 @@ import com.brainiac.view.GameFrame;
 public class Game {
     private GameEngine gameEngine;
     private GameElements gameElements;
-    private GameFrame gameFrame;
+    //private GameFrame gameFrame; //protohoz kiszedve
     //TODO
     ///Ezt nézzétek majd át, hogy így jó-e.
     private Proto proto;
@@ -20,15 +20,16 @@ public class Game {
     public Game() {
         gameElements = new GameElements();
         gameEngine = new GameEngine(gameElements);
-        gameFrame = new GameFrame(gameEngine, gameElements);
+        //gameFrame = new GameFrame(gameEngine, gameElements); //protohoz kiszedve
         proto = new Proto(this);
-        proto.doCommands();
     }
 
     public static void main(String[] args) {
         Game game = new Game();
-        game.gameEngine.startNewGame();
-        new Thread(game.gameFrame).start();
+        game.proto.doCommands();
+        //protohoz kiszedve
+        /*game.gameEngine.startNewGame();
+        new Thread(game.gameFrame).start();*/
     }
 
     /**
@@ -49,7 +50,7 @@ public class Game {
      * A proto ezen keresztül tudja elérni a gameFrame változót
      * @return a Game osztály gameFrame változója
      */
-    public GameFrame getGameFrame(){
+    /*public GameFrame getGameFrame(){ //protohoz kiszedve
         return gameFrame;
-    }
+    }*/
 }

@@ -1,5 +1,6 @@
 package com.brainiac.controller;
 
+import com.brainiac.Proto;
 import com.brainiac.model.*;
 import com.brainiac.model.Event;
 
@@ -147,18 +148,31 @@ public class GameEngine {
                             if ((tower.getPosition().getX() == event.x) && (tower.getPosition().getY() == event.y)){
                                 theSamePosition = true;
                                 System.out.println("Torony építése sikertelen: a tornyot csak üres helyre lehet építeni");
+                                if (Proto.fileOut != null){
+                                    Proto.fileOut.println("Torony építése sikertelen: a tornyot csak üres helyre lehet építeni");
+                                }
                             }
                         }
                         if (!theSamePosition){
                             if (gameElements.saruman.getSpellPower() < costOfTowerBuild){
                                 System.out.println("Torony építése sikertelen: nincs elég varázserő.");
+                                if (Proto.fileOut != null){
+                                    Proto.fileOut.println("Torony építése sikertelen: nincs elég varázserő.");
+                                }
                             } else {
                                 gameElements.towers.add(new Tower(new Position(event.x, event.y)));
+                                gameElements.saruman.setSpellPower(gameElements.saruman.getSpellPower() - costOfTowerBuild);
                                 System.out.println("Torony építése sikeres.");
+                                if (Proto.fileOut != null){
+                                    Proto.fileOut.println("Torony építése sikeres.");
+                                }
                             }
                         }
                     } else {
                         System.out.println("Torony építése sikertelen: a tornyot csak üres helyre lehet építeni");
+                        if (Proto.fileOut != null){
+                            Proto.fileOut.println("Torony építése sikertelen: a tornyot csak üres helyre lehet építeni");
+                        }
                     }
                 }
                 break;
@@ -167,7 +181,7 @@ public class GameEngine {
                     boolean isOnRoad = false;
                     for (Path path : gameElements.map.getPaths()) {
                         for (Line2D road : path.roads) {
-                            if (road.contains(event.x, event.y)){
+                            if (road.ptLineDist((double)event.x, (double)event.y) == 0){
                                 isOnRoad = true;
                             }
                         }
@@ -178,18 +192,31 @@ public class GameEngine {
                             if ((blockage.getPosition().getX() == event.x) && (blockage.getPosition().getY() == event.y)){
                                 theSamePosition = true;
                                 System.out.println("Akadály építése sikertelen: az akadályt csak útra szabad építeni.");
+                                if (Proto.fileOut != null){
+                                    Proto.fileOut.println("Akadály építése sikertelen: az akadályt csak útra szabad építeni.");
+                                }
                             }
                         }
                         if (!theSamePosition){
                             if (gameElements.saruman.getSpellPower() < costOfBlockageBuild){
                                 System.out.println("Akadály építése sikertelen: nincs elég varázserő.");
+                                if (Proto.fileOut != null){
+                                    Proto.fileOut.println("Akadály építése sikertelen: nincs elég varázserő.");
+                                }
                             } else {
                                 gameElements.blockages.add(new Blockage(new Position(event.x, event.y)));
+                                gameElements.saruman.setSpellPower(gameElements.saruman.getSpellPower() - costOfBlockageBuild);
                                 System.out.println("Akadály építése sikeres.");
+                                if (Proto.fileOut != null){
+                                    Proto.fileOut.println("Akadály építése sikeres.");
+                                }
                             }
                         }
                     } else {
                         System.out.println("Akadály építése sikertelen: az akadályt csak útra szabad építeni.");
+                        if (Proto.fileOut != null){
+                            Proto.fileOut.println("Akadály építése sikertelen: az akadályt csak útra szabad építeni.");
+                        }
                     }
                 }
                 break;
@@ -201,15 +228,25 @@ public class GameEngine {
                             thereIsTower = true;
                             if (gameElements.saruman.getSpellPower() < costOfTowerUpgrade){
                                 System.out.println("Torony fejlesztése sikertelen: nincs elég varázserő.");
+                                if (Proto.fileOut != null){
+                                    Proto.fileOut.println("Torony fejlesztése sikertelen: nincs elég varázserő.");
+                                }
                             } else {
                                 tower.upgrade(new TowerCrystal(event.against, event.damageIncrement,
                                                                event.fireRateIncrement, event.rangeIncrement));
+                                gameElements.saruman.setSpellPower(gameElements.saruman.getSpellPower() - costOfTowerUpgrade);
                                 System.out.println("Torony fejlesztése sikeres.");
+                                if (Proto.fileOut != null){
+                                    Proto.fileOut.println("Torony fejlesztése sikeres.");
+                                }
                             }
                         }
                     }
                     if (!thereIsTower){
                         System.out.println("Torony fejlesztése sikertelen: nem létezik a megadott helyen torony.");
+                        if (Proto.fileOut != null){
+                            Proto.fileOut.println("Torony fejlesztése sikertelen: nem létezik a megadott helyen torony.");
+                        }
                     }
                 }
                 break;
@@ -221,14 +258,24 @@ public class GameEngine {
                             thereIsBlockage = true;
                             if (gameElements.saruman.getSpellPower() < costOfBlockageUpgrade){
                                 System.out.println("Akadály fejlesztése sikertelen: nincs elég varázserő.");
+                                if (Proto.fileOut != null){
+                                    Proto.fileOut.println("Akadály fejlesztése sikertelen: nincs elég varázserő.");
+                                }
                             } else {
                                 blockage.upgrade(new BlockageCrystal(event.against, event.slowIncrement));
+                                gameElements.saruman.setSpellPower(gameElements.saruman.getSpellPower() - costOfBlockageUpgrade);
                                 System.out.println("Akadály fejlesztése sikeres.");
+                                if (Proto.fileOut != null){
+                                    Proto.fileOut.println("Akadály fejlesztése sikeres.");
+                                }
                             }
                         }
                     }
                     if (!thereIsBlockage){
                         System.out.println("Akadály fejlesztése sikertelen: nem létezik a megadott helyen akadály.");
+                        if (Proto.fileOut != null){
+                            Proto.fileOut.println("Akadály fejlesztése sikertelen: nem létezik a megadott helyen akadály.");
+                        }
                     }
                 }
                 break;

@@ -1,7 +1,5 @@
 package com.brainiac.model;
 
-import com.brainiac.Skeleton;
-
 public class Hobbit extends Enemy {
     /**
      * Beállítjuk a megfellelő kezdő sebességet, életet és pozíciót.

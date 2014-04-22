@@ -1,8 +1,5 @@
 package com.brainiac.model;
 
-/**
- * Created by Acer on 2014.04.21..
- */
 public class Event {
     public int x, y;
     public Action action;

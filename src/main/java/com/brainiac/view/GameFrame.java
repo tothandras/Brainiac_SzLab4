@@ -32,7 +32,7 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
         setResizable(false);
         setLocationRelativeTo(null);
         pack();
-        setVisible(true);
+        //setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
