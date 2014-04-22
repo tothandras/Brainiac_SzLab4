@@ -1,5 +1,3 @@
-teszt11.txt betöltése sikeres
-Fájlba írás kezdete>
 ----------
 --O-------
          
@@ -15,4 +13,3 @@ Torony építése sikertelen: a tornyot csak üres helyre lehet építeni
 ----------
 ----------
 Szarumán varázsereje: 50
-<Fájlba írás vége

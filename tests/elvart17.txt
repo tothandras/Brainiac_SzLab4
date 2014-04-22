@@ -1,5 +1,3 @@
-teszt17.txt betöltése sikeres
-Fájlba írás kezdete>
 ----------
 --O-------
 X X  	
@@ -24,4 +22,3 @@ Pályán lévő ellenségek felsorolásának kezdete>
 Tünde: pozíció: 3, 2; életerő: 40; sebesség: 1
 Tünde: pozíció: 1, 2; életerő: 50; sebesség: 1
 <Pályán lévő ellenségek felsorolásának vége
-<Fájlba írás vége

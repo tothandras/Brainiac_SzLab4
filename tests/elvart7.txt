@@ -1,5 +1,3 @@
-teszt7.txt betöltése sikeres
-Fájlba írás kezdete>
 ----------
 --O-------
   +       
@@ -13,4 +11,3 @@ Akadály (2, 2): megszűnik
 ----------
 ----------
 Szarumán varázsereje: 50
-<Fájlba írás vége
