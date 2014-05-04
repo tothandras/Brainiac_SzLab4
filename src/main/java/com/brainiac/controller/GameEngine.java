@@ -61,7 +61,7 @@ public class GameEngine {
                 Enemy enemy;
                 // Véletlenszerűen választunk egyet az útvonalak közül
                 // Lehet különböző kezdőpontjuk
-                Position startingPosition = startingPositions.get(Math.abs(random.nextInt()) % startingPositions.size());
+                Position startingPosition = new Position(startingPositions.get(Math.abs(random.nextInt()) % startingPositions.size()));
 
                 // Véletlenszerűen választunk az ellenség típusok közül
                 switch (Math.abs(random.nextInt()) % 4) {
@@ -109,7 +109,6 @@ public class GameEngine {
         }
     }
 
-    // TODO eleg szarul megy, valaki? azt sem ertem miert igy mukodik, ha newRound-ban nem 1, hanem tobb ellenseget adunk meg
     private void step() {
         Random random = new Random();
 
@@ -127,9 +126,10 @@ public class GameEngine {
             for (Path path : gameElements.map.getPaths()) {
                 for (Line2D road : path.getRoads()) {
                     // Ha rajta van az úton
-                    if (enemy.getPosition().distanceFromRoad(road) <= 2) {
+                    if (enemy.getPosition().distanceFromRoad(road) == 0) {
                         roads.add(road);
                     }
+
                 }
             }
 

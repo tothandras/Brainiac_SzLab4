@@ -39,7 +39,6 @@ public class Hobbit extends Enemy {
             currentSpeed -= block > currentSpeed ? currentSpeed : block;
         }
 
-        System.out.println(speed);
         // Léptetés a megfelelő irányba
         switch (direction) {
             // Észak

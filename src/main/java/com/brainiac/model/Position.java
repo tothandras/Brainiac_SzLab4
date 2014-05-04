@@ -18,6 +18,16 @@ public class Position {
     }
 
     /**
+     * Másoló konstruktor
+     *
+     * @param p Másolandó pozíció
+     */
+    public Position(Position p) {
+        this.x = p.getX();
+        this.y = p.getY();
+    }
+
+    /**
      * Másik pozíciótol vett távolsága
      *
      * @param position Másik pozíció
@@ -29,7 +39,7 @@ public class Position {
 
     /**
      * Úttól vett távolság
-     * 
+     *
      * @param road Út
      * @return Távolság
      */
