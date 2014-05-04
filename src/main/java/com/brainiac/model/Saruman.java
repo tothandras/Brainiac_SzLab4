@@ -1,6 +1,7 @@
 package com.brainiac.model;
 
 public class Saruman {
+    // Varázserő
     private int spellPower;
 
     /**

@@ -1,5 +1,12 @@
 package com.brainiac.model;
 
 public enum EnemyType {
-    Dwarf, Elf, Hobbit, Man
+    // Törp
+    Dwarf,
+    // Tünde
+    Elf,
+    // Hobbit
+    Hobbit,
+    // Ember
+    Man
 }

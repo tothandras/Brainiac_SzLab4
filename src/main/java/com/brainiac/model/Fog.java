@@ -5,10 +5,10 @@ public class Fog {
     private int range;
 
     /**
-     * A Fog osztály konstruktora.
+     * A Fog osztály konstruktora
      *
-     * @param middle A létrehozott új köd középpontja.
-     * @param range  A létrehozott új köd sugara.
+     * @param middle A létrehozott új köd középpontja
+     * @param range  A létrehozott új köd sugara
      */
     public Fog(Position middle, int range) {
         this.middle = middle;
@@ -16,18 +16,18 @@ public class Fog {
     }
 
     /**
-     * A köd osztály hatósugarát lehet ezzel a függvénnyel lekérdezni.
+     * A köd osztály hatósugarát lehet ezzel a függvénnyel lekérdezni
      *
-     * @return Visszatér a köd sugarával.
+     * @return A köd sugara
      */
     public int getRange() {
         return range;
     }
 
     /**
-     * A köd osztály középpontját lehet ezzel a függvénnyel lekérdezni.
+     * A köd osztály középpontját lehet ezzel a függvénnyel lekérdezni
      *
-     * @return Visszatér a köd középpontjával.
+     * @return A köd középpontja
      */
     public Position getMiddle() {
         return middle;

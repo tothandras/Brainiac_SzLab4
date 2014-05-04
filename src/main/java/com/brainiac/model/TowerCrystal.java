@@ -2,39 +2,38 @@ package com.brainiac.model;
 
 public class TowerCrystal {
     private EnemyType against;
-    private double increment;
-    private double speedIncrement;
-    private double rangeIncrement;
+    private int increment;
+    private int fireRateIncrement;
+    private int rangeIncrement;
 
     /**
-     * Új varázskő a sebzés növelésére
+     * Új varázskő a sebzés, hatótávolság, vagy tüzelési sebesség növelésére
      *
-     * @param against
-     * @param increment
+     * @param against Ellenség típus ellen
+     * @param increment Sebzés növelése
+     * @param speedIncrement Tüzelési sebesség növelése
+     * @param rangeIncrement Tüzelési hatótávolság növelése
      */
-    public TowerCrystal(EnemyType against, double increment, double speedIncrement, double rangeIncrement) {
+    public TowerCrystal(EnemyType against, int increment, int speedIncrement, int rangeIncrement) {
         this.against = against;
         this.increment = increment;
-        this.speedIncrement = speedIncrement;
+        this.fireRateIncrement = speedIncrement;
         this.rangeIncrement = rangeIncrement;
     }
 
     /**
      * Varázskő sebzésének lekérdezése
-     * Visszatér a növelés mértékével
      *
-     * @return increment
+     * @return Sebzés növelésének mértéke
      */
-    public double getIncrement() {
+    public int getIncrement() {
         return increment;
-
     }
 
     /**
-     * Milyen ellenfélre hat
-     * Visszatér egy ellenfél típussal
+     * Varázskő sebzésnövelése melyik elleség típus ellen hatásos
      *
-     * @return against az EnemyType
+     * @return Ellenség típus
      */
     public EnemyType getAgainst() {
         return against;
@@ -43,18 +42,18 @@ public class TowerCrystal {
     /**
      * Varázskő lővési gyakoriságra gyakorolt hatása
      *
-     * @return
+     * @return Tüzelési sebesség növelésének mértéke
      */
-    public double getSpeedIncrement() {
-        return speedIncrement;
+    public int getFireRateIncrement() {
+        return fireRateIncrement;
     }
 
     /**
      * Varázskő hatótáv növelésének lekérdezése
      *
-     * @return hatótáv
+     * @return Tüzelési hatótávolság növelésének mértéke
      */
-    public double getRangeIncrement() {
+    public int getRangeIncrement() {
         return rangeIncrement;
     }
 }

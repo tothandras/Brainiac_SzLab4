@@ -1,75 +1,84 @@
 package com.brainiac.model;
 
-import com.brainiac.Proto;
-
 public class Hobbit extends Enemy {
     /**
-     * Beállítjuk a megfellelő kezdő sebességet, életet és pozíciót.
+     * Beállítjuk a megfellelő kezdő sebességet, életet és pozíciót
+     *
+     * @param position Kezdőpozíció
      */
-    public Hobbit() {
+    public Hobbit(Position position) {
+        this.position = position;
         life = 50;
-        speed = 2;
-        this.position = new Position(0, 0);
+        speed = 1;
     }
 
     /**
-     * @param damage: a sebzés
+     * Hobbitot sebezzük
+     *
+     * @param damage: Sebzés
      */
     @Override
     public void hurt(Damage damage) {
+        // TODO: hol hal meg?
         int d = damage.getDamage(EnemyType.Hobbit);
         life -= d;
-        System.out.println("Hobbit (" + position.getX() + ", " + position.getY() + "): Sérül ");
-        if (Proto.fileOut != null) {
-            Proto.fileOut.println("Hobbit (" + position.getX() + ", " + position.getY() + "): Sérül ");
-        }
     }
 
     /**
-     * mozgatjuk az ellenefelet a megfelelő irányba és sebeséggel
+     * Mozgatjuk az törpöt a megfelelő irányba
      *
-     * @param direction: milyen irányba mozogjon
-     * @param blockage:  kap e blokkolót
+     * @param direction: Haladás iránya
+     * @param blockage:  Ha az útjában akadály van, akkor megkapja paraméterben
      */
     @Override
     public void move(Direction direction, Blockage blockage) {
-        int speed_actual = speed - blockage.block(EnemyType.Hobbit);
+        // Pillanatnyi sebesség
+        int currentSpeed = speed;
+        if (blockage != null) {
+            int block = blockage.block(EnemyType.Hobbit);
+            currentSpeed -= block > currentSpeed ? currentSpeed : block;
+        }
 
+        System.out.println(speed);
+        // Léptetés a megfelelő irányba
         switch (direction) {
-            case EAST:
-                position.setX(position.getX() + speed_actual);
-                break;
+            // Észak
             case NORTH:
-                position.setY(position.getY() + speed_actual);
+                position.setY(position.getY() + currentSpeed);
                 break;
+            // Kelet
+            case EAST:
+                position.setX(position.getX() + currentSpeed);
+                break;
+            // Dél
             case SOUTH:
-                position.setY(position.getY() - speed_actual);
+                position.setY(position.getY() - currentSpeed);
                 break;
+            // Nyugat
             case WEST:
-                position.setX(position.getX() - speed_actual);
+                position.setX(position.getX() - currentSpeed);
                 break;
             default:
                 break;
 
         }
-        System.out.println("Hobbit (" + position.getX() + ", " + position.getY() + "): Lép ");
-        if (Proto.fileOut != null) {
-            Proto.fileOut.println("Hobbit (" + position.getX() + ", " + position.getY() + "): Lép ");
-        }
     }
 
+    /**
+     * Hobbit szétvágása
+     * Csinál egy másolatot magából, ugyanolyan tulajdonságokkal és fele annyi életerővel mint az eredeti egyed
+     *
+     * @return Szétvágott hobbit
+     */
     @Override
     public Enemy cut() {
+        // Felére csökkentjük a törp életerejét
         this.life = this.life / 2;
-        Hobbit hobbit = new Hobbit();
+        // Létrehozunk egy törpöt megegyező tulajdonságokkal
+        // TODO: kicsit lehet el kéne tolni?
+        Hobbit hobbit = new Hobbit(this.position);
         hobbit.life = this.life;
-        hobbit.position = this.position;
         return hobbit;
-    }
-
-    @Override
-    public void setPosition(Position pos) {
-        this.position = pos;
     }
 
 }

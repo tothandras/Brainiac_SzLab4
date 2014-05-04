@@ -1,69 +1,58 @@
 package com.brainiac.model;
 
-/**
- * Project name: Brainiac_SzLab4
- * User: tothandras
- * Date: 2014.03.20.
- * Time: 12:02
- */
 public abstract class Enemy {
+    // Ellenség életereje
     protected int life;
+    // Ellenség sebessége
     protected int speed;
+    // Ellenség pozíciója
     protected Position position;
 
-
     /**
-     * @param damage: a sebzés
+     * Ellenséget sebezzük
+     *
+     * @param damage: Sebzés
      */
     public abstract void hurt(Damage damage);
 
 
     /**
-     * mozgatjuk az ellenefelet a megfelelő irányba és sebeséggel
+     * Mozgatjuk az ellenséget a megfelelő irányba
      *
-     * @param direction: milyen irányba mozogjon
-     * @param blockage:  kap e blokkolót
+     * @param direction: Haladás iránya
+     * @param blockage:  Ha az útjában akadály van, akkor megkapja paraméterben
      */
     public abstract void move(Direction direction, Blockage blockage);
 
     /**
-     * protohoz kell csak
-     * @param speed az új sebesggég
-     */
-    public void setSpeed(int speed){
-        this.speed = speed;
-    }
-
-    /*
-    Visszatér az ellenség pozícióval
+     * Visszatér az ellenség pozíciójával
+     *
+     * @return Ellenség pozíciója
      */
     public Position getPosition() {
         return position;
     }
 
     /**
-     * Az ellenség életerejének lekérdezésére szolgáló függvény.
+     * Visszatér az ellenség életerejével
      *
-     * @return Az ellenség életerejével tér vissza.
+     * @return Ellenség életereje
      */
     public int getLife() {
         return life;
     }
 
     /**
-     * Az ellenség sebességének lekérdezésére szolgáló függvény.
+     * Visszatér az ellenség sebességével
      *
-     * @return Az ellenség sebességével tér vissza.
+     * @return Ellenség sebessége
      */
     public int getSpeed() {
         return speed;
     }
 
     /**
-     * Csinál egy másolatot magából, ugyanolyan tulajdonságokkal, mint az eredeti egyed.
+     * Csinál egy másolatot magából, ugyanolyan tulajdonságokkal és fele annyi életerővel mint az eredeti egyed.
      */
     public abstract Enemy cut();
-
-    public abstract void setPosition(Position pos);
-
 }

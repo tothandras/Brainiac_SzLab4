@@ -12,7 +12,7 @@ public class GameElements {
     public Fog fog;
 
     /**
-     * Létrehozzuk a megfelelő tárolókat és játék elemeket.
+     * Létrehozzuk a megfelelő tárolókat és játék elemeket
      */
     public GameElements() {
         enemies = new ArrayList<Enemy>();
@@ -20,6 +20,5 @@ public class GameElements {
         blockages = new ArrayList<Blockage>();
         saruman = new Saruman();
         map = new Map(600, 600);
-        fog = null;
     }
 }

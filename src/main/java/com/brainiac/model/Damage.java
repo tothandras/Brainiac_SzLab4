@@ -1,21 +1,16 @@
 package com.brainiac.model;
 
-/**
- * Project name: Brainiac_SzLab4
- * User: tothandras
- * Date: 2014.03.20.
- * Time: 12:03
- */
 public class Damage {
+    // Sebzés mértéke a különbözű ellenség típusokra
     private int toDwarf;
     private int toElf;
     private int toHobbit;
     private int toMan;
 
     /**
-     * Damage osztály konstruktora. Minden ellenfélnek alapértelmezetten 10 a sebzése
+     * Damage osztály konstruktora
+     * Minden ellenségre alapértelmezetten 10 a sebzése
      */
-
     public Damage() {
         toDwarf = 10;
         toElf = 10;
@@ -24,51 +19,46 @@ public class Damage {
     }
 
     /**
-     * @param enemyType paraméterül kap egy ellenfél típust, és visszatér annak a sebzésével
-     * @return
+     * @param enemyType Egy ellenség típus
+     * @return Az ellenség típusra vonatkozó sebzés
      */
-
     public int getDamage(EnemyType enemyType) {
-
         switch (enemyType) {
+            // Törp
             case Dwarf:
-
                 return toDwarf;
+            // Tünde
             case Elf:
-
                 return toElf;
+            // Hobbit
             case Hobbit:
-
                 return toHobbit;
-            default:
-
+            // Ember
+            case Man:
                 return toMan;
+            default:
+                return 0;
         }
 
     }
 
     /**
-     * @param damage    a paraméterül átvett damaget hozzáadja a másik paraméterül kapott ellenség típushoz
-     * @param enemyType
+     * @param damage    Új sebzés
+     * @param enemyType Egy ellenség típus
      */
-
-    public void setDamage(double damage, EnemyType enemyType) {
+    public void setDamage(int damage, EnemyType enemyType) {
         switch (enemyType) {
             case Dwarf:
-
-                toDwarf = (int) (toDwarf * damage);
+                toDwarf = damage;
                 break;
             case Elf:
-
-                toElf = (int) (toElf * damage);
+                toElf = damage;
                 break;
             case Hobbit:
-
-                toHobbit = (int) (toHobbit * damage);
+                toHobbit = damage;
                 break;
             case Man:
-
-                toMan = (int) (toMan * damage);
+                toMan = damage;
                 break;
             default:
                 break;

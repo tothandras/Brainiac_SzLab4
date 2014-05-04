@@ -1,18 +1,17 @@
 package com.brainiac.model;
 
-/**
- * Torony osztály
- */
 public class Tower {
     private Position position;
+    // Sebzés osztály, külön-külön el van tárolva benne a különböző ellenségtípusokra vonatkozó sebzés mértéke
     private Damage damage;
+    // Tüzelési sebesség
     private int fireRate;
+    // Tüzelési hatótávolság
     private int range;
+    // Szévágás valószínűsége (0-1)
     private double cutChance;
-    /**
-     * mivel már nincs lista a kristályokról, így tudunk a legegyszerűbben
-     * információt kapni arról, hogy fejlesztett-e a torony
-     */
+    // Fejlesztve vagyunk?
+    // TODO: biztos kell? Máshogy rajzoljuk ki a fejlesztettet mint a nem fejlesztettet?
     public boolean upgraded;
 
     /**
@@ -21,8 +20,8 @@ public class Tower {
      * @param position A torony pozíciója
      */
     public Tower(Position position) {
-        this.upgraded = false;
         this.position = position;
+        this.upgraded = false;
         this.damage = new Damage();
         this.fireRate = 1;
         this.range = 100;
@@ -30,7 +29,7 @@ public class Tower {
     }
 
     /**
-     * Torony lő egyet a paramáterében megkapott ellenfélre.
+     * Torony lő egyet a paramáterében megkapott ellenségre
      *
      * @param enemy Az ellenfél
      */
@@ -70,18 +69,9 @@ public class Tower {
     }
 
     /**
-     * A félbevágós lövedék esélyének lekérdezése
+     * A függvény segítségével beállíthatjuk a félbevágós lövés valószínűségét
      *
-     * @return a félbevágós lövedék esélye
-     */
-    public double getCutChance() {
-        return cutChance;
-    }
-
-    /**
-     * A függvény segítségével beállíthatjuk a félbevágós lövés esélyét.
-     *
-     * @param cutChance A félbevágós lövés új esélye.
+     * @param cutChance A félbevágós lövés új valószínűsége
      */
     public void setCutChance(double cutChance) {
         this.cutChance = cutChance;
@@ -93,9 +83,13 @@ public class Tower {
      * @param crystal a kristály
      */
     public void upgrade(TowerCrystal crystal) {
-        range = (int) (range * crystal.getRangeIncrement());
-        fireRate = (int) (fireRate * crystal.getIncrement());
-        damage.setDamage(crystal.getIncrement(), crystal.getAgainst());
+        // Tüzelési hatótávolság növelése a kristályban meghatározott mértékben
+        range = range + crystal.getRangeIncrement();
+        // Tüzelési sebesség növelése a kristályban meghatározott mértékben
+        fireRate = fireRate + crystal.getFireRateIncrement();
+        // Sebzés növelése a kristályban meghatározott ellenség ellen és mértékben
+        damage.setDamage(damage.getDamage(crystal.getAgainst()) + crystal.getIncrement(), crystal.getAgainst());
+
         upgraded = true;
     }
 }

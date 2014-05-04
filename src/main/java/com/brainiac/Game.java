@@ -2,16 +2,12 @@ package com.brainiac;
 
 import com.brainiac.controller.GameEngine;
 import com.brainiac.model.GameElements;
-import com.brainiac.model.Position;
-import com.brainiac.model.Tower;
 import com.brainiac.view.GameFrame;
 
 public class Game {
     private GameEngine gameEngine;
     private GameElements gameElements;
-    //private GameFrame gameFrame; //protohoz kiszedve
-    ///Ezt nézzétek majd át, hogy így jó-e.
-    private Proto proto;
+    private GameFrame gameFrame;
 
     /**
      * A konstruktorban létrehozzuk a tagváltozókat
@@ -19,37 +15,19 @@ public class Game {
     public Game() {
         gameElements = new GameElements();
         gameEngine = new GameEngine(gameElements);
-        //gameFrame = new GameFrame(gameEngine, gameElements); //protohoz kiszedve
-        proto = new Proto(this);
+        gameFrame = new GameFrame(gameEngine, gameElements);
     }
 
+    /**
+     * Program belépési pontja
+      * @param args Argumentumok
+     */
     public static void main(String[] args) {
+        // Példányosítás
         Game game = new Game();
-        game.proto.doCommands();
-        //protohoz kiszedve
-        /*game.gameEngine.startNewGame();
-        new Thread(game.gameFrame).start();*/
+        // Új játék indítása
+        game.gameEngine.startNewGame();
+        // Nézet szál indítása
+        new Thread(game.gameFrame).start();
     }
-
-    /**
-     * A proto ezen keresztül tudja elérni a gameEngine változót
-     * @return a Game osztály gameEngine változója
-     */
-    public GameEngine getGameEngine(){
-        return gameEngine;
-    }
-    /**
-     * A proto ezen keresztül tudja elérni a gameElements változót
-     * @return a Game osztály gameElemets változója
-     */
-    public GameElements getGameElements(){
-        return gameElements;
-    }
-    /**
-     * A proto ezen keresztül tudja elérni a gameFrame változót
-     * @return a Game osztály gameFrame változója
-     */
-    /*public GameFrame getGameFrame(){ //protohoz kiszedve
-        return gameFrame;
-    }*/
 }

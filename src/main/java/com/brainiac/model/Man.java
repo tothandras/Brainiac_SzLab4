@@ -1,75 +1,82 @@
 package com.brainiac.model;
 
-import com.brainiac.Proto;
-
 public class Man extends Enemy {
     /**
-     * Beállítjuk a megfellelő kezdő sebességet, életet és pozíciót.
+     * Beállítjuk a megfellelő kezdő sebességet, életet és pozíciót
+     *
+     * @param position Kezdőpozíció
      */
-    public Man() {
-        life = 70;
-        speed = 2;
-        this.position = new Position(0, 0);
+    public Man(Position position) {
+        this.position = position;
+        life = 100;
+        speed = 1;
     }
 
     /**
-     * @param damage: a sebzés
+     * Embert sebezzük
+     *
+     * @param damage: Sebzés
      */
     @Override
     public void hurt(Damage damage) {
+        // TODO: hol hal meg?
         int d = damage.getDamage(EnemyType.Man);
         life -= d;
-        System.out.println("Ember (" + position.getX() + ", " + position.getY() + "): Sérül ");
-        if (Proto.fileOut != null) {
-            Proto.fileOut.println("Ember (" + position.getX() + ", " + position.getY() + "): Sérül ");
-        }
     }
 
     /**
-     * mozgatjuk az ellenefelet a megfelelő irányba és sebeséggel
+     * Mozgatjuk az embert a megfelelő irányba
      *
-     * @param direction: milyen irányba mozogjon
-     * @param blockage:  kap e blokkolót
+     * @param direction: Haladás iránya
+     * @param blockage:  Ha az útjában akadály van, akkor megkapja paraméterben
      */
     @Override
     public void move(Direction direction, Blockage blockage) {
-        int speed_actual = speed - blockage.block(EnemyType.Man);
+        // Pillanatnyi sebesség
+        int currentSpeed = speed;
+        if (blockage != null) {
+            int block = blockage.block(EnemyType.Man);
+            currentSpeed -= block > currentSpeed ? currentSpeed : block;
+        }
 
+        // Léptetés a megfelelő irányba
         switch (direction) {
-            case EAST:
-                position.setX(position.getX() + speed_actual);
-                break;
+            // Észak
             case NORTH:
-                position.setY(position.getY() + speed_actual);
+                position.setY(position.getY() + currentSpeed);
                 break;
+            // Kelet
+            case EAST:
+                position.setX(position.getX() + currentSpeed);
+                break;
+            // Dél
             case SOUTH:
-                position.setY(position.getY() - speed_actual);
+                position.setY(position.getY() - currentSpeed);
                 break;
+            // Nyugat
             case WEST:
-                position.setX(position.getX() - speed_actual);
+                position.setX(position.getX() - currentSpeed);
                 break;
             default:
                 break;
 
         }
-        System.out.println("Ember (" + position.getX() + ", " + position.getY() + "): Lép ");
-        if (Proto.fileOut != null) {
-            Proto.fileOut.println("Ember (" + position.getX() + ", " + position.getY() + "): Lép ");
-        }
     }
 
+    /**
+     * Ember szétvágása
+     * Csinál egy másolatot magából, ugyanolyan tulajdonságokkal és fele annyi életerővel mint az eredeti egyed
+     *
+     * @return Szétvágott ember
+     */
     @Override
     public Enemy cut() {
+        // Felére csökkentjük a ember életerejét
         this.life = this.life / 2;
-        Man man = new Man();
+        // Létrehozunk egy embert megegyező tulajdonságokkal
+        // TODO: kicsit lehet el kéne tolni?
+        Man man = new Man(this.position);
         man.life = this.life;
-        man.position = this.position;
         return man;
     }
-
-    @Override
-    public void setPosition(Position pos) {
-        this.position = pos;
-    }
-
 }

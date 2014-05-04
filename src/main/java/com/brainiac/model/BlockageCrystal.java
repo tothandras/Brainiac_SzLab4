@@ -1,11 +1,5 @@
 package com.brainiac.model;
 
-/**
- * Project name: Brainiac_SzLab4
- * User: tothandras
- * Date: 2014.03.20.
- * Time: 12:11
- */
 public class BlockageCrystal {
     private EnemyType against;
     private int increment;
@@ -13,22 +7,20 @@ public class BlockageCrystal {
     /**
      * Varázskő létrehozása
      *
-     * @param against
-     * @param increment
+     * @param against   Ellenség típus
+     * @param increment Lassítás mértéke
      */
     public BlockageCrystal(EnemyType against, int increment) {
         this.against = against;
         this.increment = increment;
-
     }
 
     /**
      * Varázskő hatásának lekérdezése
-     * Ha a paraméterben megadott enemyvel megegyezik ,akkor visszatér a növelés mértékével
-     * egyébként 0-val.
+     * Ha a paraméterben megadott ellenség típussal megegyezik, akkor visszatér a lassítás mértékével, egyébként 0-val.
      *
-     * @param enemyType
-     * @return increment
+     * @param enemyType Elleség típus
+     * @return Lassítás mértéke
      */
     public int getIncrement(EnemyType enemyType) {
         if (enemyType == against) {

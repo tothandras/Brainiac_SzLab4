@@ -6,16 +6,13 @@ import java.util.List;
 public class Blockage {
     private Position position;
     private List<BlockageCrystal> crystals;
-    /**
-     * mivel már nincs lista a kristályokról, így tudunk a legegyszerűbben
-     * információt kapni arról, hogy fejlesztett-e a torony
-     */
+
     public boolean upgraded;
 
     /**
-     * A Blockage osztály konstruktora.
+     * Új akadály létrehozása a pálya egy adott pozíciójára
      *
-     * @param position Az új akadály pozíciója.
+     * @param position Az akadály pozíciója
      */
     public Blockage(Position position) {
         this.position = position;
@@ -24,18 +21,18 @@ public class Blockage {
     }
 
     /**
-     * Visszaadja az akadály pozícióját a pályán.
+     * Visszaadja az akadály pozícióját a pályán
      *
-     * @return Az akadály pozíciója.
+     * @return Az akadály pozíciója
      */
     public Position getPosition() {
         return position;
     }
 
     /**
-     * Az akadály fejlesztése egy adott kristállyal.
+     * Az akadály fejlesztése egy adott kristállyal
      *
-     * @param crystal A hozzáadott kristály.
+     * @param crystal A hozzáadott kristály
      */
     public void upgrade(BlockageCrystal crystal) {
         this.crystals.add(crystal);
@@ -43,10 +40,10 @@ public class Blockage {
     }
 
     /**
-     * Megmondja a lassulás mértéket, amikor egy ellenség az akadályon megpróbál áthaladni.
+     * Lekérdezhető a lassulás mértéke egy ellenség típusra
      *
-     * @param enemyType Milyen fajta ellenség ellen vagyunk kíváncsiak a lassulás mértékére.
-     * @return Visszaadja hányadára csökkenjen az egység sebessége.
+     * @param enemyType Ellenség típus
+     * @return Akadályozás mértéke
      */
     public int block(EnemyType enemyType) {
         int retValue = 0;
