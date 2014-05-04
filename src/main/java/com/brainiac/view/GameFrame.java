@@ -1,9 +1,8 @@
 package com.brainiac.view;
 
 import com.brainiac.controller.GameEngine;
-import com.brainiac.model.*;
 import com.brainiac.model.Action;
-import javafx.geometry.Pos;
+import com.brainiac.model.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +20,8 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
     private GameElements gameElements;
     // Futó állapotban vagyunk?
     private boolean running;
+    // Action beállítása gombra kattintásnál
+    private Action action;
     // Játék felülete
     private JPanel gamePanel;
     private Graphics2D graphics;
@@ -34,6 +35,7 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
     public GameFrame(GameEngine gameEngine, GameElements gameElements) {
         this.gameEngine = gameEngine;
         this.gameElements = gameElements;
+        this.action = Action.NONE;
 
         makeGUI();
         addWindowListener(this);
@@ -55,19 +57,35 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
         gamePanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // TODO kivihetnénk külön függvénybe
+                // TODO kivihetnénk külön privát osztályba
                 int x = e.getX();
                 int y = e.getY();
-                Position p = new Position(x, y);
-                // Megvizsgáljuk, hogy gombra kattintottunk-e, a gombokat a képernyő alsó 200 pixelére rajzoljuk ki
-                // TODO
-                // ...
-                // TODO Ha igen, akkor Action-t váltunk
-                // ...
-                // TODO Ha nem, akkor a jelenlegi Action-nel meghívjuk a gameEngine egérkattintást lekezelő függvényét, kell majd Action változó a Framebe
-                // ...
-                Action a = Action.BUILD_BLOCKAGE;
-                gameEngine.handleMouseEvent(e, a);
+                Position position = new Position(x, y);
+                // Megvizsgáljuk, hogy gombra kattintottunk-e, a gombokat a képernyő alsó 50 pixelére rajzoljuk ki
+                if (y > HEIGHT - 50) {
+                    // Ha igen, akkor Action-t váltunk
+                    if (x < WIDTH / 4) {
+                        // 1. Gomb
+                        action = Action.BUILD_TOWER;
+                    } else if (x > WIDTH / 4 && x < 2 * WIDTH / 4) {
+                        // 2. Gomb
+                        action = Action.BUILD_BLOCKAGE;
+                    } else if (x > WIDTH / 4 * 2 && x < 3 * WIDTH / 4) {
+                        // TODO itt feloszthatnánk több kisebb gombra, hogy mit szeretnénk fejleszteni
+                        // 3. Gomb
+                        action = Action.UPGRADE_TOWER;
+                    } else if (x > WIDTH / 4 * 3 && x < WIDTH) {
+                        // TODO itt feloszthatnánk több kisebb gombra, hogy mit szeretnénk fejleszteni
+                        // 4. Gomb
+                        action = Action.UPGRADE_BLOCKAGE;
+                    }
+                } else if (action != Action.NONE) {
+                    // Ha nem, akkor a jelenlegi Action-nel meghívjuk a gameEngine eseménykezelő függvényét
+                    if (gameEngine.handleEvent(position, action)) {
+                        // Majd az action változót alapállapotba helyezzük, ha a parancs sikeresen végrehajtódott
+                        action = Action.NONE;
+                    }
+                }
             }
         });
 
@@ -102,22 +120,45 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 // draw towers
                 for (Tower tower : gameElements.towers) {
                     // TODO ezt jobban meg kell majd csinalni
-                    // TODO + ha kirajzol es meghivjuk a handleMouseEventet, hogy tornyot adjunk hozza, akkor  java.util.ConcurrentModificationException-t kapunk (lehet kene egy valtozo amivel lockolunk)
+                    // TODO + ha kirajzol es meghivjuk a handleMouseEventet, hogy tornyot adjunk hozza, akkor  java.util.ConcurrentModificationException-t kapunk (próbálgassátok ti is)
                     graphics.draw(new Ellipse2D.Double(tower.getPosition().getX() - tower.getRange(), tower.getPosition().getY() - tower.getRange(), 2 * tower.getRange(), 2 * tower.getRange()));
                     graphics.fill(new Ellipse2D.Double(tower.getPosition().getX() - WIDTH / 100, tower.getPosition().getY() - HEIGHT / 100, WIDTH / 50, HEIGHT / 50));
                 }
 
-                // draw enemies
-                for (Enemy enemy : gameElements.enemies) {
-                    graphics.setColor(Color.RED);
-                    graphics.drawOval(enemy.getPosition().getX() - 2, enemy.getPosition().getY() - 2, 4, 4);
-                }
-
                 // draw blockages
                 for (Blockage blockage : gameElements.blockages) {
+                    // TODO ide meg az akadályoknak
                     graphics.setColor(Color.BLUE);
-                    graphics.drawOval(blockage.getPosition().getX() - 2, blockage.getPosition().getY() - 2, 4, 4);
+                    graphics.fillOval(blockage.getPosition().getX() - 15, blockage.getPosition().getY() - 15, 30, 30);
                 }
+
+                // draw enemies
+                for (Enemy enemy : gameElements.enemies) {
+                    // TODO ide kellenek majd a képek az egyégeknek
+                    graphics.setColor(Color.RED);
+                    graphics.fillOval(enemy.getPosition().getX() - 3, enemy.getPosition().getY() - 3, 6, 6);
+                }
+
+                // Gombok a képernyő alsó 50 pixelén jelennek vannak
+                // TODO ide majd szép képekből álló gombok kellenek, ha kell megrajzolom Illustratorban és átküldöm
+                graphics.setColor(Color.BLACK);
+                graphics.drawLine(0, HEIGHT - 50, WIDTH, HEIGHT - 50);
+                for (int i = 0; i < 4; i++) {
+                    if (action == Action.BUILD_TOWER && i == 0 || action == Action.BUILD_BLOCKAGE && i == 1 || action == Action.UPGRADE_TOWER && i == 2 || action == Action.UPGRADE_BLOCKAGE && i == 3) {
+                        graphics.setColor(Color.GRAY);
+                    } else {
+                        graphics.setColor(Color.LIGHT_GRAY);
+                    }
+                    graphics.fillRect(i * WIDTH / 4, HEIGHT - 50, (i + 1) * WIDTH / 4, 50);
+                    graphics.setColor(Color.BLACK);
+                    if (i != 0) {
+                        graphics.drawLine(i * WIDTH / 4, HEIGHT, i * WIDTH / 4, HEIGHT - 50);
+                    }
+                }
+                graphics.drawString("Torony", WIDTH * 0.09f, HEIGHT - 25);
+                graphics.drawString("Akadály", WIDTH * 0.33f, HEIGHT - 25);
+                graphics.drawString("Torony fejlesztése", WIDTH * 0.53f, HEIGHT - 25);
+                graphics.drawString("Akadály fejlesztése", WIDTH * 0.77f, HEIGHT - 25);
 
                 // paint screen
                 Graphics g;
@@ -126,6 +167,7 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                     g.drawImage(image, 0, 16, null);
                 if (g != null) g.dispose();
 
+                // Szál altatása 20ms-ig
                 Thread.sleep(20);
             } catch (InterruptedException ex) {
                 ex.printStackTrace();

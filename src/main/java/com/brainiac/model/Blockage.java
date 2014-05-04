@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Blockage {
     private Position position;
+    private int range;
     private List<BlockageCrystal> crystals;
 
     public boolean upgraded;
@@ -16,6 +17,7 @@ public class Blockage {
      */
     public Blockage(Position position) {
         this.position = position;
+        this.range = 15;
         crystals = new ArrayList<BlockageCrystal>();
         upgraded = false;
     }
@@ -40,12 +42,22 @@ public class Blockage {
     }
 
     /**
+     * Hatótávolság lekérdezése
+     *
+     * @return Hatótávolság
+     */
+    public int getRange() {
+        return range;
+    }
+
+    /**
      * Lekérdezhető a lassulás mértéke egy ellenség típusra
      *
      * @param enemyType Ellenség típus
      * @return Akadályozás mértéke
      */
     public int block(EnemyType enemyType) {
+        // Alapértelmezett lassítás
         int retValue = 0;
         for (BlockageCrystal crystal : crystals) {
             retValue += crystal.getIncrement(enemyType);

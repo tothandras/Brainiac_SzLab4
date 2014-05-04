@@ -2,7 +2,6 @@ package com.brainiac.controller;
 
 import com.brainiac.model.*;
 
-import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -109,6 +108,9 @@ public class GameEngine {
         }
     }
 
+    /**
+     * Egységek léptetése
+     */
     private void step() {
         Random random = new Random();
 
@@ -143,9 +145,13 @@ public class GameEngine {
         }
     }
 
+    /**
+     * Tornyok tüzelése
+     */
     private void fire() {
         for (Tower tower : gameElements.towers) {
             int towerRange = tower.getRange();
+            // Ha köd ereszkedik le
             if (gameElements.fog != null) {
                 if (gameElements.fog.getMiddle().distance(tower.getPosition()) < gameElements.fog.getRange()) {
                     towerRange = towerRange / 2;
@@ -192,28 +198,31 @@ public class GameEngine {
         return false;
     }
 
-    public void handleMouseEvent(MouseEvent event, Action action) {
+    /**
+     * Események kezelése
+     *
+     * @param position Parancs pozíciója
+     * @param action   Parancs
+     * @return Igaz, ha sikerült
+     */
+    public boolean handleEvent(Position position, Action action) {
         // Csak akkor tudunk építeni, ha építési állapotban vagyunk
-        if (gameState == GameState.Build) {
-            int x = event.getX();
-            int y = event.getY();
-            Position p = new Position(x, y);
+        if (gameState == GameState.Step) {
+            int x = position.getX();
+            int y = position.getY();
 
             switch (action) {
                 // Akadály építése
                 case BUILD_BLOCKAGE:
                     // Akadály ára
-                    int costOfBlockageBuild = 10;
-                    // Utra próbáljuk-e letenni
+                    int costOfBlockageBuild = 0;
+                    // útra próbáljuk-e letenni
                     boolean isOnRoad = false;
 
                     for (Path path : gameElements.map.getPaths()) {
                         for (Line2D road : path.getRoads()) {
-                            double normalLength = Math.sqrt(Math.pow(road.getX2() - road.getX1(), 2) + Math.pow(road.getY2() - road.getY1(), 2));
-                            double distance = Math.abs((p.getX() - road.getX1()) * (road.getY2() - road.getY1()) - (p.getY() - road.getY1()) * (road.getX2() - road.getX1())) / normalLength;
-                            if (distance < 2) {
+                            if (position.distanceFromRoad(road) < 3) {
                                 isOnRoad = true;
-                                System.out.println("ON ROAD");
                                 break;
                             }
                         }
@@ -221,37 +230,65 @@ public class GameEngine {
                     if (isOnRoad) {
                         boolean theSamePosition = false;
                         for (Blockage blockage : gameElements.blockages) {
-                            if (blockage.getPosition().distance(p) < 5) {
+                            // Két akadály közelségének ellenőrzése
+                            if (blockage.getPosition().distance(position) < blockage.getRange() * 2) {
                                 theSamePosition = true;
-
-                                System.out.println("Akadály építése sikertelen: Van m'r");
+                                System.out.println("Akadály építése sikertelen: Van már");
                             }
                         }
-                        if (!theSamePosition) {
-                            if (gameElements.saruman.getSpellPower() < costOfBlockageBuild) {
-                                System.out.println("Akadály építése sikertelen: nincs elég varázserő.");
-
-                            } else {
-                                gameElements.blockages.add(new Blockage(new Position(x, y)));
-                                gameElements.saruman.setSpellPower(gameElements.saruman.getSpellPower() - costOfBlockageBuild);
-                                System.out.println("Akadály építése sikeres.");
-
-                            }
+                        if (!theSamePosition && gameElements.saruman.getSpellPower() >= costOfBlockageBuild) {
+                            // Nincs ugyanott akadály és van elég varázserő
+                            gameElements.blockages.add(new Blockage(new Position(x, y)));
+                            gameElements.saruman.setSpellPower(gameElements.saruman.getSpellPower() - costOfBlockageBuild);
+                            return true;
+                        } else {
+                            // Van már adakály a közelben, vagy nincs elég varázserő
+                            return false;
                         }
                     } else {
-                        System.out.println("Akadály építése sikertelen: az akadályt csak útra szabad építeni.");
-
+                        // Akadályt csak útra szabad építeni
+                        return false;
                     }
-                    break;
                 case BUILD_TOWER:
-                    break;
+                    int costOfTowerBuild = 10;
+                    isOnRoad = false;
+                    for (Path path : gameElements.map.getPaths()) {
+                        for (Line2D road : path.getRoads()) {
+                            if (position.distanceFromRoad(road) < 5) {
+                                isOnRoad = true;
+                            }
+                        }
+                    }
+                    if (!isOnRoad) {
+                        boolean theSamePosition = false;
+                        for (Tower tower : gameElements.towers) {
+                            if ((tower.getPosition().getX() == x) && (tower.getPosition().getY() == y)) {
+                                // Torony építése sikertelen: a tornyot csak üres helyre lehet építeni
+                                theSamePosition = true;
+                            }
+                        }
+                        if (!theSamePosition && gameElements.saruman.getSpellPower() >= costOfTowerBuild) {
+                            // Torony építése sikeres
+                            gameElements.towers.add(new Tower(new Position(x, y)));
+                            gameElements.saruman.setSpellPower(gameElements.saruman.getSpellPower() - costOfTowerBuild);
+                            return true;
+                        } else {
+                            // Torony építése sikerertelen
+                            return false;
+                        }
+                    } else {
+                        // A tornyot csak üres helyre lehet építeni
+                        return false;
+                    }
                 case UPGRADE_BLOCKAGE:
+                    // TODO
                     break;
                 case UPGRADE_TOWER:
+                    // TODO
                     break;
             }
         }
-
+        return false;
     }
 
     /*
