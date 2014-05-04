@@ -126,8 +126,34 @@ public class GameEngine {
             for (Path path : gameElements.map.getPaths()) {
                 for (Line2D road : path.getRoads()) {
                     // Ha rajta van az úton
-                    if (enemy.getPosition().distanceFromRoad(road) == 0) {
-                        roads.add(road);
+                    if (enemy.getPosition().distanceFromRoad(road) < 2) {
+                        // Megnézzük, hogy nem ment-e túl az út végén
+                        // Ha nem, akkor hozzáadjuk az utat
+                        switch (Path.getDirection(road)){
+                            // Észak
+                            case NORTH:
+                                if (road.getY2() > enemy.getPosition().getY())
+                                    roads.add(road);
+                                break;
+                            // Kelet
+                            case EAST:
+                                if (road.getX2() > enemy.getPosition().getX())
+                                    roads.add(road);
+                                break;
+                            // Dél
+                            case SOUTH:
+                                if (road.getY2() < enemy.getPosition().getY())
+                                    roads.add(road);
+                                break;
+                            // Nyugat
+                            case WEST:
+                                if (road.getX1() < enemy.getPosition().getX())
+                                    roads.add(road);
+                                break;
+                            default:
+                                break;
+
+                        }
                     }
 
                 }
