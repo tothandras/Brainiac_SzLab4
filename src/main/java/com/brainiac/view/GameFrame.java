@@ -55,13 +55,17 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
         gamePanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                // TODO kivihetnénk külön függvénybe
                 int x = e.getX();
                 int y = e.getY();
                 Position p = new Position(x, y);
                 // Megvizsgáljuk, hogy gombra kattintottunk-e, a gombokat a képernyő alsó 200 pixelére rajzoljuk ki
-
-
-
+                // TODO
+                // ...
+                // TODO Ha igen, akkor Action-t váltunk
+                // ...
+                // TODO Ha nem, akkor a jelenlegi Action-nel meghívjuk a gameEngine egérkattintást lekezelő függvényét
+                // ...
                 Action a = Action.BUILD_BLOCKAGE;
                 gameEngine.handleMouseEvent(e, a);
             }
@@ -77,13 +81,16 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
 
         while (running) {
             try {
-                // update
+                // Játék állapotának frissítése
                 gameEngine.update();
 
                 if (image == null) {
                     image = createImage(WIDTH, HEIGHT);
                     graphics = (Graphics2D) image.getGraphics();
                 }
+
+                // Előző kép törlése
+                graphics.clearRect(0, 0, WIDTH, HEIGHT);
 
                 // draw roads
                 for (Path path : gameElements.map.getPaths()) {
