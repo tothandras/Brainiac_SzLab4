@@ -7,9 +7,9 @@ public class Hobbit extends Enemy {
      * @param position Kezdőpozíció
      */
     public Hobbit(Position position) {
-        this.position = position;
+        this.position = new Position(position.getX(), position.getY());
         life = 50;
-        speed = 1;
+        speed = 3;
     }
 
     /**
@@ -35,31 +35,35 @@ public class Hobbit extends Enemy {
         // Pillanatnyi sebesség
         int currentSpeed = speed;
         if (blockage != null) {
-            int block = blockage.block(EnemyType.Hobbit);
-            currentSpeed -= block > currentSpeed ? currentSpeed : block;
+            currentSpeed += blockage.block(EnemyType.Hobbit);
         }
 
-        // Léptetés a megfelelő irányba
-        switch (direction) {
-            // Észak
-            case NORTH:
-                position.setY(position.getY() + currentSpeed);
-                break;
-            // Kelet
-            case EAST:
-                position.setX(position.getX() + currentSpeed);
-                break;
-            // Dél
-            case SOUTH:
-                position.setY(position.getY() - currentSpeed);
-                break;
-            // Nyugat
-            case WEST:
-                position.setX(position.getX() - currentSpeed);
-                break;
-            default:
-                break;
+        timeSinceMove += 1;
+        // Ha már kell lépni
+        if (timeSinceMove >= currentSpeed){
+            timeSinceMove = 0;
+            // Léptetés a megfelelő irányba
+            switch (direction) {
+                // Észak
+                case NORTH:
+                    position.setY(position.getY() + 1);
+                    break;
+                // Kelet
+                case EAST:
+                    position.setX(position.getX() + 1);
+                    break;
+                // Dél
+                case SOUTH:
+                    position.setY(position.getY() - 1);
+                    break;
+                // Nyugat
+                case WEST:
+                    position.setX(position.getX() - 1);
+                    break;
+                default:
+                    break;
 
+            }
         }
     }
 

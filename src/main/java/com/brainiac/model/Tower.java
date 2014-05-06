@@ -13,6 +13,8 @@ public class Tower {
     // Fejlesztve vagyunk?
     // TODO: biztos kell? Máshogy rajzoljuk ki a fejlesztettet mint a nem fejlesztettet?
     public boolean upgraded;
+    // Az utolsó tüzelés óta eltelt óraütések száma
+    private int timeSinceShoot;
 
     /**
      * Új torony létrehozása a pálya egy adott pozíciójára
@@ -23,22 +25,41 @@ public class Tower {
         this.position = position;
         this.upgraded = false;
         this.damage = new Damage();
-        this.fireRate = 1;
+        this.fireRate = 10;
         this.range = 100;
         this.cutChance = 0.05;
+        timeSinceShoot = 0;
     }
 
     /**
      * Torony lő egyet a paramáterében megkapott ellenségre
      *
-     * @param enemy Az ellenfél
+     * @param enemy Az esetlegesen félbevágott ellenfél új darabja
      */
     public Enemy fire(Enemy enemy) {
-        enemy.hurt(damage);
-        if (Math.random() < cutChance) {
-            return enemy.cut();
+        if (timeSinceShoot >= fireRate){
+            timeSinceShoot = 0;
+            enemy.hurt(damage);
+            if (Math.random() < cutChance) {
+                return enemy.cut();
+            }
         }
         return null;
+    }
+
+    /**
+     * Ezen függvény meghívásával jelezzük a toronynak, hogy telik az idő. Hatására esetleg lő a torony
+     */
+    public void tick() {
+        timeSinceShoot += 1;
+    }
+
+    /**
+     * Visszatér azzal az információval, hogy a torony lőhet-e már újra.
+     * @return Igaz, ha már lőhet a torony.
+     */
+    public boolean canShoot(){
+        return (timeSinceShoot >= fireRate);
     }
 
     /**

@@ -1,5 +1,7 @@
 package com.brainiac.model;
 
+import java.util.Random;
+
 public abstract class Enemy {
     // Ellenség életereje
     protected int life;
@@ -7,6 +9,16 @@ public abstract class Enemy {
     protected int speed;
     // Ellenség pozíciója
     protected Position position;
+    // Az ellenség eltolásának pozíciója az úton
+    protected Position offset;
+    //
+    protected int timeSinceMove;
+
+    public Enemy() {
+        Random rand = new Random();
+        offset = new Position(rand.nextInt(6) - 3, rand.nextInt(6) - 3);
+        timeSinceMove = 0;
+    }
 
     /**
      * Ellenséget sebezzük
@@ -49,6 +61,15 @@ public abstract class Enemy {
      */
     public int getSpeed() {
         return speed;
+    }
+
+    /**
+     * Visszatér az ellenség eltolt pozíciójával
+     *
+     * @return Az eltolási vektor és a pozíció összege
+     */
+    public Position getOffset() {
+        return new Position(position.getX() + offset.getX(), position.getY() + offset.getY());
     }
 
     /**

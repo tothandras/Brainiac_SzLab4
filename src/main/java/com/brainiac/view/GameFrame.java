@@ -136,8 +136,14 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 for (Enemy enemy : gameElements.enemies) {
                     // TODO ide kellenek majd a képek az egyégeknek
                     graphics.setColor(Color.RED);
-                    graphics.fillOval(enemy.getPosition().getX() - 3, enemy.getPosition().getY() - 3, 6, 6);
+                    graphics.fillOval(enemy.getOffset().getX() - 3, enemy.getOffset().getY() - 3, 6, 6);
                 }
+
+                for (Line2D shot : gameElements.shots){
+                    graphics.setColor(Color.green);
+                    graphics.drawLine((int)shot.getX1(), (int)shot.getY1(), (int)shot.getX2(), (int)shot.getY2());
+                }
+                gameElements.shots.clear();
 
                 // Gombok a képernyő alsó 50 pixelén jelennek vannak
                 // TODO ide majd szép képekből álló gombok kellenek, ha kell megrajzolom Illustratorban és átküldöm

@@ -58,7 +58,7 @@ public class Blockage {
      */
     public int block(EnemyType enemyType) {
         // Alapértelmezett lassítás
-        int retValue = 0;
+        int retValue = 2;
         for (BlockageCrystal crystal : crystals) {
             retValue += crystal.getIncrement(enemyType);
         }
