@@ -7,7 +7,7 @@ public class Man extends Enemy {
      * @param position Kezdőpozíció
      */
     public Man(Position position) {
-        this.position = new Position(position.getX(), position.getY());
+        this.position = new Position(position);
         life = 100;
         speed = 3;
     }

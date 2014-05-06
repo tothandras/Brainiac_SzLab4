@@ -7,7 +7,7 @@ public class Elf extends Enemy {
      * @param position Kezdőpozíció
      */
     public Elf(Position position) {
-        this.position = new Position(position.getX(), position.getY());
+        this.position = new Position(position);
         life = 100;
         speed = 2;
     }

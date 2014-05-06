@@ -9,14 +9,10 @@ public abstract class Enemy {
     protected int speed;
     // Ellenség pozíciója
     protected Position position;
-    // Az ellenség eltolásának pozíciója az úton
-    protected Position offset;
     //
     protected int timeSinceMove;
 
     public Enemy() {
-        Random rand = new Random();
-        offset = new Position(rand.nextInt(6) - 3, rand.nextInt(6) - 3);
         timeSinceMove = 0;
     }
 
@@ -63,14 +59,6 @@ public abstract class Enemy {
         return speed;
     }
 
-    /**
-     * Visszatér az ellenség eltolt pozíciójával
-     *
-     * @return Az eltolási vektor és a pozíció összege
-     */
-    public Position getOffset() {
-        return new Position(position.getX() + offset.getX(), position.getY() + offset.getY());
-    }
 
     /**
      * Csinál egy másolatot magából, ugyanolyan tulajdonságokkal és fele annyi életerővel mint az eredeti egyed.

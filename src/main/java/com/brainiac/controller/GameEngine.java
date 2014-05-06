@@ -60,7 +60,7 @@ public class GameEngine {
                 Enemy enemy;
                 // Véletlenszerűen választunk egyet az útvonalak közül
                 // Lehet különböző kezdőpontjuk
-                Position startingPosition = new Position(startingPositions.get(Math.abs(random.nextInt()) % startingPositions.size()));
+                Position startingPosition = startingPositions.get(Math.abs(random.nextInt()) % startingPositions.size());
 
                 // Véletlenszerűen választunk az ellenség típusok közül
                 switch (Math.abs(random.nextInt()) % 4) {
@@ -153,7 +153,7 @@ public class GameEngine {
     private void fire() {
         for (Tower tower : gameElements.towers) {
             tower.tick();
-            if (tower.canShoot()){
+            if (tower.canShoot()) {
                 int towerRange = tower.getRange();
                 // Ha köd ereszkedik le
                 if (gameElements.fog != null) {
@@ -167,7 +167,7 @@ public class GameEngine {
 
                         Enemy temp = tower.fire(enemy);
                         gameElements.shots.add(new Line2D.Double(tower.getPosition().getX(), tower.getPosition().getY(),
-                                                                 enemy.getOffset().getX(), enemy.getOffset().getY()));
+                                enemy.getPosition().getX(), enemy.getPosition().getY()));
                         if (enemy.getLife() <= 0) {
                             gameElements.enemies.remove(enemy);
                             System.out.println("Ellenség (" + enemy.getPosition().getX() + ", " + enemy.getPosition().getY() + "): Meghal");

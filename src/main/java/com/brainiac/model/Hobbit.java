@@ -7,7 +7,7 @@ public class Hobbit extends Enemy {
      * @param position Kezdőpozíció
      */
     public Hobbit(Position position) {
-        this.position = new Position(position.getX(), position.getY());
+        this.position = new Position(position);
         life = 50;
         speed = 3;
     }
