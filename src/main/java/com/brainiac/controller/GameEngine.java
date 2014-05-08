@@ -9,6 +9,8 @@ import java.util.Random;
 
 public class GameEngine {
     private GameElements gameElements;
+    // a játék kezdete óta eltelt update-k száma
+    private int ticks;
     // Játék állapota
     public GameState gameState;
 
@@ -20,6 +22,7 @@ public class GameEngine {
      */
     public GameEngine(GameElements gameElements) {
         this.gameElements = gameElements;
+        ticks = 0;
     }
 
     /**
@@ -86,6 +89,9 @@ public class GameEngine {
      * Játék állapotának frissítése.
      */
     public void update() {
+        // növeljük az eltelt lépések számát
+        ticks = ticks + 1;
+
         // Csak akkor léptetünk, ha nem építési szakaszban vagyunk
         if (gameState == GameState.Step) {
             // Ha minden ellenség halott
@@ -125,24 +131,27 @@ public class GameEngine {
                 }
             }
 
-            // Megnézzük melyik úton van rajta
-            List<Line2D> roads = new ArrayList<Line2D>();
-            for (Path path : gameElements.map.getPaths()) {
-                // Visszafelé iterálunk, hogy az előbbre lévő utat találjuk meg az utak csatlakozásánál
-                for (int i = path.getRoads().size(); i > 0; i--) {
-                    Line2D road = path.getRoads().get(i - 1);
-                    if (enemy.getPosition().distanceFromRoad(road) == 0) {
-                        roads.add(road);
-                        // Találtunk már utat az útvonalon
-                        break;
+            // Kell-e lépnie az ellenséges egységnek ebben a körben
+            if ((ticks % enemy.getSpeed(blockage) == 0)){
+                // Megnézzük melyik úton van rajta
+                List<Line2D> roads = new ArrayList<Line2D>();
+                for (Path path : gameElements.map.getPaths()) {
+                    // Visszafelé iterálunk, hogy az előbbre lévő utat találjuk meg az utak csatlakozásánál
+                    for (int i = path.getRoads().size(); i > 0; i--) {
+                        Line2D road = path.getRoads().get(i - 1);
+                        if (enemy.getPosition().distanceFromRoad(road) == 0) {
+                            roads.add(road);
+                            // Találtunk már utat az útvonalon
+                            break;
+                        }
                     }
                 }
-            }
 
-            // Véletlenszerűen választunk egy útat, ami mentén mozgatjuk
-            if (!roads.isEmpty()) {
-                Line2D road = roads.get(Math.abs(random.nextInt() % roads.size()));
-                enemy.move(Path.getDirection(road), blockage);
+                // Véletlenszerűen választunk egy útat, ami mentén mozgatjuk
+                if (!roads.isEmpty()) {
+                    Line2D road = roads.get(Math.abs(random.nextInt() % roads.size()));
+                    enemy.move(Path.getDirection(road));
+                }
             }
         }
     }
@@ -152,8 +161,7 @@ public class GameEngine {
      */
     private void fire() {
         for (Tower tower : gameElements.towers) {
-            tower.tick();
-            if (tower.canShoot()) {
+            if ((ticks % tower.getSpeed()) == 0) {
                 int towerRange = tower.getRange();
                 // Ha köd ereszkedik le
                 if (gameElements.fog != null) {

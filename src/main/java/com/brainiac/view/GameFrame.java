@@ -126,7 +126,8 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 for (Tower tower : gameElements.towers) {
                     // TODO ezt jobban meg kell majd csinalni
                     // TODO + ha kirajzol es meghivjuk a handleMouseEventet, hogy tornyot adjunk hozza, akkor  java.util.ConcurrentModificationException-t kapunk (próbálgassátok ti is)
-                    graphics.draw(new Ellipse2D.Double(tower.getPosition().getX() - tower.getRange(), tower.getPosition().getY() - tower.getRange(), 2 * tower.getRange(), 2 * tower.getRange()));
+                    int towerRange = (gameElements.fog == null) ? tower.getRange() : tower.getRange() / 2;
+                    graphics.draw(new Ellipse2D.Double(tower.getPosition().getX() - towerRange, tower.getPosition().getY() - towerRange, 2 * towerRange, 2 * towerRange));
                     graphics.fill(new Ellipse2D.Double(tower.getPosition().getX() - WIDTH / 100, tower.getPosition().getY() - HEIGHT / 100, WIDTH / 50, HEIGHT / 50));
                 }
 
