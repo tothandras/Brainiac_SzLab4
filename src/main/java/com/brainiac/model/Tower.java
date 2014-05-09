@@ -10,9 +10,6 @@ public class Tower {
     private int range;
     // Szévágás valószínűsége (0-1)
     private double cutChance;
-    // Fejlesztve vagyunk?
-    // TODO: biztos kell? Máshogy rajzoljuk ki a fejlesztettet mint a nem fejlesztettet?
-    public boolean upgraded;
 
     /**
      * Új torony létrehozása a pálya egy adott pozíciójára
@@ -21,9 +18,8 @@ public class Tower {
      */
     public Tower(Position position) {
         this.position = position;
-        this.upgraded = false;
         this.damage = new Damage();
-        this.fireRate = 1;
+        this.fireRate = 10;
         this.range = 100;
         this.cutChance = 0.05;
     }
@@ -31,7 +27,7 @@ public class Tower {
     /**
      * Torony lő egyet a paramáterében megkapott ellenségre
      *
-     * @param enemy Az ellenfél
+     * @param enemy Az esetlegesen félbevágott ellenfél új darabja
      */
     public Enemy fire(Enemy enemy) {
         enemy.hurt(damage);
@@ -89,7 +85,5 @@ public class Tower {
         fireRate = fireRate + crystal.getFireRateIncrement();
         // Sebzés növelése a kristályban meghatározott ellenség ellen és mértékben
         damage.setDamage(damage.getDamage(crystal.getAgainst()) + crystal.getIncrement(), crystal.getAgainst());
-
-        upgraded = true;
     }
 }

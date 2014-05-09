@@ -1,5 +1,6 @@
 package com.brainiac.model;
 
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ public class GameElements {
     public Saruman saruman;
     public Map map;
     public Fog fog;
+    public List<Line2D> shots;
 
     /**
      * Létrehozzuk a megfelelő tárolókat és játék elemeket
@@ -20,5 +22,6 @@ public class GameElements {
         blockages = new ArrayList<Blockage>();
         saruman = new Saruman();
         map = new Map(600, 600);
+        shots = new ArrayList<Line2D>();
     }
 }

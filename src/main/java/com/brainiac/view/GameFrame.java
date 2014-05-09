@@ -12,6 +12,8 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
+import java.util.HashMap;
+import java.util.Random;
 
 public class GameFrame extends JFrame implements WindowListener, Runnable {
     // Játék motorja
@@ -26,6 +28,8 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
     private JPanel gamePanel;
     private Graphics2D graphics;
     private Image image;
+    // Az egyes ellenséges egységek eltolásának nagysága
+    private HashMap<Enemy, Position> offset;
 
     // Ablak szélessége
     public final int WIDTH = 600;
@@ -36,6 +40,7 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
         this.gameEngine = gameEngine;
         this.gameElements = gameElements;
         this.action = Action.NONE;
+        offset = new HashMap<Enemy, Position>();
 
         makeGUI();
         addWindowListener(this);
@@ -121,7 +126,8 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 for (Tower tower : gameElements.towers) {
                     // TODO ezt jobban meg kell majd csinalni
                     // TODO + ha kirajzol es meghivjuk a handleMouseEventet, hogy tornyot adjunk hozza, akkor  java.util.ConcurrentModificationException-t kapunk (próbálgassátok ti is)
-                    graphics.draw(new Ellipse2D.Double(tower.getPosition().getX() - tower.getRange(), tower.getPosition().getY() - tower.getRange(), 2 * tower.getRange(), 2 * tower.getRange()));
+                    int towerRange = (gameElements.fog == null) ? tower.getRange() : tower.getRange() / 2;
+                    graphics.draw(new Ellipse2D.Double(tower.getPosition().getX() - towerRange, tower.getPosition().getY() - towerRange, 2 * towerRange, 2 * towerRange));
                     graphics.fill(new Ellipse2D.Double(tower.getPosition().getX() - WIDTH / 100, tower.getPosition().getY() - HEIGHT / 100, WIDTH / 50, HEIGHT / 50));
                 }
 
@@ -132,12 +138,24 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                     graphics.fillOval(blockage.getPosition().getX() - 15, blockage.getPosition().getY() - 15, 30, 30);
                 }
 
+                Random rand = new Random();
                 // draw enemies
                 for (Enemy enemy : gameElements.enemies) {
                     // TODO ide kellenek majd a képek az egyégeknek
+                    if (!offset.containsKey(enemy)) {
+                        Position temp = new Position(rand.nextInt(6) - 3, rand.nextInt(6) - 3);
+                        offset.put(enemy, temp);
+                    }
                     graphics.setColor(Color.RED);
-                    graphics.fillOval(enemy.getPosition().getX() - 3, enemy.getPosition().getY() - 3, 6, 6);
+                    graphics.fillOval(enemy.getPosition().getX() - 3 + offset.get(enemy).getX(),
+                            enemy.getPosition().getY() - 3 + offset.get(enemy).getY(), 6, 6);
                 }
+
+                for (Line2D shot : gameElements.shots) {
+                    graphics.setColor(Color.green);
+                    graphics.drawLine((int) shot.getX1(), (int) shot.getY1(), (int) shot.getX2(), (int) shot.getY2());
+                }
+                gameElements.shots.clear();
 
                 // Gombok a képernyő alsó 50 pixelén jelennek vannak
                 // TODO ide majd szép képekből álló gombok kellenek, ha kell megrajzolom Illustratorban és átküldöm

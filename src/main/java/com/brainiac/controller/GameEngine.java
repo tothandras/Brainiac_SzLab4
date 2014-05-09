@@ -9,6 +9,8 @@ import java.util.Random;
 
 public class GameEngine {
     private GameElements gameElements;
+    // a játék kezdete óta eltelt update-k száma
+    private int ticks;
     // Játék állapota
     public GameState gameState;
 
@@ -20,6 +22,7 @@ public class GameEngine {
      */
     public GameEngine(GameElements gameElements) {
         this.gameElements = gameElements;
+        ticks = 0;
     }
 
     /**
@@ -30,7 +33,7 @@ public class GameEngine {
         gameElements.saruman.setSpellPower(100);
         // Először építés fázisban vagyunk
         gameState = GameState.Step;
-        newRound(1);
+        newRound(10);
     }
 
     /**
@@ -60,7 +63,7 @@ public class GameEngine {
                 Enemy enemy;
                 // Véletlenszerűen választunk egyet az útvonalak közül
                 // Lehet különböző kezdőpontjuk
-                Position startingPosition = new Position(startingPositions.get(Math.abs(random.nextInt()) % startingPositions.size()));
+                Position startingPosition = startingPositions.get(Math.abs(random.nextInt()) % startingPositions.size());
 
                 // Véletlenszerűen választunk az ellenség típusok közül
                 switch (Math.abs(random.nextInt()) % 4) {
@@ -86,6 +89,9 @@ public class GameEngine {
      * Játék állapotának frissítése.
      */
     public void update() {
+        // növeljük az eltelt lépések számát
+        ticks = ticks + 1;
+
         // Csak akkor léptetünk, ha nem építési szakaszban vagyunk
         if (gameState == GameState.Step) {
             // Ha minden ellenség halott
@@ -93,7 +99,9 @@ public class GameEngine {
                 // Levesszük az akadályokat a pályáról
                 gameElements.blockages.clear();
                 // Vége a körnek, építési szakasz
-                gameState = GameState.Build;
+                //gameState = GameState.Build;
+                newRound(10);
+
             }
             // Ha valamelyik ellenség elérte a végzet hegyét
             else if (checkGameState()) {
@@ -103,7 +111,7 @@ public class GameEngine {
             // Egyébként léptetjük az ellenségeket és tüzelünk a tornyokkal
             else {
                 step();
-                //fire();
+                fire();
             }
         }
     }
@@ -118,29 +126,32 @@ public class GameEngine {
         for (Enemy enemy : gameElements.enemies) {
             Blockage blockage = null;
             for (Blockage block : gameElements.blockages) {
-                if (enemy.getPosition().distance(block.getPosition()) < 2) {
+                if (enemy.getPosition().distance(block.getPosition()) < block.getRange()) {
                     blockage = block;
                 }
             }
 
-            // Megnézzük melyik úton van rajta
-            List<Line2D> roads = new ArrayList<Line2D>();
-            for (Path path : gameElements.map.getPaths()) {
-                // Visszafelé iterálunk, hogy az előbbre lévő utat találjuk meg az utak csatlakozásánál
-                for (int i = path.getRoads().size(); i > 0; i--) {
-                    Line2D road = path.getRoads().get(i - 1);
-                    if (enemy.getPosition().distanceFromRoad(road) == 0) {
-                        roads.add(road);
-                        // Találtunk már utat az útvonalon
-                        break;
+            // Kell-e lépnie az ellenséges egységnek ebben a körben
+            if ((ticks % enemy.getSpeed(blockage) == 0)){
+                // Megnézzük melyik úton van rajta
+                List<Line2D> roads = new ArrayList<Line2D>();
+                for (Path path : gameElements.map.getPaths()) {
+                    // Visszafelé iterálunk, hogy az előbbre lévő utat találjuk meg az utak csatlakozásánál
+                    for (int i = path.getRoads().size(); i > 0; i--) {
+                        Line2D road = path.getRoads().get(i - 1);
+                        if (enemy.getPosition().distanceFromRoad(road) == 0) {
+                            roads.add(road);
+                            // Találtunk már utat az útvonalon
+                            break;
+                        }
                     }
                 }
-            }
 
-            // Véletlenszerűen választunk egy útat, ami mentén mozgatjuk
-            if (!roads.isEmpty()) {
-                Line2D road = roads.get(Math.abs(random.nextInt() % roads.size()));
-                enemy.move(Path.getDirection(road), blockage);
+                // Véletlenszerűen választunk egy útat, ami mentén mozgatjuk
+                if (!roads.isEmpty()) {
+                    Line2D road = roads.get(Math.abs(random.nextInt() % roads.size()));
+                    enemy.move(Path.getDirection(road));
+                }
             }
         }
     }
@@ -150,29 +161,32 @@ public class GameEngine {
      */
     private void fire() {
         for (Tower tower : gameElements.towers) {
-            int towerRange = tower.getRange();
-            // Ha köd ereszkedik le
-            if (gameElements.fog != null) {
-                if (gameElements.fog.getMiddle().distance(tower.getPosition()) < gameElements.fog.getRange()) {
-                    towerRange = towerRange / 2;
-                }
-            }
-            for (Enemy enemy : gameElements.enemies) {
-                if (tower.getPosition().distance(enemy.getPosition()) < towerRange) {
-                    System.out.println("Torony (" + tower.getPosition().getX() + ", " + tower.getPosition().getY() + "): Lő");
-
-                    Enemy temp = tower.fire(enemy);
-                    if (enemy.getLife() <= 0) {
-                        gameElements.enemies.remove(enemy);
-                        System.out.println("Ellenség (" + enemy.getPosition().getX() + ", " + enemy.getPosition().getY() + "): Meghal");
-
-                        gameElements.saruman.setSpellPower(gameElements.saruman.getSpellPower() + 1);
-                    } else if (temp != null) {
-                        gameElements.enemies.add(temp);
-                        System.out.println("Ellenség (" + enemy.getPosition().getX() + ", " + enemy.getPosition().getY() + "): félbevágódik");
-
+            if ((ticks % tower.getSpeed()) == 0) {
+                int towerRange = tower.getRange();
+                // Ha köd ereszkedik le
+                if (gameElements.fog != null) {
+                    if (gameElements.fog.getMiddle().distance(tower.getPosition()) < gameElements.fog.getRange()) {
+                        towerRange = towerRange / 2;
                     }
-                    break;
+                }
+                for (Enemy enemy : gameElements.enemies) {
+                    if (tower.getPosition().distance(enemy.getPosition()) < towerRange) {
+                        System.out.println("Torony (" + tower.getPosition().getX() + ", " + tower.getPosition().getY() + "): Lő");
+
+                        Enemy temp = tower.fire(enemy);
+                        gameElements.shots.add(new Line2D.Double(tower.getPosition().getX(), tower.getPosition().getY(),
+                                enemy.getPosition().getX(), enemy.getPosition().getY()));
+                        if (enemy.getLife() <= 0) {
+                            gameElements.enemies.remove(enemy);
+                            System.out.println("Ellenség (" + enemy.getPosition().getX() + ", " + enemy.getPosition().getY() + "): Meghal");
+
+                            gameElements.saruman.setSpellPower(gameElements.saruman.getSpellPower() + 1);
+                        } else if (temp != null) {
+                            gameElements.enemies.add(temp);
+                            System.out.println("Ellenség (" + enemy.getPosition().getX() + ", " + enemy.getPosition().getY() + "): félbevágódik");
+                        }
+                        break;
+                    }
                 }
             }
         }

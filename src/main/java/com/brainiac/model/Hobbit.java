@@ -7,9 +7,9 @@ public class Hobbit extends Enemy {
      * @param position Kezdőpozíció
      */
     public Hobbit(Position position) {
-        this.position = position;
+        this.position = new Position(position);
         life = 50;
-        speed = 1;
+        speed = 3;
     }
 
     /**
@@ -19,7 +19,6 @@ public class Hobbit extends Enemy {
      */
     @Override
     public void hurt(Damage damage) {
-        // TODO: hol hal meg?
         int d = damage.getDamage(EnemyType.Hobbit);
         life -= d;
     }
@@ -28,39 +27,45 @@ public class Hobbit extends Enemy {
      * Mozgatjuk az törpöt a megfelelő irányba
      *
      * @param direction: Haladás iránya
-     * @param blockage:  Ha az útjában akadály van, akkor megkapja paraméterben
      */
     @Override
-    public void move(Direction direction, Blockage blockage) {
-        // Pillanatnyi sebesség
-        int currentSpeed = speed;
-        if (blockage != null) {
-            int block = blockage.block(EnemyType.Hobbit);
-            currentSpeed -= block > currentSpeed ? currentSpeed : block;
-        }
-
+    public void move(Direction direction) {
         // Léptetés a megfelelő irányba
         switch (direction) {
             // Észak
             case NORTH:
-                position.setY(position.getY() + currentSpeed);
+                position.setY(position.getY() + 1);
                 break;
             // Kelet
             case EAST:
-                position.setX(position.getX() + currentSpeed);
+                position.setX(position.getX() + 1);
                 break;
             // Dél
             case SOUTH:
-                position.setY(position.getY() - currentSpeed);
+                position.setY(position.getY() - 1);
                 break;
             // Nyugat
             case WEST:
-                position.setX(position.getX() - currentSpeed);
+                position.setX(position.getX() - 1);
                 break;
             default:
                 break;
 
         }
+    }
+
+    /**
+     * A hobbit sebességét lekérdező függvény. A hobbit útjában lévő akadályt figyelembe véve ad választ.
+     *
+     * @param blockage a hobbit útjában lévő akadály
+     * @return a hobbit esetlegesen módosított sebessége
+     */
+    @Override
+    public int getSpeed(Blockage blockage) {
+        if (blockage == null) {
+            return speed;
+        }
+        return speed + blockage.block(EnemyType.Hobbit);
     }
 
     /**

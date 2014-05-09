@@ -7,6 +7,12 @@ public abstract class Enemy {
     protected int speed;
     // Ellenség pozíciója
     protected Position position;
+    //
+    protected int timeSinceMove;
+
+    public Enemy() {
+        timeSinceMove = 0;
+    }
 
     /**
      * Ellenséget sebezzük
@@ -20,9 +26,8 @@ public abstract class Enemy {
      * Mozgatjuk az ellenséget a megfelelő irányba
      *
      * @param direction: Haladás iránya
-     * @param blockage:  Ha az útjában akadály van, akkor megkapja paraméterben
      */
-    public abstract void move(Direction direction, Blockage blockage);
+    public abstract void move(Direction direction);
 
     /**
      * Visszatér az ellenség pozíciójával
@@ -45,11 +50,11 @@ public abstract class Enemy {
     /**
      * Visszatér az ellenség sebességével
      *
+     * @param blockage az ellenség útjában lévő akadály
      * @return Ellenség sebessége
      */
-    public int getSpeed() {
-        return speed;
-    }
+    public abstract int getSpeed(Blockage blockage);
+
 
     /**
      * Csinál egy másolatot magából, ugyanolyan tulajdonságokkal és fele annyi életerővel mint az eredeti egyed.
