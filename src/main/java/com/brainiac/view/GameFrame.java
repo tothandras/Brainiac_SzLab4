@@ -57,7 +57,7 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
     private void makeGUI() {
         gamePanel = new JPanel(new BorderLayout());
         // -10 magasság, hogy MAC-en jól nézzek ki
-        gamePanel.setPreferredSize(new Dimension(WIDTH, HEIGHT - 10));
+        gamePanel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         gamePanel.setBackground(Color.BLACK);
         gamePanel.addMouseListener(new MouseAdapter() {
             @Override
@@ -66,25 +66,65 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 int x = e.getX();
                 int y = e.getY();
                 Position position = new Position(x, y);
+                System.out.println("Koord:"+x+":"+y);
                 // Megvizsgáljuk, hogy gombra kattintottunk-e, a gombokat a képernyő alsó 50 pixelére rajzoljuk ki
                 if (y > HEIGHT - 50) {
                     // Ha igen, akkor Action-t váltunk
-                    if (x < WIDTH / 4) {
-                        // 1. Gomb
-                        action = Action.BUILD_TOWER;
-                    } else if (x > WIDTH / 4 && x < 2 * WIDTH / 4) {
-                        // 2. Gomb
-                        action = Action.BUILD_BLOCKAGE;
-                    } else if (x > WIDTH / 4 * 2 && x < 3 * WIDTH / 4) {
-                        // TODO itt feloszthatnánk több kisebb gombra, hogy mit szeretnénk fejleszteni
-                        // 3. Gomb
-                        action = Action.UPGRADE_TOWER;
-                    } else if (x > WIDTH / 4 * 3 && x < WIDTH) {
-                        // TODO itt feloszthatnánk több kisebb gombra, hogy mit szeretnénk fejleszteni
-                        // 4. Gomb
-                        action = Action.UPGRADE_BLOCKAGE;
+                    switch(action){
+                        case UPGRADE_TOWER:
+                            if (x < WIDTH / 4) {
+                                // 1. Gomb
+                                action = Action.UPGRADE_TOWER_ELF;
+                            } else if (x > WIDTH / 4 && x < 2 * WIDTH / 4) {
+                                // 2. Gomb
+                                action = Action.UPGRADE_TOWER_DWARF;
+                            } else if (x > WIDTH / 4 * 2 && x < 3 * WIDTH / 4) {
+                                // TODO itt feloszthatnánk több kisebb gombra, hogy mit szeretnénk fejleszteni
+                                // 3. Gomb
+                                action = Action.UPGRADE_TOWER_MAN;
+                            } else if (x > WIDTH / 4 * 3 && x < WIDTH) {
+                                // TODO itt feloszthatnánk több kisebb gombra, hogy mit szeretnénk fejleszteni
+                                // 4. Gomb
+                                action = Action.UPGRADE_TOWER_HOBBIT;
+                            }
+                            break;
+                        case UPGRADE_BLOCKAGE:
+                            if (x < WIDTH / 4) {
+                                // 1. Gomb
+                                action = Action.UPGRADE_BLOCKAGE_ELF;
+                            } else if (x > WIDTH / 4 && x < 2 * WIDTH / 4) {
+                                // 2. Gomb
+                                action = Action.UPGRADE_BLOCKAGE_DWARF;
+                            } else if (x > WIDTH / 4 * 2 && x < 3 * WIDTH / 4) {
+                                // TODO itt feloszthatnánk több kisebb gombra, hogy mit szeretnénk fejleszteni
+                                // 3. Gomb
+                                action = Action.UPGRADE_BLOCKAGE_MAN;
+                            } else if (x > WIDTH / 4 * 3 && x < WIDTH) {
+                                // TODO itt feloszthatnánk több kisebb gombra, hogy mit szeretnénk fejleszteni
+                                // 4. Gomb
+                                action = Action.UPGRADE_BLOCKAGE_HOBBIT;
+                            }
+                            break;
+
+                        case NONE:
+                        if (x < WIDTH / 4) {
+                            // 1. Gomb
+                            action = Action.BUILD_TOWER;
+                        } else if (x > WIDTH / 4 && x < 2 * WIDTH / 4) {
+                            // 2. Gomb
+                            action = Action.BUILD_BLOCKAGE;
+                        } else if (x > WIDTH / 4 * 2 && x < 3 * WIDTH / 4) {
+                            // TODO itt feloszthatnánk több kisebb gombra, hogy mit szeretnénk fejleszteni
+                            // 3. Gomb
+                            action = Action.UPGRADE_TOWER;
+                        } else if (x > WIDTH / 4 * 3 && x < WIDTH) {
+                            // TODO itt feloszthatnánk több kisebb gombra, hogy mit szeretnénk fejleszteni
+                            // 4. Gomb
+                            action = Action.UPGRADE_BLOCKAGE;
+                        }
+                            break;
                     }
-                } else if (action != Action.NONE) {
+                } else if (action != Action.NONE && action != Action.UPGRADE_BLOCKAGE && action != Action.UPGRADE_TOWER) {
                     // Ha nem, akkor a jelenlegi Action-nel meghívjuk a gameEngine eseménykezelő függvényét
                     if (gameEngine.handleEvent(position, action)) {
                         // Majd az action változót alapállapotba helyezzük, ha a parancs sikeresen végrehajtódott
@@ -162,27 +202,53 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 graphics.setColor(Color.BLACK);
                 graphics.drawLine(0, HEIGHT - 50, WIDTH, HEIGHT - 50);
                 for (int i = 0; i < 4; i++) {
-                    if (action == Action.BUILD_TOWER && i == 0 || action == Action.BUILD_BLOCKAGE && i == 1 || action == Action.UPGRADE_TOWER && i == 2 || action == Action.UPGRADE_BLOCKAGE && i == 3) {
+                    if (((action == Action.BUILD_TOWER || action == Action.UPGRADE_TOWER_ELF || action == Action.UPGRADE_BLOCKAGE_ELF) && i == 0) ||
+                            ((action == Action.BUILD_BLOCKAGE || action == Action.UPGRADE_TOWER_DWARF || action == Action.UPGRADE_BLOCKAGE_DWARF) && i == 1) ||
+                            ((action == Action.UPGRADE_TOWER_MAN || action == Action.UPGRADE_BLOCKAGE_MAN) && i == 2) ||
+                            ((action == Action.UPGRADE_TOWER_HOBBIT || action == Action.UPGRADE_BLOCKAGE_HOBBIT) && i == 3)) {
                         graphics.setColor(Color.GRAY);
                     } else {
                         graphics.setColor(Color.LIGHT_GRAY);
                     }
-                    graphics.fillRect(i * WIDTH / 4, HEIGHT - 50, (i + 1) * WIDTH / 4, 50);
+                    graphics.fillRect(i * WIDTH / 4, HEIGHT - 50, WIDTH / 4, 50);
                     graphics.setColor(Color.BLACK);
                     if (i != 0) {
                         graphics.drawLine(i * WIDTH / 4, HEIGHT, i * WIDTH / 4, HEIGHT - 50);
                     }
                 }
-                graphics.drawString("Torony", WIDTH * 0.09f, HEIGHT - 25);
-                graphics.drawString("Akadály", WIDTH * 0.33f, HEIGHT - 25);
-                graphics.drawString("Torony fejlesztése", WIDTH * 0.53f, HEIGHT - 25);
-                graphics.drawString("Akadály fejlesztése", WIDTH * 0.77f, HEIGHT - 25);
+                switch(action){
+                    case BUILD_TOWER:
+                    case BUILD_BLOCKAGE:
+                    case NONE:
+
+                        graphics.drawString("Torony", WIDTH * 0.09f, HEIGHT - 25);
+                        graphics.drawString("Akadály", WIDTH * 0.33f, HEIGHT - 25);
+                        graphics.drawString("Torony fejlesztése", WIDTH * 0.53f, HEIGHT - 25);
+                        graphics.drawString("Akadály fejlesztése", WIDTH * 0.77f, HEIGHT - 25);
+                        break;
+                    default:
+                    /*case UPGRADE_TOWER:
+                    case UPGRADE_BLOCKAGE:
+                    case UPGRADE_TOWER_MAN:
+                    case UPGRADE_TOWER_ELF:
+                    case UPGRADE_TOWER_DWARF:
+                    case UPGRADE_TOWER_HOBBIT:
+                    case UPGRADE_BLOCKAGE_MAN:
+                    case UPGRADE_BLOCKAGE_ELF:
+                    case UPGRADE_BLOCKAGE_DWARF:
+                    case UPGRADE_BLOCKAGE_HOBBIT:*/
+                    graphics.drawString("ELF", WIDTH * 0.09f, HEIGHT - 25);
+                    graphics.drawString("DWARF", WIDTH * 0.33f, HEIGHT - 25);
+                    graphics.drawString("MAN", WIDTH * 0.53f, HEIGHT - 25);
+                    graphics.drawString("HOBBIT", WIDTH * 0.77f, HEIGHT - 25);
+                    break;
+                }
 
                 // paint screen
                 Graphics g;
                 g = this.getGraphics();
                 if ((g != null) && (image != null))
-                    g.drawImage(image, 0, 16, null);
+                    g.drawImage(image, 3, 25, null);
                 if (g != null) g.dispose();
 
                 // Szál altatása 20ms-ig

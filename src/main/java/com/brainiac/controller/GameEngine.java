@@ -1,6 +1,7 @@
 package com.brainiac.controller;
 
 import com.brainiac.model.*;
+import com.brainiac.view.GameFrame;
 
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
@@ -235,7 +236,7 @@ public class GameEngine {
 
                     for (Path path : gameElements.map.getPaths()) {
                         for (Line2D road : path.getRoads()) {
-                            if (position.distanceFromRoad(road) < 3) {
+                            if (position.distanceFromRoad(road) < 5) {
                                 isOnRoad = true;
                                 break;
                             }
@@ -295,11 +296,44 @@ public class GameEngine {
                         return false;
                     }
                 case UPGRADE_BLOCKAGE:
-                    // TODO
-                    break;
                 case UPGRADE_TOWER:
-                    // TODO
+                    // NE CSINÁLJON SEMMIT, DIREKT
                     break;
+                case UPGRADE_TOWER_ELF:
+                    // TODO
+                    System.out.println("ELF");
+                    return true;
+                case UPGRADE_TOWER_DWARF:
+                    // TODO
+                    System.out.println("DWARF");
+                    return true;
+                case UPGRADE_TOWER_MAN:
+                    // TODO
+
+                    System.out.println("MAN");
+                    return true;
+                case UPGRADE_TOWER_HOBBIT:
+                    // TODO
+                    System.out.println("HOBBIT");
+                    return true;
+                case UPGRADE_BLOCKAGE_ELF:
+                    // TODO
+                    System.out.println("BLO_ELF");
+                    return true;
+                case UPGRADE_BLOCKAGE_DWARF:
+                    // TODO
+                    System.out.println("BLO_DWARF");
+                    return true;
+                case UPGRADE_BLOCKAGE_MAN:
+                    // TODO
+
+                    System.out.println("BLO_MAN");
+                    return true;
+                case UPGRADE_BLOCKAGE_HOBBIT:
+                    // TODO
+                    System.out.println("BLO_HOBBIT");
+                    return true;
+
             }
         }
         return false;
