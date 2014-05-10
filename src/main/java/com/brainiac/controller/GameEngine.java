@@ -225,7 +225,8 @@ public class GameEngine {
         if (gameState == GameState.Step) {
             int x = position.getX();
             int y = position.getY();
-
+            int costOfTowerUpgrade=10;
+            int costOfBlockageUpgrade=10;
             switch (action) {
                 // Akadály építése
                 case BUILD_BLOCKAGE:
@@ -301,12 +302,36 @@ public class GameEngine {
                     // NE CSINÁLJON SEMMIT, DIREKT
                     break;
                 case UPGRADE_TOWER_ELF:
-                    // TODO
-                    System.out.println("ELF");
+                    for (Tower tower : gameElements.towers) {
+                        if (Math.abs(tower.getPosition().getX()-x) < 5 && Math.abs(tower.getPosition().getY()-y) < 5) {
+                            // a kiválasztott torony
+                            if (gameElements.saruman.getSpellPower() >= costOfTowerUpgrade) {
+                                // Van-e elegendő varázserő?
+                                tower.upgrade(new TowerCrystal(EnemyType.Elf,10,0,0)); //10-zel többet sebez
+                                gameElements.saruman.setSpellPower(gameElements.saruman.getSpellPower() - costOfTowerUpgrade);
+                                return true;
+                            } else {
+                                // Torony építése sikerertelen
+                                return false;
+                            }
+                        }
+                    }
                     return true;
                 case UPGRADE_TOWER_DWARF:
-                    // TODO
-                    System.out.println("DWARF");
+                    for (Tower tower : gameElements.towers) {
+                        if (Math.abs(tower.getPosition().getX()-x) < 5 && Math.abs(tower.getPosition().getY()-y) < 5) {
+                            // a kiválasztott torony
+                            if (gameElements.saruman.getSpellPower() >= costOfTowerUpgrade) {
+                                // Van-e elegendő varázserő?
+                                tower.upgrade(new TowerCrystal(EnemyType.Dwarf,10,0,0)); //10-zel többet sebez
+                                gameElements.saruman.setSpellPower(gameElements.saruman.getSpellPower() - costOfTowerUpgrade);
+                                return true;
+                            } else {
+                                // Torony építése sikerertelen
+                                return false;
+                            }
+                        }
+                    }
                     return true;
                 case UPGRADE_TOWER_MAN:
                     // TODO
@@ -317,12 +342,36 @@ public class GameEngine {
                     System.out.println("HOBBIT");
                     return true;
                 case UPGRADE_BLOCKAGE_ELF:
-                    // TODO
-                    System.out.println("BLO_ELF");
+                    for (Blockage blockage : gameElements.blockages) {
+                        if (Math.abs(blockage.getPosition().getX()-x) < 15 && Math.abs(blockage.getPosition().getY() - y) < 15) {
+                            // a kiválasztott torony
+                            if (gameElements.saruman.getSpellPower() >= costOfBlockageUpgrade) {
+                                // Van-e elegendő varázserő?
+                                blockage.upgrade(new BlockageCrystal(EnemyType.Elf,2));//2-vel lassít
+                                gameElements.saruman.setSpellPower(gameElements.saruman.getSpellPower() - costOfBlockageUpgrade);
+                                return true;
+                            } else {
+                                // Blockage építése sikerertelen
+                                return false;
+                            }
+                        }
+                    }
                     return true;
                 case UPGRADE_BLOCKAGE_DWARF:
-                    // TODO
-                    System.out.println("BLO_DWARF");
+                    for (Blockage blockage : gameElements.blockages) {
+                        if (Math.abs(blockage.getPosition().getX()-x) < 15 && Math.abs(blockage.getPosition().getY() - y) < 15) {
+                            // a kiválasztott torony
+                            if (gameElements.saruman.getSpellPower() >= costOfBlockageUpgrade) {
+                                // Van-e elegendő varázserő?
+                                blockage.upgrade(new BlockageCrystal(EnemyType.Dwarf,5));//2-vel lassít
+                                gameElements.saruman.setSpellPower(gameElements.saruman.getSpellPower() - costOfBlockageUpgrade);
+                                return true;
+                            } else {
+                                // Blockage építése sikerertelen
+                                return false;
+                            }
+                        }
+                    }
                     return true;
                 case UPGRADE_BLOCKAGE_MAN:
                     // TODO

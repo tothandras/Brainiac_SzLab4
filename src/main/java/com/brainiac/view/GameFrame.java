@@ -36,6 +36,8 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
     // Ablak magassága
     public final int HEIGHT = 600;
 
+    boolean sync = true;
+
     public GameFrame(GameEngine gameEngine, GameElements gameElements) {
         this.gameEngine = gameEngine;
         this.gameElements = gameElements;
@@ -62,6 +64,7 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
         gamePanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                sync = false; //Ne engedje rajzolni ekkor
                 // TODO kivihetnénk külön privát osztályba
                 int x = e.getX();
                 int y = e.getY();
@@ -134,7 +137,6 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
 
     public void run() {
         running = true;
-
         while (running) {
             try {
                 // Játék állapotának frissítése
@@ -185,6 +187,7 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
 
             // draw towers
             for (Tower tower : gameElements.towers) {
+                if(sync){ // hogy ne kapjunk hibát
                 // TODO ezt jobban meg kell majd csinalni
                 // TODO + ha kirajzol es meghivjuk a handleMouseEventet, hogy tornyot adjunk hozza, akkor  java.util.ConcurrentModificationException-t kapunk (próbálgassátok ti is)
                 graphics.setColor(Color.black);
@@ -192,11 +195,13 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 graphics.draw(new Ellipse2D.Double(tower.getPosition().getX() - towerRange, tower.getPosition().getY() - towerRange, 2 * towerRange, 2 * towerRange));
                 graphics.fill(new Ellipse2D.Double(tower.getPosition().getX() - WIDTH / 100, tower.getPosition().getY() - HEIGHT / 100, WIDTH / 50, HEIGHT / 50));
             }
+            }
 
             // draw blockages
             for (Blockage blockage : gameElements.blockages) {
                 // TODO ide meg az akadályoknak
-                graphics.setColor(Color.BLUE);
+                if(blockage.upgraded){graphics.setColor(Color.green);}
+                else{graphics.setColor(Color.BLUE);}
                 graphics.fillOval(blockage.getPosition().getX() - 15, blockage.getPosition().getY() - 15, 30, 30);
             }
 
@@ -268,6 +273,7 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
         }catch(InterruptedException ex){
             ex.printStackTrace();
         }
+            sync = true; //torony kirajzolás engedélyező
     }
 
 }
