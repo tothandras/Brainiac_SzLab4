@@ -236,7 +236,7 @@ public class GameEngine {
 
                     for (Path path : gameElements.map.getPaths()) {
                         for (Line2D road : path.getRoads()) {
-                            if (position.distanceFromRoad(road) < 5) {
+                            if (position.distanceFromRoad(road) < path.sizeOfRoad) {
                                 isOnRoad = true;
                                 break;
                             }
@@ -269,7 +269,8 @@ public class GameEngine {
                     isOnRoad = false;
                     for (Path path : gameElements.map.getPaths()) {
                         for (Line2D road : path.getRoads()) {
-                            if (position.distanceFromRoad(road) < 5) {
+                            //megvizsgálom, hogy elég távol van e az uttól a lerakandó torony
+                            if (position.distanceFromRoad(road) < path.sizeOfRoad+5) {
                                 isOnRoad = true;
                             }
                         }
