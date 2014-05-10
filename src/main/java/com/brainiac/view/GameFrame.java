@@ -57,7 +57,7 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
     private void makeGUI() {
         gamePanel = new JPanel(new BorderLayout());
         // -10 magasság, hogy MAC-en jól nézzek ki
-        gamePanel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        gamePanel.setPreferredSize(new Dimension(WIDTH, HEIGHT-10));
         gamePanel.setBackground(Color.BLACK);
         gamePanel.addMouseListener(new MouseAdapter() {
             @Override
@@ -66,7 +66,6 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 int x = e.getX();
                 int y = e.getY();
                 Position position = new Position(x, y);
-                System.out.println("Koord:"+x+":"+y);
                 // Megvizsgáljuk, hogy gombra kattintottunk-e, a gombokat a képernyő alsó 50 pixelére rajzoljuk ki
                 if (y > HEIGHT - 50) {
                     // Ha igen, akkor Action-t váltunk
@@ -79,11 +78,9 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                                 // 2. Gomb
                                 action = Action.UPGRADE_TOWER_DWARF;
                             } else if (x > WIDTH / 4 * 2 && x < 3 * WIDTH / 4) {
-                                // TODO itt feloszthatnánk több kisebb gombra, hogy mit szeretnénk fejleszteni
                                 // 3. Gomb
                                 action = Action.UPGRADE_TOWER_MAN;
                             } else if (x > WIDTH / 4 * 3 && x < WIDTH) {
-                                // TODO itt feloszthatnánk több kisebb gombra, hogy mit szeretnénk fejleszteni
                                 // 4. Gomb
                                 action = Action.UPGRADE_TOWER_HOBBIT;
                             }
@@ -96,11 +93,9 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                                 // 2. Gomb
                                 action = Action.UPGRADE_BLOCKAGE_DWARF;
                             } else if (x > WIDTH / 4 * 2 && x < 3 * WIDTH / 4) {
-                                // TODO itt feloszthatnánk több kisebb gombra, hogy mit szeretnénk fejleszteni
                                 // 3. Gomb
                                 action = Action.UPGRADE_BLOCKAGE_MAN;
                             } else if (x > WIDTH / 4 * 3 && x < WIDTH) {
-                                // TODO itt feloszthatnánk több kisebb gombra, hogy mit szeretnénk fejleszteni
                                 // 4. Gomb
                                 action = Action.UPGRADE_BLOCKAGE_HOBBIT;
                             }
@@ -114,11 +109,9 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                             // 2. Gomb
                             action = Action.BUILD_BLOCKAGE;
                         } else if (x > WIDTH / 4 * 2 && x < 3 * WIDTH / 4) {
-                            // TODO itt feloszthatnánk több kisebb gombra, hogy mit szeretnénk fejleszteni
                             // 3. Gomb
                             action = Action.UPGRADE_TOWER;
                         } else if (x > WIDTH / 4 * 3 && x < WIDTH) {
-                            // TODO itt feloszthatnánk több kisebb gombra, hogy mit szeretnénk fejleszteni
                             // 4. Gomb
                             action = Action.UPGRADE_BLOCKAGE;
                         }
@@ -227,16 +220,6 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                         graphics.drawString("Akadály fejlesztése", WIDTH * 0.77f, HEIGHT - 25);
                         break;
                     default:
-                    /*case UPGRADE_TOWER:
-                    case UPGRADE_BLOCKAGE:
-                    case UPGRADE_TOWER_MAN:
-                    case UPGRADE_TOWER_ELF:
-                    case UPGRADE_TOWER_DWARF:
-                    case UPGRADE_TOWER_HOBBIT:
-                    case UPGRADE_BLOCKAGE_MAN:
-                    case UPGRADE_BLOCKAGE_ELF:
-                    case UPGRADE_BLOCKAGE_DWARF:
-                    case UPGRADE_BLOCKAGE_HOBBIT:*/
                     graphics.drawString("ELF", WIDTH * 0.09f, HEIGHT - 25);
                     graphics.drawString("DWARF", WIDTH * 0.33f, HEIGHT - 25);
                     graphics.drawString("MAN", WIDTH * 0.53f, HEIGHT - 25);
