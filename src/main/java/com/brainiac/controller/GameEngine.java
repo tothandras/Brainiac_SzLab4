@@ -309,7 +309,6 @@ public class GameEngine {
                     return true;
                 case UPGRADE_TOWER_MAN:
                     // TODO
-
                     System.out.println("MAN");
                     return true;
                 case UPGRADE_TOWER_HOBBIT:
