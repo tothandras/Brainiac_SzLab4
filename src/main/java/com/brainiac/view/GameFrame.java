@@ -191,7 +191,7 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 if(sync){ // hogy ne kapjunk hibát
                 // TODO ezt jobban meg kell majd csinalni
                 // TODO + ha kirajzol es meghivjuk a handleMouseEventet, hogy tornyot adjunk hozza, akkor  java.util.ConcurrentModificationException-t kapunk (próbálgassátok ti is)
-                Image img = new ImageIcon("src/tower.png").getImage();;
+                Image img = new ImageIcon("src/tower.png").getImage();
                 int towerRange = tower.getRange();
                 graphics.setColor(Color.black);
                 if(gameElements.fog != null){
