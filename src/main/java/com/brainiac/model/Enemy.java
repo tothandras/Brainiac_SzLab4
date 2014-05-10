@@ -14,6 +14,7 @@ public abstract class Enemy {
         timeSinceMove = 0;
     }
 
+
     /**
      * Ellenséget sebezzük
      *

@@ -8,6 +8,7 @@ import java.util.List;
 public class Path {
     // Útvonal több egyenes útszakaszból áll
     private List<Line2D> roads;
+    public final int sizeOfRoad=8; //itt állíthatjuk, be az utak szélleségét, kettővel oszthatónak kell lennie
 
     public Path() {
         roads = new ArrayList<Line2D>();

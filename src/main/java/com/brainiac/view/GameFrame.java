@@ -118,7 +118,33 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 // draw roads
                 for (Path path : gameElements.map.getPaths()) {
                     for (Line2D road : path.getRoads()) {
-                        graphics.draw(road);
+                        graphics.setColor(Color.DARK_GRAY);
+                        int sizeOfRoad=path.sizeOfRoad;//itt állíthatjuk, be az utak szélleségét, kettővel oszthatónak kell lennie
+
+                        //Végigmenve az utakon, amik vonalak, egy kicsit szélesebben rajzoljuk ki őket téglalapként
+                        if (road.getX1() == road.getX2()) {
+                            if (road.getY1()>road.getY2()) {
+                                // egy kicsit odébb állítjuk az út kezdő koordinátáját és magasságát vagy szélességét,
+                                // hogy az út kiszélesedjen
+                                graphics.draw(new Rectangle((int) road.getX1()-sizeOfRoad, (int) road.getY2()-sizeOfRoad,
+                                        (int) (road.getX2() - road.getX1())+2*sizeOfRoad, (int) (road.getY1() - road.getY2())+2*sizeOfRoad));
+                                graphics.fill(new Rectangle((int) road.getX1()-sizeOfRoad, (int) road.getY2()-sizeOfRoad,
+                                        (int) (road.getX2() - road.getX1())+2*sizeOfRoad, (int) (road.getY1() - road.getY2())+2*sizeOfRoad));
+                            }else{
+                                graphics.draw(new Rectangle((int) road.getX1()-sizeOfRoad, (int) road.getY1(),
+                                        (int) (road.getX2() - road.getX1())+2*sizeOfRoad, (int) (road.getY2() - road.getY1())));
+                                graphics.fill(new Rectangle((int) road.getX1()-sizeOfRoad, (int) road.getY1(),
+                                        (int) (road.getX2() - road.getX1())+2*sizeOfRoad, (int) (road.getY2() - road.getY1())));
+                            }
+                        }
+
+
+                        if (road.getY1() == road.getY2()) {
+                            graphics.draw(new Rectangle((int) road.getX1()-sizeOfRoad, (int) road.getY1()-sizeOfRoad,
+                                    (int) (road.getX2() - road.getX1())+2*sizeOfRoad, (int) (road.getY2() - road.getY1())+2*sizeOfRoad));
+                            graphics.fill(new Rectangle((int) road.getX1()-sizeOfRoad, (int) road.getY1()-sizeOfRoad,
+                                    (int) (road.getX2() - road.getX1())+2*sizeOfRoad, (int) (road.getY2() - road.getY1())+2*sizeOfRoad));
+                        }
                     }
                 }
 
@@ -126,6 +152,7 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 for (Tower tower : gameElements.towers) {
                     // TODO ezt jobban meg kell majd csinalni
                     // TODO + ha kirajzol es meghivjuk a handleMouseEventet, hogy tornyot adjunk hozza, akkor  java.util.ConcurrentModificationException-t kapunk (próbálgassátok ti is)
+                    graphics.setColor(Color.black);
                     int towerRange = (gameElements.fog == null) ? tower.getRange() : tower.getRange() / 2;
                     graphics.draw(new Ellipse2D.Double(tower.getPosition().getX() - towerRange, tower.getPosition().getY() - towerRange, 2 * towerRange, 2 * towerRange));
                     graphics.fill(new Ellipse2D.Double(tower.getPosition().getX() - WIDTH / 100, tower.getPosition().getY() - HEIGHT / 100, WIDTH / 50, HEIGHT / 50));
