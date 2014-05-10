@@ -149,7 +149,8 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
 
                 // Előző kép törlése
                 graphics.clearRect(0, 0, WIDTH, HEIGHT);
-
+                Image im = new ImageIcon("src/map.png").getImage();
+                graphics.drawImage(im,0,0,null);
                 // draw roads
                 for (Path path : gameElements.map.getPaths()) {
                     for (Line2D road : path.getRoads()) {
@@ -190,10 +191,18 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 if(sync){ // hogy ne kapjunk hibát
                 // TODO ezt jobban meg kell majd csinalni
                 // TODO + ha kirajzol es meghivjuk a handleMouseEventet, hogy tornyot adjunk hozza, akkor  java.util.ConcurrentModificationException-t kapunk (próbálgassátok ti is)
+                Image img = new ImageIcon("src/tower.png").getImage();;
+                int towerRange = tower.getRange();
                 graphics.setColor(Color.black);
-                int towerRange = (gameElements.fog == null) ? tower.getRange() : tower.getRange() / 2;
+                if(gameElements.fog != null){
+                    if (gameElements.fog.getMiddle().distance(tower.getPosition()) < gameElements.fog.getRange()) {
+                    towerRange = towerRange / 2;
+                    img = new ImageIcon("src/towerfog.png").getImage();
+                    }
+                }
                 graphics.draw(new Ellipse2D.Double(tower.getPosition().getX() - towerRange, tower.getPosition().getY() - towerRange, 2 * towerRange, 2 * towerRange));
-                graphics.fill(new Ellipse2D.Double(tower.getPosition().getX() - WIDTH / 100, tower.getPosition().getY() - HEIGHT / 100, WIDTH / 50, HEIGHT / 50));
+                graphics.drawImage(img,tower.getPosition().getX()-16,tower.getPosition().getY()-16,null);
+                //graphics.fill(new Ellipse2D.Double(tower.getPosition().getX() - WIDTH / 100, tower.getPosition().getY() - HEIGHT / 100, WIDTH / 50, HEIGHT / 50));
             }
             }
 

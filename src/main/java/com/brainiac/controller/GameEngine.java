@@ -14,6 +14,7 @@ public class GameEngine {
     private int ticks;
     // Játék állapota
     public GameState gameState;
+    private Fog fog;
 
     /**
      * Konstuktor
@@ -84,6 +85,7 @@ public class GameEngine {
                 gameElements.enemies.add(enemy);
             }
         }
+        fog = new Fog(new Position(300,300),150);
     }
 
     /**
@@ -111,6 +113,14 @@ public class GameEngine {
             }
             // Egyébként léptetjük az ellenségeket és tüzelünk a tornyokkal
             else {
+
+                if((ticks%800)==1){
+                    if(gameElements.fog == null){
+                        gameElements.fog = fog;
+                    }else{
+                        gameElements.fog = null;
+                    }
+                }
                 step();
                 fire();
             }
