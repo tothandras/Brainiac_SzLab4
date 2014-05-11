@@ -68,6 +68,9 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
             @Override
             public void mouseClicked(MouseEvent e) {
                 sync = false; //Ne engedje rajzolni ekkor
+                if(SwingUtilities.isRightMouseButton(e)){
+                    action=Action.NONE;
+                }
                 // TODO kivihetnénk külön privát osztályba
                 int x = e.getX();
                 int y = e.getY();
@@ -79,10 +82,25 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                         case UPGRADE_TOWER:
                             if (x < WIDTH / 4) {
                                 // 1. Gomb
+                                action = Action.UPGRADE_DAMAGE;
+                            } else if (x > WIDTH / 4 && x < 2 * WIDTH /4 ) {
+                                // 2. Gomb
+                                action = Action.UPGRADE_FIRE_RATE;
+                            } else if (x > WIDTH / 4 * 2 && x < 3 * WIDTH / 4) {
+                                // 3. Gomb
+                                action = Action.UPGRADE_RANGE;
+                            }
+                            break;
+
+                        //direkt egymás után vannak a casek, mert mindegyiknél ugyanazt a 4 esetet kell elmenteni,
+                        //a GameEnginebe mentem mit növel, sebzés, lövás gyorsaság, sugár
+                        case UPGRADE_DAMAGE:
+                            if (x < WIDTH / 4) {
+                                // 1. Gomb
                                 action = Action.UPGRADE_TOWER_ELF;
                             } else if (x > WIDTH / 4 && x < 2 * WIDTH / 4) {
                                 // 2. Gomb
-                                action = Action.UPGRADE_TOWER_DWARF;
+                                action = Action.UPGRADE_BLOCKAGE_DWARF;
                             } else if (x > WIDTH / 4 * 2 && x < 3 * WIDTH / 4) {
                                 // 3. Gomb
                                 action = Action.UPGRADE_TOWER_MAN;
@@ -91,6 +109,7 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                                 action = Action.UPGRADE_TOWER_HOBBIT;
                             }
                             break;
+
                         case UPGRADE_BLOCKAGE:
                             if (x < WIDTH / 4) {
                                 // 1. Gomb
@@ -106,6 +125,8 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                                 action = Action.UPGRADE_BLOCKAGE_HOBBIT;
                             }
                             break;
+
+
 
                         case NONE:
                             if (x < WIDTH / 4) {
@@ -246,8 +267,8 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
             graphics.drawLine(0, HEIGHT - 50, WIDTH, HEIGHT - 50);
             for (int i = 0; i < 4; i++) {
                 if (((action == Action.BUILD_TOWER || action == Action.UPGRADE_TOWER_ELF || action == Action.UPGRADE_BLOCKAGE_ELF) && i == 0) ||
-                        ((action == Action.BUILD_BLOCKAGE || action == Action.UPGRADE_TOWER_DWARF || action == Action.UPGRADE_BLOCKAGE_DWARF) && i == 1) ||
-                        ((action == Action.UPGRADE_TOWER_MAN || action == Action.UPGRADE_BLOCKAGE_MAN) && i == 2) ||
+                        ((action == Action.BUILD_BLOCKAGE || action == Action.UPGRADE_TOWER_DWARF || action == Action.UPGRADE_BLOCKAGE_DWARF|| action==Action.UPGRADE_FIRE_RATE) && i == 1) ||
+                        ((action == Action.UPGRADE_TOWER_MAN || action == Action.UPGRADE_BLOCKAGE_MAN || action==Action.UPGRADE_RANGE) && i == 2) ||
                         ((action == Action.UPGRADE_TOWER_HOBBIT || action == Action.UPGRADE_BLOCKAGE_HOBBIT) && i == 3)) {
                     graphics.setColor(Color.GRAY);
                 } else {
@@ -269,13 +290,22 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                     graphics.drawString("Torony fejlesztése", WIDTH * 0.53f, HEIGHT - 25);
                     graphics.drawString("Akadály fejlesztése", WIDTH * 0.77f, HEIGHT - 25);
                     break;
-                default:
+                case UPGRADE_FIRE_RATE:
+                case UPGRADE_RANGE:
+                case UPGRADE_TOWER:
                     graphics.setFont(new Font(Font.SERIF,Font.BOLD,12));
-                    graphics.drawString("ELF", WIDTH * 0.09f, HEIGHT - 25);
-                    graphics.drawString("DWARF", WIDTH * 0.33f, HEIGHT - 25);
-                    graphics.drawString("MAN", WIDTH * 0.53f, HEIGHT - 25);
-                    graphics.drawString("HOBBIT", WIDTH * 0.77f, HEIGHT - 25);
+                    graphics.drawString("Sebzés", WIDTH * 0.09f, HEIGHT - 25);
+                    graphics.drawString("Tüzelési sebesség", WIDTH * 0.30f, HEIGHT - 25);
+                    graphics.drawString("Hatósugár", WIDTH * 0.58f, HEIGHT - 25);
                     break;
+
+                default:
+                   graphics.setFont(new Font(Font.SERIF,Font.BOLD,12));
+                   graphics.drawString("ELF", WIDTH * 0.09f, HEIGHT - 25);
+                   graphics.drawString("DWARF", WIDTH * 0.33f, HEIGHT - 25);
+                   graphics.drawString("MAN", WIDTH * 0.53f, HEIGHT - 25);
+                   graphics.drawString("HOBBIT", WIDTH * 0.77f, HEIGHT - 25);
+                   break;
             }
 
             //varázserő kirajzolása

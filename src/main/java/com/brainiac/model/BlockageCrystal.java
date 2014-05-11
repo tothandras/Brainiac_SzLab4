@@ -24,8 +24,12 @@ public class BlockageCrystal {
      */
     public int getIncrement(EnemyType enemyType) {
         if (enemyType == against) {
-            return increment;
+             return increment;
         }
         return 0;
+    }
+
+    public EnemyType getEnemyType(){
+        return against;
     }
 }
