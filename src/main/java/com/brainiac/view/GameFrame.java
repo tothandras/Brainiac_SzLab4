@@ -192,8 +192,7 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
 
 
             // draw towers
-            ArrayList<Tower> towers=new ArrayList<Tower>(gameElements.towers);
-            for (Tower tower : towers) {
+                for (Tower tower : gameElements.getTowers()) {
                 if(sync){ // hogy ne kapjunk hibát
                 // TODO ezt jobban meg kell majd csinalni
                 // TODO + ha kirajzol es meghivjuk a handleMouseEventet, hogy tornyot adjunk hozza, akkor  java.util.ConcurrentModificationException-t kapunk (próbálgassátok ti is)
@@ -213,7 +212,7 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
             }
 
             // draw blockages
-            for (Blockage blockage : gameElements.blockages) {
+            for (Blockage blockage : gameElements.getBlockages()) {
                 Image img = new ImageIcon("src/blockage2.png").getImage();
                 if(blockage.upgraded){graphics.setColor(Color.green);}
                 else{graphics.setColor(Color.BLUE);}
@@ -223,7 +222,7 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
 
             Random rand = new Random();
             // draw enemies
-            for (Enemy enemy : gameElements.enemies) {
+            for (Enemy enemy : gameElements.getEnemies()) {
                 if (!offset.containsKey(enemy)) {
                     Position temp = new Position(rand.nextInt(6) - 3, rand.nextInt(6) - 3);
                     offset.put(enemy, temp);

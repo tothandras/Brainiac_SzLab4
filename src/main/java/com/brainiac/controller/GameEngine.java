@@ -137,9 +137,9 @@ public class GameEngine {
         Random random = new Random();
 
         // Akadályok ellenőrzése
-        for (Enemy enemy : gameElements.enemies) {
+        for (Enemy enemy : gameElements.getEnemies()) {
             Blockage blockage = null;
-            for (Blockage block : gameElements.blockages) {
+            for (Blockage block : gameElements.getBlockages()) {
                 if (enemy.getPosition().distance(block.getPosition()) < block.getRange()) {
                     blockage = block;
                 }
@@ -174,7 +174,7 @@ public class GameEngine {
      * Tornyok tüzelése
      */
     private void fire() {
-        for (Tower tower : gameElements.towers) {
+        for (Tower tower : gameElements.getTowers()) {
             if ((ticks % tower.getSpeed()) == 0) {
                 int towerRange = tower.getRange();
                 // Ha köd ereszkedik le
@@ -183,7 +183,7 @@ public class GameEngine {
                         towerRange = towerRange / 2;
                     }
                 }
-                for (Enemy enemy : gameElements.enemies) {
+                for (Enemy enemy : gameElements.getEnemies()) {
                     if (tower.getPosition().distance(enemy.getPosition()) < towerRange) {
                         System.out.println("Torony (" + tower.getPosition().getX() + ", " + tower.getPosition().getY() + "): Lő");
 
@@ -215,7 +215,7 @@ public class GameEngine {
         // A végzet hegye (width, height / 2.0)-ben van
         Position baradDur = new Position(gameElements.map.getWidth(), gameElements.map.getHeight() / 2);
         // Minden ellenségre megvizsgáljuk elérte-e
-        for (Enemy enemy : gameElements.enemies) {
+        for (Enemy enemy : gameElements.getEnemies()) {
             // Ha igen, akkor vége van
             if (baradDur.distance(enemy.getPosition()) < 3) {
                 return true;
@@ -258,7 +258,7 @@ public class GameEngine {
                     }
                     if (isOnRoad) {
                         boolean theSamePosition = false;
-                        for (Blockage blockage : gameElements.blockages) {
+                        for (Blockage blockage : gameElements.getBlockages()) {
                             // Két akadály közelségének ellenőrzése
                             if (blockage.getPosition().distance(position) < blockage.getRange() * 2) {
                                 theSamePosition = true;
@@ -291,7 +291,7 @@ public class GameEngine {
                     }
                     if (!isOnRoad) {
                         boolean theSamePosition = false;
-                        for (Tower tower : gameElements.towers) {
+                        for (Tower tower : gameElements.getTowers()) {
                             if ((tower.getPosition().getX() == x) && (tower.getPosition().getY() == y)) {
                                 // Torony építése sikertelen: a tornyot csak üres helyre lehet építeni
                                 theSamePosition = true;
@@ -315,7 +315,7 @@ public class GameEngine {
                     // NE CSINÁLJON SEMMIT, DIREKT
                     break;
                 case UPGRADE_TOWER_ELF:
-                    for (Tower tower : gameElements.towers) {
+                    for (Tower tower : gameElements.getTowers()) {
                         if (Math.abs(tower.getPosition().getX() - x) < 5 && Math.abs(tower.getPosition().getY() - y) < 5) {
                             // a kiválasztott torony
                             if (gameElements.saruman.getSpellPower() >= costOfTowerUpgrade) {
@@ -331,7 +331,7 @@ public class GameEngine {
                     }
                     return true;
                 case UPGRADE_TOWER_DWARF:
-                    for (Tower tower : gameElements.towers) {
+                    for (Tower tower : gameElements.getTowers()) {
                         if (Math.abs(tower.getPosition().getX() - x) < 5 && Math.abs(tower.getPosition().getY() - y) < 5) {
                             // a kiválasztott torony
                             if (gameElements.saruman.getSpellPower() >= costOfTowerUpgrade) {
@@ -355,7 +355,7 @@ public class GameEngine {
                     System.out.println("HOBBIT");
                     return true;
                 case UPGRADE_BLOCKAGE_ELF:
-                    for (Blockage blockage : gameElements.blockages) {
+                    for (Blockage blockage : gameElements.getBlockages()) {
                         if (Math.abs(blockage.getPosition().getX() - x) < 15 && Math.abs(blockage.getPosition().getY() - y) < 15) {
                             // a kiválasztott torony
                             if (gameElements.saruman.getSpellPower() >= costOfBlockageUpgrade) {
@@ -371,7 +371,7 @@ public class GameEngine {
                     }
                     return true;
                 case UPGRADE_BLOCKAGE_DWARF:
-                    for (Blockage blockage : gameElements.blockages) {
+                    for (Blockage blockage : gameElements.getBlockages()) {
                         if (Math.abs(blockage.getPosition().getX() - x) < 15 && Math.abs(blockage.getPosition().getY() - y) < 15) {
                             // a kiválasztott torony
                             if (gameElements.saruman.getSpellPower() >= costOfBlockageUpgrade) {
@@ -416,7 +416,7 @@ public class GameEngine {
                 }
                 if (!isOnRoad) {
                     boolean theSamePosition = false;
-                    for (Tower tower : gameElements.towers) {
+                    for (Tower tower : gameElements.getTowers()) {
                         if ((tower.getPosition().getX() == event.x) && (tower.getPosition().getY() == event.y)) {
                             theSamePosition = true;
                             System.out.println("Torony építése sikertelen: a tornyot csak üres helyre lehet építeni");
@@ -452,7 +452,7 @@ public class GameEngine {
                 }
                 if (isOnRoad) {
                     boolean theSamePosition = false;
-                    for (Blockage blockage : gameElements.blockages) {
+                    for (Blockage blockage : gameElements.getBlockages()) {
                         if ((blockage.getPosition().getX() == event.x) && (blockage.getPosition().getY() == event.y)) {
                             theSamePosition = true;
                             System.out.println("Akadály építése sikertelen: az akadályt csak útra szabad építeni.");
@@ -479,7 +479,7 @@ public class GameEngine {
             case UPGRADE_TOWER: {
                 boolean thereIsTower = false;
                 int costOfTowerUpgrade = 5;
-                for (Tower tower : gameElements.towers) {
+                for (Tower tower : gameElements.getTowers()) {
                     if ((tower.getPosition().getX() == event.x) && (tower.getPosition().getY() == event.y)) {
                         thereIsTower = true;
                         if (gameElements.saruman.getSpellPower() < costOfTowerUpgrade) {
@@ -503,7 +503,7 @@ public class GameEngine {
             case UPGRADE_BLOCKAGE: {
                 boolean thereIsBlockage = false;
                 int costOfBlockageUpgrade = 5;
-                for (Blockage blockage : gameElements.blockages) {
+                for (Blockage blockage : gameElements.getBlockages()) {
                     if ((blockage.getPosition().getX() == event.x) && (blockage.getPosition().getY() == event.y)) {
                         thereIsBlockage = true;
                         if (gameElements.saruman.getSpellPower() < costOfBlockageUpgrade) {
