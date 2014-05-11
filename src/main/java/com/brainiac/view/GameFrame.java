@@ -155,7 +155,7 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 for (Path path : gameElements.map.getPaths()) {
                     for (Line2D road : path.getRoads()) {
 
-                        graphics.setColor(Color.DARK_GRAY);
+                        graphics.setColor(new Color(156,158,126));
                         int sizeOfRoad = path.sizeOfRoad;//itt állíthatjuk, be az utak szélleségét, kettővel oszthatónak kell lennie
 
                         //Végigmenve az utakon, amik vonalak, egy kicsit szélesebben rajzoljuk ki őket téglalapként
@@ -208,10 +208,11 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
 
             // draw blockages
             for (Blockage blockage : gameElements.blockages) {
-                // TODO ide meg az akadályoknak
+                Image img = new ImageIcon("src/blockage2.png").getImage();
                 if(blockage.upgraded){graphics.setColor(Color.green);}
                 else{graphics.setColor(Color.BLUE);}
-                graphics.fillOval(blockage.getPosition().getX() - 15, blockage.getPosition().getY() - 15, 30, 30);
+                graphics.drawImage(img,blockage.getPosition().getX()-16,blockage.getPosition().getY()-16,null);
+                //graphics.fillOval(blockage.getPosition().getX() - 15, blockage.getPosition().getY() - 15, 30, 30);
             }
 
             Random rand = new Random();
@@ -256,19 +257,28 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 case BUILD_TOWER:
                 case BUILD_BLOCKAGE:
                 case NONE:
-
+                    graphics.setFont(new Font(Font.SERIF,Font.BOLD,12));
                     graphics.drawString("Torony", WIDTH * 0.09f, HEIGHT - 25);
                     graphics.drawString("Akadály", WIDTH * 0.33f, HEIGHT - 25);
                     graphics.drawString("Torony fejlesztése", WIDTH * 0.53f, HEIGHT - 25);
                     graphics.drawString("Akadály fejlesztése", WIDTH * 0.77f, HEIGHT - 25);
                     break;
                 default:
+                    graphics.setFont(new Font(Font.SERIF,Font.BOLD,12));
                     graphics.drawString("ELF", WIDTH * 0.09f, HEIGHT - 25);
                     graphics.drawString("DWARF", WIDTH * 0.33f, HEIGHT - 25);
                     graphics.drawString("MAN", WIDTH * 0.53f, HEIGHT - 25);
                     graphics.drawString("HOBBIT", WIDTH * 0.77f, HEIGHT - 25);
                     break;
             }
+
+            //varázserő kirajzolása
+            Integer in = gameElements.saruman.getSpellPower();
+            graphics.setFont(new Font(Font.SERIF,Font.BOLD,18));
+            graphics.drawString("Power: "+in.toString(),10,20);
+            //szín beállítása majd a varázserő nagyságának megfelelő téglalap rajzolása
+            graphics.setColor(Color.LIGHT_GRAY);
+            graphics.fillRect(10,30,in,5);
 
             // paint screen
             Graphics g;
