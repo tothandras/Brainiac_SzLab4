@@ -147,7 +147,6 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 //ha valaki elérte a végzet hegyét vége a játéknak
                 if(gameEngine.gameState== GameState.End){
                     running=false;
-                    System.out.println("Game Over!");
                 }
 
                 if (image == null) {

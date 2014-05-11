@@ -215,7 +215,6 @@ public class GameEngine {
         for (Enemy enemy : gameElements.enemies) {
             // Ha igen, akkor vége van
             if (baradDur.distance(enemy.getPosition()) < 3) {
-                System.out.println("Game Over!");
                 return true;
             }
         }
