@@ -245,12 +245,11 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
             Random rand = new Random();
             // draw enemies
             for (Enemy enemy : gameElements.enemies) {
-                // TODO ide kellenek majd a képek az egyégeknek
                 if (!offset.containsKey(enemy)) {
                     Position temp = new Position(rand.nextInt(6) - 3, rand.nextInt(6) - 3);
                     offset.put(enemy, temp);
                 }
-                graphics.setColor(Color.RED);
+                graphics.setColor(enemy.getColor());
                 graphics.fillOval(enemy.getPosition().getX() - 3 + offset.get(enemy).getX(),
                         enemy.getPosition().getY() - 3 + offset.get(enemy).getY(), 6, 6);
             }
