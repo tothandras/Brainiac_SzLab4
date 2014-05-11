@@ -50,6 +50,7 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
         addWindowListener(this);
         setResizable(false);
         setLocationRelativeTo(null);
+        setLocation(20,40);
         pack();
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -287,6 +288,13 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
             //szín beállítása majd a varázserő nagyságának megfelelő téglalap rajzolása
             graphics.setColor(Color.LIGHT_GRAY);
             graphics.fillRect(10,30,in,5);
+
+
+            //kiírja, hogy Game Over
+             if(gameEngine.gameState==GameState.End){
+                 graphics.setFont(new Font(Font.SERIF,Font.BOLD,38));
+                 graphics.drawString("GAME OVER", WIDTH*0.2f, HEIGHT*0.4f);
+             }
 
             // paint screen
             Graphics g;
