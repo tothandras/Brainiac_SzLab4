@@ -13,7 +13,6 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -34,7 +33,6 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
     // Az egyes ellenséges egységek eltolásának nagysága
     private HashMap<Enemy, Position> offset;
 
-
     // Ablak szélessége
     public final int WIDTH = 600;
     // Ablak magassága
@@ -52,7 +50,6 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
         addWindowListener(this);
         setResizable(false);
         setLocationRelativeTo(null);
-        setLocation(40,50);
         pack();
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -147,6 +144,10 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 // Játék állapotának frissítése
                 gameEngine.update();
 
+                //ha valaki elérte a végzet hegyét vége a játéknak
+                if(gameEngine.gameState== GameState.End){
+                    running=false;
+                }
 
                 if (image == null) {
                     image = createImage(WIDTH, HEIGHT);
@@ -157,8 +158,6 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 graphics.clearRect(0, 0, WIDTH, HEIGHT);
                 Image im = new ImageIcon("src/map.png").getImage();
                 graphics.drawImage(im,0,0,null);
-
-
                 // draw roads
                 for (Path path : gameElements.map.getPaths()) {
                     for (Line2D road : path.getRoads()) {
@@ -288,12 +287,6 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
             //szín beállítása majd a varázserő nagyságának megfelelő téglalap rajzolása
             graphics.setColor(Color.LIGHT_GRAY);
             graphics.fillRect(10,30,in,5);
-
-            //Ha vége a játéknak kiírjuk, hogy Game Over!
-            if(gameEngine.gameState==GameState.End){
-                graphics.setFont(new Font(Font.SERIF,Font.BOLD,30));
-                graphics.drawString("GAME OVER", WIDTH*0.4f, HEIGHT*0.5f);
-            }
 
             // paint screen
             Graphics g;
