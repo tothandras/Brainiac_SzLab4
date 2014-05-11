@@ -12,10 +12,6 @@ public abstract class Enemy {
     // az ellenség megjelenési színe a játékban
     protected Color color;
 
-    public Enemy() {
-
-    }
-
     /**
      * Ellenséget sebezzük
      *
@@ -65,9 +61,10 @@ public abstract class Enemy {
 
     /**
      * Az ellenség kirajzolási színének lekérdezése
+     *
      * @return Az ellenség színe
      */
-    public Color getColor(){
+    public Color getColor() {
         return color;
     }
 }

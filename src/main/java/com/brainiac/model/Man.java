@@ -81,7 +81,6 @@ public class Man extends Enemy {
         // Felére csökkentjük a ember életerejét
         this.life = this.life / 2;
         // Létrehozunk egy embert megegyező tulajdonságokkal
-        // TODO: kicsit lehet el kéne tolni?
         Man man = new Man(this.position);
         man.life = this.life;
         return man;

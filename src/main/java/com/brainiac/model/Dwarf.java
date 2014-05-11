@@ -10,7 +10,7 @@ public class Dwarf extends Enemy {
      */
     public Dwarf(Position position) {
         this.position = new Position(position);
-        life = 100;
+        life = 150;
         speed = 4;
         color = new Color(1.0f, 0.8398f, 0.0f);
     }
@@ -59,15 +59,16 @@ public class Dwarf extends Enemy {
 
     /**
      * A törp sebességét lekérdező függvény. A törp útjában lévő akadályt figyelembe véve ad választ.
+     *
      * @param blockage a törp útjában lévő akadály
      * @return a törp esetlegesen módosított sebessége
      */
     @Override
     public int getSpeed(Blockage blockage) {
-        if (blockage == null){
+        if (blockage == null) {
             return speed;
         }
-        return speed+blockage.block(EnemyType.Dwarf);
+        return speed + blockage.block(EnemyType.Dwarf);
     }
 
     /**
@@ -81,7 +82,6 @@ public class Dwarf extends Enemy {
         // Felére csökkentjük a törp életerejét
         this.life = this.life / 2;
         // Létrehozunk egy törpöt megegyező tulajdonságokkal
-        // TODO: kicsit lehet el kéne tolni?
         Dwarf dwarf = new Dwarf(this.position);
         dwarf.life = this.life;
         return dwarf;
