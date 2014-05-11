@@ -19,7 +19,7 @@ public class Tower {
     public Tower(Position position) {
         this.position = position;
         this.damage = new Damage();
-        this.fireRate = 10;
+        this.fireRate = 20;
         this.range = 100;
         this.cutChance = 0.05;
     }
@@ -82,7 +82,9 @@ public class Tower {
         // Tüzelési hatótávolság növelése a kristályban meghatározott mértékben
         range = range + crystal.getRangeIncrement();
         // Tüzelési sebesség növelése a kristályban meghatározott mértékben
-        fireRate = fireRate + crystal.getFireRateIncrement();
+        //5 esetén nem csökkentünk tovább
+        if(fireRate>5)
+            fireRate = fireRate - crystal.getFireRateIncrement();
         // Sebzés növelése a kristályban meghatározott ellenség ellen és mértékben
         damage.setDamage(damage.getDamage(crystal.getAgainst()) + crystal.getIncrement(), crystal.getAgainst());
     }
