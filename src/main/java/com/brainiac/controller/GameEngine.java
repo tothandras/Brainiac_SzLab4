@@ -339,7 +339,7 @@ public class GameEngine {
                     return false;
 
                 case UPGRADE_RANGE:
-                    for (Tower tower : gameElements.towers) {
+                    for (Tower tower : gameElements.getTowers()) {
                         if (Math.abs(tower.getPosition().getX() - x) < 5 && Math.abs(tower.getPosition().getY() - y) < 5) {
                             // a kiválasztott torony
                             if (gameElements.saruman.getSpellPower() >= costOfTowerUpgrade) {
@@ -390,7 +390,7 @@ public class GameEngine {
                     }
                     return false;
                 case UPGRADE_TOWER_MAN:
-                    for (Tower tower : gameElements.towers) {
+                    for (Tower tower : gameElements.getTowers()) {
                         if (Math.abs(tower.getPosition().getX() - x) < 5 && Math.abs(tower.getPosition().getY() - y) < 5) {
                             // a kiválasztott torony
                             if (gameElements.saruman.getSpellPower() >= costOfTowerUpgrade) {
@@ -407,7 +407,7 @@ public class GameEngine {
                     }
                     return false;
                 case UPGRADE_TOWER_HOBBIT:
-                    for (Tower tower : gameElements.towers) {
+                    for (Tower tower : gameElements.getTowers()) {
                         if (Math.abs(tower.getPosition().getX() - x) < 5 && Math.abs(tower.getPosition().getY() - y) < 5) {
                             // a kiválasztott torony
                             if (gameElements.saruman.getSpellPower() >= costOfTowerUpgrade) {
@@ -456,7 +456,7 @@ public class GameEngine {
                     }
                     return false;
                 case UPGRADE_BLOCKAGE_MAN:
-                    for (Blockage blockage : gameElements.blockages) {
+                    for (Blockage blockage : gameElements.getBlockages()) {
                         if (Math.abs(blockage.getPosition().getX() - x) < 15 && Math.abs(blockage.getPosition().getY() - y) < 15) {
                             // a kiválasztott torony
                             if (gameElements.saruman.getSpellPower() >= costOfBlockageUpgrade) {
@@ -472,7 +472,7 @@ public class GameEngine {
                     }
                     return false;
                 case UPGRADE_BLOCKAGE_HOBBIT:
-                    for (Blockage blockage : gameElements.blockages) {
+                    for (Blockage blockage : gameElements.getBlockages()) {
                         if (Math.abs(blockage.getPosition().getX() - x) < 15 && Math.abs(blockage.getPosition().getY() - y) < 15) {
                             // a kiválasztott torony
                             if (gameElements.saruman.getSpellPower() >= costOfBlockageUpgrade) {
