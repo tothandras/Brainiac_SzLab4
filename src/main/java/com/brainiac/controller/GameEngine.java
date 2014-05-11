@@ -113,7 +113,7 @@ public class GameEngine {
             }
             // Egyébként léptetjük az ellenségeket és tüzelünk a tornyokkal
             else {
-
+                   //TODO Ezt lehet nem itt kéne megvalósítani, és nem ilyen módon
                 if((ticks%800)==1){
                     if(gameElements.fog == null){
                         gameElements.fog = fog;
@@ -236,11 +236,12 @@ public class GameEngine {
             int y = position.getY();
             int costOfTowerUpgrade=10;
             int costOfBlockageUpgrade=10;
+            int costOfBlockageBuild = 10;
             switch (action) {
                 // Akadály építése
                 case BUILD_BLOCKAGE:
                     // Akadály ára
-                    int costOfBlockageBuild = 0;
+
                     // útra próbáljuk-e letenni
                     boolean isOnRoad = false;
 

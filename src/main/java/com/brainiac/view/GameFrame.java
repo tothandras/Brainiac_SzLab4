@@ -1,7 +1,6 @@
 package com.brainiac.view;
 
 import com.brainiac.controller.GameEngine;
-import com.brainiac.controller.GameState;
 import com.brainiac.model.Action;
 import com.brainiac.model.*;
 
@@ -13,7 +12,6 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -38,7 +36,7 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
     // Ablak magassága
     public final int HEIGHT = 600;
 
-    boolean sync = true;
+
 
     public GameFrame(GameEngine gameEngine, GameElements gameElements) {
         this.gameEngine = gameEngine;
@@ -66,7 +64,6 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
         gamePanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                sync = false; //Ne engedje rajzolni ekkor
                 // TODO kivihetnénk külön privát osztályba
                 int x = e.getX();
                 int y = e.getY();
@@ -121,6 +118,9 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                                 action = Action.UPGRADE_BLOCKAGE;
                             }
                             break;
+                       default:
+                           action = Action.NONE;
+                           break;
                     }
                 } else if (action != Action.NONE && action != Action.UPGRADE_BLOCKAGE && action != Action.UPGRADE_TOWER) {
                     // Ha nem, akkor a jelenlegi Action-nel meghívjuk a gameEngine eseménykezelő függvényét
@@ -143,11 +143,6 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
             try {
                 // Játék állapotának frissítése
                 gameEngine.update();
-
-                //ha valaki elérte a végzet hegyét vége a játéknak
-                if(gameEngine.gameState== GameState.End){
-                    running=false;
-                }
 
                 if (image == null) {
                     image = createImage(WIDTH, HEIGHT);
@@ -194,9 +189,7 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
 
 
             // draw towers
-            ArrayList<Tower> towers=new ArrayList<Tower>(gameElements.towers);
-            for (Tower tower : towers) {
-                if(sync){ // hogy ne kapjunk hibát
+            for (Tower tower : gameElements.towers) {
                 // TODO ezt jobban meg kell majd csinalni
                 // TODO + ha kirajzol es meghivjuk a handleMouseEventet, hogy tornyot adjunk hozza, akkor  java.util.ConcurrentModificationException-t kapunk (próbálgassátok ti is)
                 Image img = new ImageIcon("src/tower.png").getImage();
@@ -212,7 +205,7 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 graphics.drawImage(img,tower.getPosition().getX()-16,tower.getPosition().getY()-16,null);
                 //graphics.fill(new Ellipse2D.Double(tower.getPosition().getX() - WIDTH / 100, tower.getPosition().getY() - HEIGHT / 100, WIDTH / 50, HEIGHT / 50));
             }
-            }
+
 
             // draw blockages
             for (Blockage blockage : gameElements.blockages) {
@@ -273,17 +266,17 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                     break;
                 default:
                     graphics.setFont(new Font(Font.SERIF,Font.BOLD,12));
-                    graphics.drawString("ELF", WIDTH * 0.09f, HEIGHT - 25);
-                    graphics.drawString("DWARF", WIDTH * 0.33f, HEIGHT - 25);
-                    graphics.drawString("MAN", WIDTH * 0.53f, HEIGHT - 25);
-                    graphics.drawString("HOBBIT", WIDTH * 0.77f, HEIGHT - 25);
+                    graphics.drawString("Tünde ellen", WIDTH * 0.09f, HEIGHT - 25);
+                    graphics.drawString("Törp ellen", WIDTH * 0.33f, HEIGHT - 25);
+                    graphics.drawString("Ember ellen", WIDTH * 0.53f, HEIGHT - 25);
+                    graphics.drawString("Hobbit ellen", WIDTH * 0.77f, HEIGHT - 25);
                     break;
             }
 
             //varázserő kirajzolása
             Integer in = gameElements.saruman.getSpellPower();
             graphics.setFont(new Font(Font.SERIF,Font.BOLD,18));
-            graphics.drawString("Power: " + in.toString(), 10, 20);
+            graphics.drawString("Power: "+in.toString(),10,20);
             //szín beállítása majd a varázserő nagyságának megfelelő téglalap rajzolása
             graphics.setColor(Color.LIGHT_GRAY);
             graphics.fillRect(10,30,in,5);
@@ -300,7 +293,7 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
         }catch(InterruptedException ex){
             ex.printStackTrace();
         }
-            sync = true; //torony kirajzolás engedélyező
+
     }
 
 }
