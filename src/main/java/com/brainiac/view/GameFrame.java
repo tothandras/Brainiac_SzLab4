@@ -321,6 +321,11 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 graphics.drawImage(img,WIDTH/2-150,HEIGHT/2-50, null);
              }
 
+             if(gameEngine.gameState==GameState.Win){
+                Image img = new ImageIcon("src/win.png").getImage();
+                graphics.drawImage(img,WIDTH/2-100,HEIGHT/2-130, null);
+             }
+
             // paint screen
             Graphics g;
             g = this.getGraphics();
