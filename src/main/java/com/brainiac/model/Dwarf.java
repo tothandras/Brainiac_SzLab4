@@ -1,5 +1,7 @@
 package com.brainiac.model;
 
+import java.awt.*;
+
 public class Dwarf extends Enemy {
     /**
      * Beállítjuk a megfellelő kezdő sebességet, életet és pozíciót
@@ -10,6 +12,7 @@ public class Dwarf extends Enemy {
         this.position = new Position(position);
         life = 100;
         speed = 4;
+        color = new Color(1.0f, 0.8398f, 0.0f);
     }
 
     /**

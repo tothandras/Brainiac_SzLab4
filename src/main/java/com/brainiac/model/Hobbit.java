@@ -1,5 +1,7 @@
 package com.brainiac.model;
 
+import java.awt.*;
+
 public class Hobbit extends Enemy {
     /**
      * Beállítjuk a megfellelő kezdő sebességet, életet és pozíciót
@@ -10,6 +12,7 @@ public class Hobbit extends Enemy {
         this.position = new Position(position);
         life = 50;
         speed = 3;
+        color = new Color(1.0f, 0.0f, 0.0f);
     }
 
     /**

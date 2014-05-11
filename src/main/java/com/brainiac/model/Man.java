@@ -1,5 +1,7 @@
 package com.brainiac.model;
 
+import java.awt.*;
+
 public class Man extends Enemy {
     /**
      * Beállítjuk a megfellelő kezdő sebességet, életet és pozíciót
@@ -10,6 +12,7 @@ public class Man extends Enemy {
         this.position = new Position(position);
         life = 100;
         speed = 3;
+        color = new Color(0.85f, 0.85f, 0.85f);
     }
 
     /**

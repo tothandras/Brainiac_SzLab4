@@ -1,5 +1,7 @@
 package com.brainiac.model;
 
+import java.awt.*;
+
 public abstract class Enemy {
     // Ellenség életereje
     protected int life;
@@ -7,11 +9,11 @@ public abstract class Enemy {
     protected int speed;
     // Ellenség pozíciója
     protected Position position;
-    //
-    protected int timeSinceMove;
+    // az ellenség megjelenési színe a játékban
+    protected Color color;
 
     public Enemy() {
-        timeSinceMove = 0;
+
     }
 
     /**
@@ -60,4 +62,12 @@ public abstract class Enemy {
      * Csinál egy másolatot magából, ugyanolyan tulajdonságokkal és fele annyi életerővel mint az eredeti egyed.
      */
     public abstract Enemy cut();
+
+    /**
+     * Az ellenség kirajzolási színének lekérdezése
+     * @return Az ellenség színe
+     */
+    public Color getColor(){
+        return color;
+    }
 }
