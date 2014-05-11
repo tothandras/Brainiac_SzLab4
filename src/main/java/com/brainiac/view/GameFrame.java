@@ -43,7 +43,6 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
         this.gameElements = gameElements;
         this.action = Action.NONE;
         offset = new HashMap<Enemy, Position>();
-
         makeGUI();
         addWindowListener(this);
         setResizable(false);
@@ -280,6 +279,16 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
             //szín beállítása majd a varázserő nagyságának megfelelő téglalap rajzolása
             graphics.setColor(Color.LIGHT_GRAY);
             graphics.fillRect(10,30,in,5);
+
+            //Hibaüzenet dobása
+
+            if(gameEngine.notiferror){
+                graphics.setColor(Color.RED);
+                graphics.fillRect(150, 250, 300, 100);
+                graphics.setColor(Color.BLACK);
+                graphics.setFont(new Font(Font.SERIF, Font.BOLD, 18));
+                graphics.drawString("Hibás interakció!", 220, 300);
+            }
 
             // paint screen
             Graphics g;

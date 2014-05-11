@@ -14,7 +14,9 @@ public class GameEngine {
     private int ticks;
     // Játék állapota
     public GameState gameState;
-    private Fog fog;
+    public boolean notiferror; //jelzés a gameframe-nek
+    private int notiftime;
+    private Fog fog; // Köd készítéséhez
 
     /**
      * Konstuktor
@@ -24,7 +26,13 @@ public class GameEngine {
      */
     public GameEngine(GameElements gameElements) {
         this.gameElements = gameElements;
+        this.notiferror = false;
         ticks = 0;
+    }
+
+    private void myNotif(){
+        notiferror=true;
+        notiftime=ticks;
     }
 
     /**
@@ -94,6 +102,12 @@ public class GameEngine {
     public void update() {
         // növeljük az eltelt lépések számát
         ticks = ticks + 1;
+
+        //Hibaüzenet egy ideig megjelenik a képernyőn majd eltűnik
+        if(notiferror){
+            if(ticks==notiftime+100)
+                notiferror=false;
+        }
 
         // Csak akkor léptetünk, ha nem építési szakaszban vagyunk
         if (gameState == GameState.Step) {
@@ -259,6 +273,7 @@ public class GameEngine {
                             // Két akadály közelségének ellenőrzése
                             if (blockage.getPosition().distance(position) < blockage.getRange() * 2) {
                                 theSamePosition = true;
+                                myNotif(); //Üzenet jelzés
                                 System.out.println("Akadály építése sikertelen: Van már");
                             }
                         }
@@ -268,10 +283,12 @@ public class GameEngine {
                             gameElements.saruman.setSpellPower(gameElements.saruman.getSpellPower() - costOfBlockageBuild);
                             return true;
                         } else {
+                            myNotif();
                             // Van már adakály a közelben, vagy nincs elég varázserő
                             return false;
                         }
                     } else {
+                        myNotif();
                         // Akadályt csak útra szabad építeni
                         return false;
                     }
@@ -289,8 +306,9 @@ public class GameEngine {
                     if (!isOnRoad) {
                         boolean theSamePosition = false;
                         for (Tower tower : gameElements.towers) {
-                            if ((tower.getPosition().getX() == x) && (tower.getPosition().getY() == y)) {
+                            if ((Math.abs(tower.getPosition().getX() - x) < 5) && Math.abs(tower.getPosition().getY()-y) < 5) {
                                 // Torony építése sikertelen: a tornyot csak üres helyre lehet építeni
+                                myNotif();//Üzenet jelzés
                                 theSamePosition = true;
                             }
                         }
@@ -300,10 +318,12 @@ public class GameEngine {
                             gameElements.saruman.setSpellPower(gameElements.saruman.getSpellPower() - costOfTowerBuild);
                             return true;
                         } else {
+                            myNotif();
                             // Torony építése sikerertelen
                             return false;
                         }
                     } else {
+                        myNotif();
                         // A tornyot csak üres helyre lehet építeni
                         return false;
                     }
@@ -321,6 +341,7 @@ public class GameEngine {
                                 gameElements.saruman.setSpellPower(gameElements.saruman.getSpellPower() - costOfTowerUpgrade);
                                 return true;
                             } else {
+                                myNotif();
                                 // Torony építése sikerertelen
                                 return false;
                             }
@@ -337,6 +358,7 @@ public class GameEngine {
                                 gameElements.saruman.setSpellPower(gameElements.saruman.getSpellPower() - costOfTowerUpgrade);
                                 return true;
                             } else {
+                                myNotif();
                                 // Torony építése sikerertelen
                                 return false;
                             }
@@ -344,12 +366,38 @@ public class GameEngine {
                     }
                     return true;
                 case UPGRADE_TOWER_MAN:
-                    // TODO
-                    System.out.println("MAN");
+                    for (Tower tower : gameElements.towers) {
+                        if (Math.abs(tower.getPosition().getX()-x) < 5 && Math.abs(tower.getPosition().getY()-y) < 5) {
+                            // a kiválasztott torony
+                            if (gameElements.saruman.getSpellPower() >= costOfTowerUpgrade) {
+                                // Van-e elegendő varázserő?
+                                tower.upgrade(new TowerCrystal(EnemyType.Man,10,0,0)); //10-zel többet sebez
+                                gameElements.saruman.setSpellPower(gameElements.saruman.getSpellPower() - costOfTowerUpgrade);
+                                return true;
+                            } else {
+                                myNotif();
+                                // Torony építése sikerertelen
+                                return false;
+                            }
+                        }
+                    }
                     return true;
                 case UPGRADE_TOWER_HOBBIT:
-                    // TODO
-                    System.out.println("HOBBIT");
+                    for (Tower tower : gameElements.towers) {
+                        if (Math.abs(tower.getPosition().getX()-x) < 5 && Math.abs(tower.getPosition().getY()-y) < 5) {
+                            // a kiválasztott torony
+                            if (gameElements.saruman.getSpellPower() >= costOfTowerUpgrade) {
+                                // Van-e elegendő varázserő?
+                                tower.upgrade(new TowerCrystal(EnemyType.Hobbit,10,0,0)); //10-zel többet sebez
+                                gameElements.saruman.setSpellPower(gameElements.saruman.getSpellPower() - costOfTowerUpgrade);
+                                return true;
+                            } else {
+                                myNotif();
+                                // Torony építése sikerertelen
+                                return false;
+                            }
+                        }
+                    }
                     return true;
                 case UPGRADE_BLOCKAGE_ELF:
                     for (Blockage blockage : gameElements.blockages) {
@@ -361,6 +409,7 @@ public class GameEngine {
                                 gameElements.saruman.setSpellPower(gameElements.saruman.getSpellPower() - costOfBlockageUpgrade);
                                 return true;
                             } else {
+                                myNotif();
                                 // Blockage építése sikerertelen
                                 return false;
                             }
@@ -377,6 +426,7 @@ public class GameEngine {
                                 gameElements.saruman.setSpellPower(gameElements.saruman.getSpellPower() - costOfBlockageUpgrade);
                                 return true;
                             } else {
+                                myNotif();
                                 // Blockage építése sikerertelen
                                 return false;
                             }
@@ -384,13 +434,38 @@ public class GameEngine {
                     }
                     return true;
                 case UPGRADE_BLOCKAGE_MAN:
-                    // TODO
-
-                    System.out.println("BLO_MAN");
+                    for (Blockage blockage : gameElements.blockages) {
+                        if (Math.abs(blockage.getPosition().getX()-x) < 15 && Math.abs(blockage.getPosition().getY() - y) < 15) {
+                            // a kiválasztott torony
+                            if (gameElements.saruman.getSpellPower() >= costOfBlockageUpgrade) {
+                                // Van-e elegendő varázserő?
+                                blockage.upgrade(new BlockageCrystal(EnemyType.Man,2));//2-vel lassít
+                                gameElements.saruman.setSpellPower(gameElements.saruman.getSpellPower() - costOfBlockageUpgrade);
+                                return true;
+                            } else {
+                                myNotif();
+                                // Blockage építése sikerertelen
+                                return false;
+                            }
+                        }
+                    }
                     return true;
                 case UPGRADE_BLOCKAGE_HOBBIT:
-                    // TODO
-                    System.out.println("BLO_HOBBIT");
+                    for (Blockage blockage : gameElements.blockages) {
+                        if (Math.abs(blockage.getPosition().getX()-x) < 15 && Math.abs(blockage.getPosition().getY() - y) < 15) {
+                            // a kiválasztott torony
+                            if (gameElements.saruman.getSpellPower() >= costOfBlockageUpgrade) {
+                                // Van-e elegendő varázserő?
+                                blockage.upgrade(new BlockageCrystal(EnemyType.Hobbit,2));//2-vel lassít
+                                gameElements.saruman.setSpellPower(gameElements.saruman.getSpellPower() - costOfBlockageUpgrade);
+                                return true;
+                            } else {
+                                myNotif();
+                                // Blockage építése sikerertelen
+                                return false;
+                            }
+                        }
+                    }
                     return true;
 
             }
