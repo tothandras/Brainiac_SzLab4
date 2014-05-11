@@ -32,7 +32,7 @@ public class GameEngine {
      */
     public void startNewGame() {
         // Szarumán varázserejének beállítása
-        gameElements.saruman.setSpellPower(100);
+        gameElements.saruman.setSpellPower(30);
         // Először építés fázisban vagyunk
         gameState = GameState.Step;
         newRound(10);
@@ -210,12 +210,12 @@ public class GameEngine {
      */
     private boolean checkGameState() {
         // A végzet hegye (width, height / 2.0)-ben van
-        Position baradDur = new Position(gameElements.map.getWidth() / 2, gameElements.map.getHeight() / 2);
-
+        Position baradDur = new Position(gameElements.map.getWidth(), gameElements.map.getHeight() / 2);
         // Minden ellenségre megvizsgáljuk elérte-e
         for (Enemy enemy : gameElements.enemies) {
             // Ha igen, akkor vége van
             if (baradDur.distance(enemy.getPosition()) < 3) {
+                System.out.println("Game Over!");
                 return true;
             }
         }

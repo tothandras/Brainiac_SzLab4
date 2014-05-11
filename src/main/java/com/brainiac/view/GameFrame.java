@@ -1,6 +1,7 @@
 package com.brainiac.view;
 
 import com.brainiac.controller.GameEngine;
+import com.brainiac.controller.GameState;
 import com.brainiac.model.Action;
 import com.brainiac.model.*;
 
@@ -12,6 +13,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -142,6 +144,12 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 // Játék állapotának frissítése
                 gameEngine.update();
 
+                //ha valaki elérte a végzet hegyét vége a játéknak
+                if(gameEngine.gameState== GameState.End){
+                    running=false;
+                    System.out.println("Game Over!");
+                }
+
                 if (image == null) {
                     image = createImage(WIDTH, HEIGHT);
                     graphics = (Graphics2D) image.getGraphics();
@@ -187,7 +195,8 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
 
 
             // draw towers
-            for (Tower tower : gameElements.towers) {
+            ArrayList<Tower> towers=new ArrayList<Tower>(gameElements.towers);
+            for (Tower tower : towers) {
                 if(sync){ // hogy ne kapjunk hibát
                 // TODO ezt jobban meg kell majd csinalni
                 // TODO + ha kirajzol es meghivjuk a handleMouseEventet, hogy tornyot adjunk hozza, akkor  java.util.ConcurrentModificationException-t kapunk (próbálgassátok ti is)
@@ -275,7 +284,7 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
             //varázserő kirajzolása
             Integer in = gameElements.saruman.getSpellPower();
             graphics.setFont(new Font(Font.SERIF,Font.BOLD,18));
-            graphics.drawString("Power: "+in.toString(),10,20);
+            graphics.drawString("Power: " + in.toString(), 10, 20);
             //szín beállítása majd a varázserő nagyságának megfelelő téglalap rajzolása
             graphics.setColor(Color.LIGHT_GRAY);
             graphics.fillRect(10,30,in,5);
