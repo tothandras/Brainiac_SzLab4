@@ -46,7 +46,6 @@ public class GameEngine {
     public void newRound(int numberOfEnemies) {
         // a köd leereszkedésének esélye százalékban kifejezve
         int fogChance = 20;
-
         round_number++;
         // Ellenségek felhelyezése a pályára
 
@@ -103,8 +102,6 @@ public class GameEngine {
     public void update() {
         // növeljük az eltelt lépések számát
         ticks = ticks + 1;
-        if (round_number > 10)
-            gameState = GameState.Win;
         // Csak akkor léptetünk, ha nem építési szakaszban vagyunk
         if (gameState == GameState.Step) {
             // Ha minden ellenség halott
@@ -113,8 +110,10 @@ public class GameEngine {
                 gameElements.blockages.clear();
                 // Vége a körnek, építési szakasz
                 //gameState = GameState.Build;
-
-                newRound(10 + round_number * 5);
+                if (round_number >= 1)
+                    gameState = GameState.Win;
+                else
+                    newRound(10 + round_number * 5);
             }
             // Ha valamelyik ellenség elérte a végzet hegyét
             else if (checkGameState()) {
