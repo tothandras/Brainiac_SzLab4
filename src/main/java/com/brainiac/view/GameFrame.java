@@ -146,9 +146,6 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 gameEngine.update();
 
                 //ha valaki elérte a végzet hegyét vége a játéknak
-                if(gameEngine.gameState== GameState.End){
-                    running=false;
-                }
 
                 if (image == null) {
                     image = createImage(WIDTH, HEIGHT);
@@ -292,8 +289,8 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
 
             //kiírja, hogy Game Over
              if(gameEngine.gameState==GameState.End){
-                 graphics.setFont(new Font(Font.SERIF,Font.BOLD,38));
-                 graphics.drawString("GAME OVER", WIDTH*0.2f, HEIGHT*0.4f);
+                Image img = new ImageIcon("src/gameover.png").getImage();
+                graphics.drawImage(img,WIDTH/2-150,HEIGHT/2-50, null);
              }
 
             // paint screen
