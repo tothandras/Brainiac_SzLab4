@@ -70,7 +70,7 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 if (SwingUtilities.isRightMouseButton(e)) {
                     action = Action.NONE;
                 } else {
-                    // TODO kivihetnénk külön privát osztályba
+
                     int x = e.getX();
                     int y = e.getY();
                     Position position = new Position(x, y);
