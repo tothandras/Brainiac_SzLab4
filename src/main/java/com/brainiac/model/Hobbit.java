@@ -81,8 +81,7 @@ public class Hobbit extends Enemy {
     public Enemy cut() {
         // Felére csökkentjük a törp életerejét
         this.life = this.life / 2;
-        // Létrehozunk egy törpöt megegyező tulajdonságokkal
-        // TODO: kicsit lehet el kéne tolni?
+        // Létrehozunk egy hobbitot megegyező tulajdonságokkal
         Hobbit hobbit = new Hobbit(this.position);
         hobbit.life = this.life;
         return hobbit;

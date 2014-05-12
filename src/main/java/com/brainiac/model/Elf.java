@@ -10,7 +10,7 @@ public class Elf extends Enemy {
      */
     public Elf(Position position) {
         this.position = new Position(position);
-        life = 100;
+        life = 130;
         speed = 2;
         color = new Color(0.0f, 1.0f, 0.0f);
     }
@@ -82,7 +82,6 @@ public class Elf extends Enemy {
         // Felére csökkentjük a tünde életerejét
         this.life = this.life / 2;
         // Létrehozunk egy tündét megegyező tulajdonságokkal
-        // TODO: kicsit lehet el kéne tolni?
         Elf elf = new Elf(this.position);
         elf.life = this.life;
         return elf;

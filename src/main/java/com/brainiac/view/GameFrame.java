@@ -11,9 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -70,85 +68,84 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 sync = false; //Ne engedje rajzolni ekkor
                 if (SwingUtilities.isRightMouseButton(e)) {
                     action = Action.NONE;
-                } else {
-                    // TODO kivihetnénk külön privát osztályba
-                    int x = e.getX();
-                    int y = e.getY();
-                    Position position = new Position(x, y);
-                    // Megvizsgáljuk, hogy gombra kattintottunk-e, a gombokat a képernyő alsó 50 pixelére rajzoljuk ki
-                    if (y > HEIGHT - 50) {
-                        // Ha igen, akkor Action-t váltunk
-                        switch (action) {
-                            case UPGRADE_TOWER:
-                                if (x < WIDTH / 4) {
-                                    // 1. Gomb
-                                    action = Action.UPGRADE_DAMAGE;
-                                } else if (x > WIDTH / 4 && x < 2 * WIDTH / 4) {
-                                    // 2. Gomb
-                                    action = Action.UPGRADE_FIRE_RATE;
-                                } else if (x > WIDTH / 4 * 2 && x < 3 * WIDTH / 4) {
-                                    // 3. Gomb
-                                    action = Action.UPGRADE_RANGE;
-                                }
-                                break;
+                }
+                // TODO kivihetnénk külön privát osztályba
+                int x = e.getX();
+                int y = e.getY();
+                Position position = new Position(x, y);
+                // Megvizsgáljuk, hogy gombra kattintottunk-e, a gombokat a képernyő alsó 50 pixelére rajzoljuk ki
+                if (y > HEIGHT - 50) {
+                    // Ha igen, akkor Action-t váltunk
+                    switch (action) {
+                        case UPGRADE_TOWER:
+                            if (x < WIDTH / 4) {
+                                // 1. Gomb
+                                action = Action.UPGRADE_DAMAGE;
+                            } else if (x > WIDTH / 4 && x < 2 * WIDTH / 4) {
+                                // 2. Gomb
+                                action = Action.UPGRADE_FIRE_RATE;
+                            } else if (x > WIDTH / 4 * 2 && x < 3 * WIDTH / 4) {
+                                // 3. Gomb
+                                action = Action.UPGRADE_RANGE;
+                            }
+                            break;
 
-                            //direkt egymás után vannak a casek, mert mindegyiknél ugyanazt a 4 esetet kell elmenteni,
-                            //a GameEnginebe mentem mit növel, sebzés, lövás gyorsaság, sugár
-                            case UPGRADE_DAMAGE:
-                                if (x < WIDTH / 4) {
-                                    // 1. Gomb
-                                    action = Action.UPGRADE_TOWER_ELF;
-                                } else if (x > WIDTH / 4 && x < 2 * WIDTH / 4) {
-                                    // 2. Gomb
-                                    action = Action.UPGRADE_BLOCKAGE_DWARF;
-                                } else if (x > WIDTH / 4 * 2 && x < 3 * WIDTH / 4) {
-                                    // 3. Gomb
-                                    action = Action.UPGRADE_TOWER_MAN;
-                                } else if (x > WIDTH / 4 * 3 && x < WIDTH) {
-                                    // 4. Gomb
-                                    action = Action.UPGRADE_TOWER_HOBBIT;
-                                }
-                                break;
+                        //direkt egymás után vannak a casek, mert mindegyiknél ugyanazt a 4 esetet kell elmenteni,
+                        //a GameEnginebe mentem mit növel, sebzés, lövás gyorsaság, sugár
+                        case UPGRADE_DAMAGE:
+                            if (x < WIDTH / 4) {
+                                // 1. Gomb
+                                action = Action.UPGRADE_TOWER_ELF;
+                            } else if (x > WIDTH / 4 && x < 2 * WIDTH / 4) {
+                                // 2. Gomb
+                                action = Action.UPGRADE_BLOCKAGE_DWARF;
+                            } else if (x > WIDTH / 4 * 2 && x < 3 * WIDTH / 4) {
+                                // 3. Gomb
+                                action = Action.UPGRADE_TOWER_MAN;
+                            } else if (x > WIDTH / 4 * 3 && x < WIDTH) {
+                                // 4. Gomb
+                                action = Action.UPGRADE_TOWER_HOBBIT;
+                            }
+                            break;
 
-                            case UPGRADE_BLOCKAGE:
-                                if (x < WIDTH / 4) {
-                                    // 1. Gomb
-                                    action = Action.UPGRADE_BLOCKAGE_ELF;
-                                } else if (x > WIDTH / 4 && x < 2 * WIDTH / 4) {
-                                    // 2. Gomb
-                                    action = Action.UPGRADE_BLOCKAGE_DWARF;
-                                } else if (x > WIDTH / 4 * 2 && x < 3 * WIDTH / 4) {
-                                    // 3. Gomb
-                                    action = Action.UPGRADE_BLOCKAGE_MAN;
-                                } else if (x > WIDTH / 4 * 3 && x < WIDTH) {
-                                    // 4. Gomb
-                                    action = Action.UPGRADE_BLOCKAGE_HOBBIT;
-                                }
-                                break;
+                        case UPGRADE_BLOCKAGE:
+                            if (x < WIDTH / 4) {
+                                // 1. Gomb
+                                action = Action.UPGRADE_BLOCKAGE_ELF;
+                            } else if (x > WIDTH / 4 && x < 2 * WIDTH / 4) {
+                                // 2. Gomb
+                                action = Action.UPGRADE_BLOCKAGE_DWARF;
+                            } else if (x > WIDTH / 4 * 2 && x < 3 * WIDTH / 4) {
+                                // 3. Gomb
+                                action = Action.UPGRADE_BLOCKAGE_MAN;
+                            } else if (x > WIDTH / 4 * 3 && x < WIDTH) {
+                                // 4. Gomb
+                                action = Action.UPGRADE_BLOCKAGE_HOBBIT;
+                            }
+                            break;
 
 
-                            case NONE:
-                                if (x < WIDTH / 4) {
-                                    // 1. Gomb
-                                    action = Action.BUILD_TOWER;
-                                } else if (x > WIDTH / 4 && x < 2 * WIDTH / 4) {
-                                    // 2. Gomb
-                                    action = Action.BUILD_BLOCKAGE;
-                                } else if (x > WIDTH / 4 * 2 && x < 3 * WIDTH / 4) {
-                                    // 3. Gomb
-                                    action = Action.UPGRADE_TOWER;
-                                } else if (x > WIDTH / 4 * 3 && x < WIDTH) {
-                                    // 4. Gomb
-                                    action = Action.UPGRADE_BLOCKAGE;
-                                }
-                                break;
-                        }
-                    } else if (action != Action.NONE && action != Action.UPGRADE_BLOCKAGE && action != Action.UPGRADE_TOWER) {
-                        // Ha nem, akkor a jelenlegi Action-nel meghívjuk a gameEngine eseménykezelő függvényét
-                        if (gameEngine.handleEvent(position, action)) {
-                            // Majd az action változót alapállapotba helyezzük, ha a parancs sikeresen végrehajtódott
-                            action = Action.NONE;
-                        }
+                        case NONE:
+                            if (x < WIDTH / 4) {
+                                // 1. Gomb
+                                action = Action.BUILD_TOWER;
+                            } else if (x > WIDTH / 4 && x < 2 * WIDTH / 4) {
+                                // 2. Gomb
+                                action = Action.BUILD_BLOCKAGE;
+                            } else if (x > WIDTH / 4 * 2 && x < 3 * WIDTH / 4) {
+                                // 3. Gomb
+                                action = Action.UPGRADE_TOWER;
+                            } else if (x > WIDTH / 4 * 3 && x < WIDTH) {
+                                // 4. Gomb
+                                action = Action.UPGRADE_BLOCKAGE;
+                            }
+                            break;
+                    }
+                } else if (action != Action.NONE && action != Action.UPGRADE_BLOCKAGE && action != Action.UPGRADE_TOWER) {
+                    // Ha nem, akkor a jelenlegi Action-nel meghívjuk a gameEngine eseménykezelő függvényét
+                    if (gameEngine.handleEvent(position, action)) {
+                        // Majd az action változót alapállapotba helyezzük, ha a parancs sikeresen végrehajtódott
+                        action = Action.NONE;
                     }
                 }
             }
@@ -215,18 +212,16 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 // draw towers
                 for (Tower tower : gameElements.getTowers()) {
                     if (sync) { // hogy ne kapjunk hibát
-                        // TODO ezt jobban meg kell majd csinalni
-                        // TODO + ha kirajzol es meghivjuk a handleMouseEventet, hogy tornyot adjunk hozza, akkor  java.util.ConcurrentModificationException-t kapunk (próbálgassátok ti is)
                         Image img = new ImageIcon("src/tower.png").getImage();
-                        int towerRange = tower.getRange();
-                        graphics.setColor(Color.black);
+                        //int towerRange = tower.getRange();
+                        //graphics.setColor(Color.black);
                         if (gameElements.fog != null) {
                             if (gameElements.fog.getMiddle().distance(tower.getPosition()) < gameElements.fog.getRange()) {
-                                towerRange = towerRange / 2;
+                                //towerRange = towerRange / 2;
                                 img = new ImageIcon("src/towerfog.png").getImage();
                             }
                         }
-                        graphics.draw(new Ellipse2D.Double(tower.getPosition().getX() - towerRange, tower.getPosition().getY() - towerRange, 2 * towerRange, 2 * towerRange));
+                        //graphics.draw(new Ellipse2D.Double(tower.getPosition().getX() - towerRange, tower.getPosition().getY() - towerRange, 2 * towerRange, 2 * towerRange));
                         graphics.drawImage(img, tower.getPosition().getX() - 16, tower.getPosition().getY() - 16, null);
                         //graphics.fill(new Ellipse2D.Double(tower.getPosition().getX() - WIDTH / 100, tower.getPosition().getY() - HEIGHT / 100, WIDTH / 50, HEIGHT / 50));
                     }
@@ -235,11 +230,8 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 // draw blockages
                 for (Blockage blockage : gameElements.getBlockages()) {
                     Image img = new ImageIcon("src/blockage2.png").getImage();
-                    if (blockage.upgraded) {
-                        graphics.setColor(Color.green);
-                    } else {
-                        graphics.setColor(Color.BLUE);
-                    }
+                    //if(blockage.upgraded){graphics.setColor(Color.green);}
+                    //else{graphics.setColor(Color.BLUE);}
                     graphics.drawImage(img, blockage.getPosition().getX() - 16, blockage.getPosition().getY() - 16, null);
                     //graphics.fillOval(blockage.getPosition().getX() - 15, blockage.getPosition().getY() - 15, 30, 30);
                 }
@@ -263,7 +255,6 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 gameElements.shots.clear();
 
                 // Gombok a képernyő alsó 50 pixelén jelennek vannak
-                // TODO ide majd szép képekből álló gombok kellenek, ha kell megrajzolom Illustratorban és átküldöm
                 graphics.setColor(Color.BLACK);
                 graphics.drawLine(0, HEIGHT - 50, WIDTH, HEIGHT - 50);
                 for (int i = 0; i < 4; i++) {

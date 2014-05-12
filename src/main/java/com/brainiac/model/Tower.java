@@ -65,15 +65,6 @@ public class Tower {
     }
 
     /**
-     * A függvény segítségével beállíthatjuk a félbevágós lövés valószínűségét
-     *
-     * @param cutChance A félbevágós lövés új valószínűsége
-     */
-    public void setCutChance(double cutChance) {
-        this.cutChance = cutChance;
-    }
-
-    /**
      * Torony fejlesztése kristállyal
      *
      * @param crystal a kristály
