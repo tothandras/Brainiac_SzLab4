@@ -33,7 +33,7 @@ public class GameElements {
      * @return a tornyo egy új, módosíthatatlan listája
      */
     public List<Tower> getTowers(){
-        return Collections.unmodifiableList(towers);
+        return new ArrayList<Tower>(towers);
     }
 
     /**
@@ -41,7 +41,7 @@ public class GameElements {
      * @return az akadályok egy új, módosíthatatlan listája
      */
     public List<Blockage> getBlockages(){
-        return Collections.unmodifiableList(blockages);
+        return new ArrayList<Blockage>(blockages);
     }
 
     /**
@@ -49,6 +49,6 @@ public class GameElements {
      * @return az ellenségek egy új, módosíthatatlan listája
      */
     public List<Enemy> getEnemies(){
-        return Collections.unmodifiableList(enemies);
+        return new ArrayList<Enemy>(enemies);
     }
 }

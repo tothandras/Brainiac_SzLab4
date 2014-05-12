@@ -45,7 +45,7 @@ public class GameEngine {
      */
     public void newRound(int numberOfEnemies) {
         // a köd leereszkedésének esélye százalékban kifejezve
-        int fogChance = 20;
+        int fogChance = 50;
         round_number++;
         // Ellenségek felhelyezése a pályára
 
@@ -87,7 +87,7 @@ public class GameEngine {
                 gameElements.enemies.add(enemy);
             }
             if ((Math.abs(random.nextInt()) % 100) < fogChance) {
-                int fogRange = 100;
+                int fogRange = 190;
                 gameElements.fog = new Fog(new Position((random.nextInt() % (600 - 2 * fogRange)) + fogRange,
                         (random.nextInt() % (400 - 2 * fogRange)) + fogRange + 100), fogRange);
             } else {
@@ -110,7 +110,7 @@ public class GameEngine {
                 gameElements.blockages.clear();
                 // Vége a körnek, építési szakasz
                 //gameState = GameState.Build;
-                if (round_number >= 1)
+                if (round_number >= 5)
                     gameState = GameState.Win;
                 else
                     newRound(10 + round_number * 5);
