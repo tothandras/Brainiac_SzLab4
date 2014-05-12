@@ -10,7 +10,7 @@ public class Man extends Enemy {
      */
     public Man(Position position) {
         this.position = new Position(position);
-        life = 100;
+        life = 80;
         speed = 3;
         color = new Color(0.85f, 0.85f, 0.85f);
     }

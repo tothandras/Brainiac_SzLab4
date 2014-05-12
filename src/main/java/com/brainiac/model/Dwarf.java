@@ -10,7 +10,7 @@ public class Dwarf extends Enemy {
      */
     public Dwarf(Position position) {
         this.position = new Position(position);
-        life = 150;
+        life = 120;
         speed = 4;
         color = new Color(1.0f, 0.8398f, 0.0f);
     }

@@ -14,7 +14,7 @@ public class GameEngine {
     // Játék állapota
     public GameState gameState;
     private Fog fog;
-    private int round_number = 0; //hányadik játékkör
+    public int round_number = 0; //hányadik játékkör
 
     /**
      * Konstuktor
@@ -34,7 +34,7 @@ public class GameEngine {
         // Szarumán varázserejének beállítása
         gameElements.saruman.setSpellPower(100);
         // Először építés fázisban vagyunk
-        gameState = GameState.Step;
+        gameState = GameState.Start;
         newRound(10);
     }
 
@@ -45,7 +45,7 @@ public class GameEngine {
      */
     public void newRound(int numberOfEnemies) {
         // a köd leereszkedésének esélye százalékban kifejezve
-        int fogChance = 50;
+        int fogChance = 40;
         round_number++;
         // Ellenségek felhelyezése a pályára
 
@@ -87,7 +87,7 @@ public class GameEngine {
                 gameElements.enemies.add(enemy);
             }
             if ((Math.abs(random.nextInt()) % 100) < fogChance) {
-                int fogRange = 190;
+                int fogRange = 150;
                 gameElements.fog = new Fog(new Position((random.nextInt() % (600 - 2 * fogRange)) + fogRange,
                         (random.nextInt() % (400 - 2 * fogRange)) + fogRange + 100), fogRange);
             } else {
@@ -279,7 +279,7 @@ public class GameEngine {
                         return false;
                     }
                 case BUILD_TOWER:
-                    int costOfTowerBuild = 20;
+                    int costOfTowerBuild = 30;
                     isOnRoad = false;
                     for (Path path : gameElements.map.getPaths()) {
                         for (Line2D road : path.getRoads()) {

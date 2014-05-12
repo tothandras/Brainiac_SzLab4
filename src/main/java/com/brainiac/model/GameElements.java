@@ -1,6 +1,5 @@
 package com.brainiac.model;
 
-import sun.org.mozilla.javascript.internal.ast.Block;
 
 import java.awt.geom.Line2D;
 import java.util.ArrayList;

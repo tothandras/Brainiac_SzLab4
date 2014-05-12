@@ -4,6 +4,7 @@ import com.brainiac.controller.GameEngine;
 import com.brainiac.controller.GameState;
 import com.brainiac.model.Action;
 import com.brainiac.model.*;
+import com.sun.webpane.platform.graphics.WCImageFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -73,6 +74,20 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                     int x = e.getX();
                     int y = e.getY();
                     Position position = new Position(x, y);
+
+                    //ha a játék kezdőképernyője van fent akkor megvizsgálom, hogy hova klikkelt a felhasználó
+                    if(gameEngine.gameState==GameState.Start || gameEngine.gameState==GameState.Help){
+                        if (y > 4* HEIGHT/10 && y < 5*HEIGHT/10 && x > 3*WIDTH/10 && x<7*WIDTH/10){
+                            gameEngine.gameState=GameState.Step;
+                        }
+                        if (y > 5* HEIGHT/10 && y < 6*HEIGHT/10 && x > 4*WIDTH/10 && x<12*WIDTH/20){
+                            gameEngine.gameState=GameState.Help;
+                        }
+                        if (y > 13* HEIGHT/20 && y < 7*HEIGHT/10 && x > 4*WIDTH/10 && x<11*WIDTH/20){
+                            System.exit(0);
+                        }
+                    }
+
                     // Megvizsgáljuk, hogy gombra kattintottunk-e, a gombokat a képernyő alsó 50 pixelére rajzoljuk ki
                     if (y > HEIGHT - 50) {
                         // Ha igen, akkor Action-t váltunk
@@ -279,10 +294,10 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                     case BUILD_BLOCKAGE:
                     case NONE:
                         graphics.setFont(new Font(Font.SERIF, Font.BOLD, 12));
-                        graphics.drawString("Torony", WIDTH * 0.09f, HEIGHT - 25);
-                        graphics.drawString("Akadály", WIDTH * 0.33f, HEIGHT - 25);
-                        graphics.drawString("Torony fejlesztése", WIDTH * 0.53f, HEIGHT - 25);
-                        graphics.drawString("Akadály fejlesztése", WIDTH * 0.77f, HEIGHT - 25);
+                        graphics.drawString("Torony (30)", WIDTH * 0.08f, HEIGHT - 25);
+                        graphics.drawString("Akadály (10)", WIDTH * 0.32f, HEIGHT - 25);
+                        graphics.drawString("Torony fejlesztése (10)", WIDTH * 0.52f, HEIGHT - 25);
+                        graphics.drawString("Akadály fejlesztése (10)", WIDTH * 0.76f, HEIGHT - 25);
                         break;
                     case UPGRADE_FIRE_RATE:
                     case UPGRADE_RANGE:
@@ -295,17 +310,20 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
 
                     default:
                         graphics.setFont(new Font(Font.SERIF, Font.BOLD, 12));
-                        graphics.drawString("ELF", WIDTH * 0.09f, HEIGHT - 25);
-                        graphics.drawString("DWARF", WIDTH * 0.33f, HEIGHT - 25);
-                        graphics.drawString("MAN", WIDTH * 0.53f, HEIGHT - 25);
-                        graphics.drawString("HOBBIT", WIDTH * 0.77f, HEIGHT - 25);
+                        graphics.drawString("Tünde ellen", WIDTH * 0.07f, HEIGHT - 25);
+                        graphics.drawString("Törp ellen", WIDTH * 0.33f, HEIGHT - 25);
+                        graphics.drawString("Ember ellen", WIDTH * 0.57f, HEIGHT - 25);
+                        graphics.drawString("Hobbit ellen", WIDTH * 0.81f, HEIGHT - 25);
                         break;
                 }
 
                 //varázserő kirajzolása
                 Integer in = gameElements.saruman.getSpellPower();
+                graphics.setColor(Color.LIGHT_GRAY);
                 graphics.setFont(new Font(Font.SERIF, Font.BOLD, 18));
-                graphics.drawString("Power: " + in.toString(), 10, 20);
+                graphics.drawString("Varázserő: " + in.toString(), 10, 25);
+                graphics.drawString(" Kör szám: "+gameEngine.round_number+"/5",480,25);
+
                 //szín beállítása majd a varázserő nagyságának megfelelő téglalap rajzolása
                 graphics.setColor(Color.LIGHT_GRAY);
                 graphics.fillRect(10, 30, in, 5);
@@ -320,6 +338,17 @@ public class GameFrame extends JFrame implements WindowListener, Runnable {
                 if (gameEngine.gameState == GameState.Win) {
                     Image img = new ImageIcon("src/win.png").getImage();
                     graphics.drawImage(img, WIDTH / 2 - 100, HEIGHT / 2 - 130, null);
+                }
+
+                if (gameEngine.gameState == GameState.Start || gameEngine.gameState == GameState.Help) {
+                    Image img = new ImageIcon("src/startwindow.png").getImage();
+                    graphics.drawImage(img, 0, 0, null);
+                }
+
+                if (gameEngine.gameState == GameState.Help) {
+                    graphics.setColor(Color.WHITE);
+                    graphics.setFont(new Font("Gigi", Font.BOLD, 45));
+                    graphics.drawString("Saruman nem kér segítséget!",30,150);
                 }
 
                 // paint screen
