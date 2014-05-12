@@ -9,7 +9,7 @@ public abstract class Enemy {
     protected int speed;
     // Ellenség pozíciója
     protected Position position;
-    // az ellenség megjelenési színe a játékban
+    // Az ellenség megjelenési színe a játékban
     protected Color color;
 
     /**

@@ -8,7 +8,8 @@ import java.util.List;
 public class Path {
     // Útvonal több egyenes útszakaszból áll
     private List<Line2D> roads;
-    public final int sizeOfRoad=8; //megmondja, hogy a vonaltól milyen nagy az út kiterjedése
+    // Út szélessége
+    public final int sizeOfRoad=8;
 
     public Path() {
         roads = new ArrayList<Line2D>();

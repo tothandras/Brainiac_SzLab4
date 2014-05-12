@@ -12,7 +12,7 @@ public class Elf extends Enemy {
         this.position = new Position(position);
         life = 130;
         speed = 2;
-        color = new Color(0.0f, 1.0f, 0.0f);
+        color = new Color(0.0f, 0.5372549f, 0.047058824f);
     }
 
     /**

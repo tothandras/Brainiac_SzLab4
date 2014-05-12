@@ -12,7 +12,7 @@ public class Hobbit extends Enemy {
         this.position = new Position(position);
         life = 50;
         speed = 3;
-        color = new Color(1.0f, 0.0f, 0.0f);
+        color = new Color(0.39f, 0.2f, 0.04f);
     }
 
     /**

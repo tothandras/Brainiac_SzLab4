@@ -73,7 +73,7 @@ public class Tower {
         // Tüzelési hatótávolság növelése a kristályban meghatározott mértékben
         range = range + crystal.getRangeIncrement();
         // Tüzelési sebesség növelése a kristályban meghatározott mértékben
-        //5 esetén nem csökkentünk tovább
+        // 5 esetén nem csökkentünk tovább
         if(fireRate>5)
             fireRate = fireRate - crystal.getFireRateIncrement();
         // Sebzés növelése a kristályban meghatározott ellenség ellen és mértékben

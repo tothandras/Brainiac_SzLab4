@@ -8,8 +8,6 @@ public class Blockage {
     private int range;
     private List<BlockageCrystal> crystals;
 
-    //public boolean upgraded;
-
     /**
      * Új akadály létrehozása a pálya egy adott pozíciójára
      *
@@ -19,7 +17,6 @@ public class Blockage {
         this.position = position;
         this.range = 15;
         crystals = new ArrayList<BlockageCrystal>();
-        //upgraded = false;
     }
 
     /**
@@ -38,7 +35,6 @@ public class Blockage {
      */
     public void upgrade(BlockageCrystal crystal) {
         this.crystals.add(crystal);
-        //upgraded = true;
     }
 
     /**
